@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "additionalDirectories": [],
+    "allow": []
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const c=require('fs').readFileSync('/dev/stdin','utf8');const d=JSON.parse(c);const cmd=d.tool_input&&d.tool_input.command||'';const blocked=['rm -rf','drop table','force push','--force','git push -f','format c'];const hit=blocked.find(b=>cmd.toLowerCase().includes(b));if(hit){process.stderr.write('BLOCKED: Dangerous command detected: '+hit+'\\n');process.exit(2);}process.exit(0);\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));const f=d.tool_input&&d.tool_input.file_path||'';if(f.match(/\\.(ts|tsx|js|jsx)$/)){const {execSync}=require('child_process');try{execSync('npx prettier --write \"'+f+'\" 2>/dev/null',{stdio:'ignore'});}catch(e){}}\""
+          }
+        ]
+      },
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));const log=new Date().toISOString()+' | '+d.tool_name+' | '+(d.tool_input&&d.tool_input.command||d.tool_input&&d.tool_input.file_path||'')+' | exit:'+(d.exit_code||0)+'\\n';require('fs').appendFileSync('.claude/tool.log',log);\""
+          }
+        ]
+      }
+    ]
+  }
+}
