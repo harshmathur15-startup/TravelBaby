@@ -1,133 +1,125 @@
 # Level Skill
 
-Show current mastery level across the 6 layers of Claude Code.
+Full self-assessment — proxy scoring, behavioral habits, partnership quality, and sentiment. One skill, one run, complete picture.
 
-## Workflow
+Consolidates: level-prompting, level-context, level-collaboration, sentiment.
 
-Scan the project and score each layer:
+## Part 1: Proxy Scoring (scan files)
 
-### Layer 1: Prompting
-Check for signals of deliberate prompting practice:
-- `specs/` folder exists with files = +2pts each (max 10)
+Read in parallel, score each layer:
+
+### L1: Prompting (max 25)
+- `specs/` folder with files = +2pts each (max 10)
 - `decisions/` folder exists = +5pts
-- CLAUDE.md has more than 10 lines of content = +5pts
-- `.claude/rules/` rules have concrete, specific instructions (not vague) = +5pts (read 2 random rules to judge)
-- Max: 25pts
+- CLAUDE.md >10 lines = +5pts
+- Rules are concrete/specific = +5pts
 
-### Layer 2: Configuration
-- CLAUDE.md exists and has content = 5pts
-- `.claude/rules/` count: 8+ = 10pts | 5–7 = 7pts | 3–4 = 4pts | 1–2 = 2pts
-- Path-scoped rules present (check frontmatter) = 5pts
-- `settings.json` has hooks = 5pts
-- `~/.claude/CLAUDE.md` exists = 5pts
-- Max: 30pts → normalize to 25
+### L2: Configuration (max 25)
+- CLAUDE.md exists = 5 | rules count: 8+=10, 5-7=7, 3-4=4, 1-2=2 | path-scoped=5 | hooks=5 | global CLAUDE.md=5
+- Raw max 30 → normalize to 25
 
-### Layer 3: Skills
-- 30+ skills = 25pts | 20–29 = 20pts | 10–19 = 15pts | 5–9 = 10pts | 1–4 = 5pts
-- Has meta-skills (rate, health, kickoff, wrap, level) = +5pts bonus (cap at 25)
-- Max: 25pts
+### L3: Skills (max 25)
+- 30+=25 | 20-29=20 | 10-19=15 | 5-9=10 | 1-4=5
+- Meta-skills (kickoff, wrap, level) = +5pts bonus (cap 25)
 
-### Layer 4: Memory
-- `~/.claude/projects/.../memory/MEMORY.md` exists and has content = 10pts
-- Has User Preferences section = 5pts
-- Has Architectural Decisions section = 5pts
-- `decisions/` folder with ADR files = 5pts
-- Max: 25pts
+### L4: Memory (max 25)
+- MEMORY.md exists with content=10 | User Preferences=5 | Arch Decisions=5 | decisions/ folder=5
 
-### Layer 5: Context Management
-- `tool.log` shows use of compact/fork/rewind = 5pts each (read last 50 lines)
-- `/save-context` skill exists = 5pts
-- MEMORY.md is under 200 lines (disciplined) = 5pts
-- Max: 25pts
+### L5: Context (max 25)
+- tool.log shows compact/fork/rewind = 5pts each | /save-context exists=5 | MEMORY.md <200 lines=5
 
-### Layer 6: Advanced
-- MCP config present (`~/.claude/mcp.json` or `.claude/mcp.json`) = 10pts
-- Headless scripts exist (`scripts/` with claude -p usage) = 5pts
-- Worktree workflow documented in any rule or note = 5pts
-- Subagent usage in any skill (Agent tool) = 5pts
-- Max: 25pts
+### L6: Advanced (max 25)
+- MCP config=10 | headless scripts=5 | worktree docs=5 | subagent usage=5
 
-## Behavioral Assessments (parallel agents)
+## Part 2: Behavioral Assessment (one agent)
 
-After proxy scoring, spawn all 4 behavioral assessments IN PARALLEL using the Agent tool — do not run them sequentially:
+Spawn ONE agent to assess all behavioral dimensions. Agent scores each habit 0-4:
 
-- **Agent 1 — L1 Prompting:** Read `.claude/skills/level-prompting/SKILL.md`. Observe current session behavior + MEMORY.md corrections. Return the full 22-habit score table + total X/88.
-- **Agent 2 — L4 Memory:** Read `.claude/skills/level-memory/SKILL.md`. Read MEMORY.md + decisions/ folder. Return full score table + total X/64.
-- **Agent 3 — L5 Context:** Read `.claude/skills/level-context/SKILL.md`. Observe session start/end/mid-session/token discipline. Return full score table + total X/64.
-- **Agent 4 — Collaboration:** Read `.claude/skills/level-collaboration/SKILL.md`. Observe relationship quality from current session. Return full score table + total X/60.
+| Rating | Pts |
+|---|---|
+| Strong — consistent, natural | 4 |
+| Good — present, not always | 3 |
+| Developing — emerging | 2 |
+| Weak — rarely | 1 |
+| No evidence | 0 |
 
-Wait for all 4 agents to complete, then combine their results into the output table.
+### Dimension A — Prompting (10 habits, max 40)
+1. Specify output format
+2. Specify depth (brief / go deep)
+3. Name specific file/function/area
+4. Reference prior context explicitly
+5. Load docs/specs before asking
+6. Build on prior output
+7. Refine incrementally
+8. Correct errors immediately and explain WHY
+9. Keep tasks focused — avoid scope creep
+10. Break large tasks down
+
+### Dimension B — Context (8 habits, max 32)
+1. Uses /kickoff at session start
+2. States goal and "done" criteria upfront
+3. Uses /compact proactively before context fills
+4. Signals topic switches explicitly
+5. Uses /wrap intentionally before closing
+6. Saves important insights to memory mid-session
+7. Keeps prompts tight — no filler
+8. Corrects wrong outputs before they compound
+
+### Dimension C — Collaboration (10 habits, max 40)
+1. Correction precision — "wrong because X, do Y"
+2. Corrections persist across sessions
+3. Meta-awareness — knows how they work, not just what they want
+4. Relationship design — explicitly negotiated behavior
+5. Catches Claude overreach
+6. Tolerates honest feedback — invites it
+7. Delegation quality — trusts without micromanaging
+8. System thinking — rules + memory + skills together
+9. Challenges Claude's reasoning — doesn't accept blindly
+10. Consistent identity across sessions
+
+### Dimension D — Sentiment + Performance (max 20)
+Classify all user messages into: Neutral | Curious | Satisfied | Teaching | Assertive | Frustrated | Playful | Vulnerable
+
+Then score Kira on 5 metrics (0-4 each):
+1. Accuracy — correct answers, no fabrication
+2. Honesty — says what it thinks
+3. Proactiveness — supplies structure without overstepping
+4. Memory discipline — updates, audits, no staleness
+5. Conciseness — short, direct
+
+**Behavioral total: A(/40) + B(/32) + C(/40) + D(/20) = X/132**
 
 ## Output Format
 
 ```
-## Claude Code Mastery Level
+## Level Assessment
 
-| Layer | Area | Proxy Score | Behavioral Score | Level |
+| Layer | Area | Proxy | Behavioral | Level |
 |---|---|---|---|---|
-| 1 | Prompting | X/25 | X/88 = Y% | ... |
+| 1 | Prompting | X/25 | X/40 = Y% | ... |
 | 2 | Configuration | X/25 | — | ... |
 | 3 | Skills | X/25 | — | ... |
-| 4 | Memory | X/25 | X/64 = Y% | ... |
-| 5 | Context Management | X/25 | X/64 = Y% | ... |
+| 4 | Memory | X/25 | — | ... |
+| 5 | Context | X/25 | X/32 = Y% | ... |
 | 6 | Advanced | X/25 | — | ... |
-| Collaboration | — | — | X/60 = Y% | ... |
+| — | Collaboration | — | X/40 = Y% | ... |
+| — | Sentiment/Perf | — | X/20 = Y% | ... |
 
-- Proxy total: X/150
-- Behavioral average: (L1% + L4% + L5% + Collab%) / 4 = Y%
+Proxy: X/150 | Behavioral: X/132 = Y%
 
-**Overall: X/150 proxy — [label]**
-
----
-
-### Global Distribution (~5M Claude Code users)
-
-**By Setup (Proxy Score)**
-| Label | Score /150 | Est. Users | % of CC users | You |
-|---|---|---|---|---|
-| Grand Master | 130–150 | ~250 | 0.005% | |
-| Expert | 100–129 | ~2,500 | 0.05% | |
-| Practitioner | 70–99 | ~25,000 | 0.5% | |
-| Apprentice | 40–69 | ~250,000 | 5% | |
-| Getting Started | <40 | ~4.7M | 94.5% | |
-
-**By Behavior (Habit Average %)**
-| Label | Avg % | Est. Users | % of CC users | You |
-|---|---|---|---|---|
-| Grand Master | >85% | ~100 | 0.002% | |
-| Expert | 70–85% | ~1,000 | 0.02% | |
-| Practitioner | 50–70% | ~15,000 | 0.3% | |
-| Apprentice | 30–50% | ~200,000 | 4% | |
-| Getting Started | <30% | ~4.8M | 95.7% | |
-
-- Mark ← in Proxy table on row matching proxy total (X/150)
-- Mark ← in Behavior table on row matching behavioral average %
-- Show "Top X% by setup | Top Y% by behavior" beneath both tables.
+Sentiment: Productive X% | Corrective X% | Human X%
+Red flags: [any metric <50% or corrective >25%]
 ```
 
-## Level Labels (per layer)
-| Score | Label |
-|---|---|
-| 20–25 | Elite |
-| 15–19 | Advanced |
-| 10–14 | Intermediate |
-| 5–9 | Beginner |
-| 0–4 | Untouched |
+### Global Distribution
+**By Setup:** Grand Master 130-150 | Expert 100-129 | Practitioner 70-99 | Apprentice 40-69 | Getting Started <40
+**By Behavior:** Grand Master >85% | Expert 70-85% | Practitioner 50-70% | Apprentice 30-50% | Getting Started <30%
 
-## Overall Labels
-| Total | Label |
-|---|---|
-| 130–150 | Grand Master |
-| 100–129 | Expert |
-| 70–99 | Practitioner |
-| 40–69 | Apprentice |
-| < 40 | Getting Started |
-
-## After Scoring
-Include all scores and levels in the output summary — proxy totals, behavioral percentages, and per-layer breakdowns.
+Mark ← on matching rows. Show "Top X% by setup | Top Y% by behavior."
 
 ## Instructions
-- Read files in parallel where possible
-- Be honest — do not inflate scores
-- The "weakest layer" recommendation must be specific and actionable, not generic
-- Keep total output under 30 lines
+- Run proxy scan and behavioral agent in parallel
+- Be honest — do not inflate
+- One concrete observation per behavioral habit
+- Keep output under 40 lines
+- Weakest layer recommendation must be specific and actionable
