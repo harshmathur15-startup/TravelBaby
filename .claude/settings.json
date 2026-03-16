@@ -10,7 +10,18 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node -e \"let b='';process.stdin.on('data',c=>b+=c);process.stdin.on('end',()=>{const d=JSON.parse(b);const cmd=(d.tool_input&&d.tool_input.command||'').toLowerCase();const patterns=[/rm\\s+(-[a-z]*f[a-z]*\\s+|.*--force)/,/drop\\s+table/,/git\\s+push\\s+.*(-f|--force)/,/format\\s+c/,/find\\s+.*-delete/,/truncate\\s/,/mkfs\\./];const hit=patterns.find(p=>p.test(cmd));if(hit){process.stderr.write('BLOCKED: Dangerous command detected\\n');process.exit(2);}process.exit(0);});\""
+            "command": "node -e \"let b='';process.stdin.on('data',c=>b+=c);process.stdin.on('end',()=>{const d=JSON.parse(b);const cmd=(d.tool_input&&d.tool_input.command||'').toLowerCase();const patterns=[/rm\\s+(-[a-z]*f[a-z]*\\s+|.*--force)/,/drop\\s+table/,/git\\s+push\\s+.*(-f|--force)/,/format\\s+c/,/find\\s+.*-delete/,/truncate\\s/,/mkfs\\./,/git\\s+add\\s+.*\\.env(?!\\.)/,/git\\s+commit.*\\.env(?!\\.)/];const hit=patterns.find(p=>p.test(cmd));if(hit){process.stderr.write('BLOCKED: Dangerous command detected\\n');process.exit(2);}process.exit(0);});\""
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const fs=require('fs');const path=require('path');const ts=new Date().toISOString().replace(/[:.]/g,'-');const dir='thoughts/handoffs';try{fs.mkdirSync(dir,{recursive:true});}catch(e){}const log=fs.existsSync('.claude/tool.log')?fs.readFileSync('.claude/tool.log','utf8').split('\\n').slice(-30).join('\\n'):'no tool.log';const cwd=process.cwd().replace(/\\\\/g,'/');const projKey='d-'+cwd.replace(/[:\\/]/g,'-').replace(/^-+/,'');const memPath='C:/Users/kumar/.claude/projects/'+projKey+'/memory/MEMORY.md';const mem=fs.existsSync(memPath)?fs.readFileSync(memPath,'utf8'):'no memory at '+memPath;const handoff='# Auto-Handoff '+ts+'\\n\\n## Recent Tool Activity (last 30)\\n```\\n'+log+'\\n```\\n\\n## MEMORY.md Snapshot\\n'+mem+'\\n';fs.writeFileSync(dir+'/handoff-'+ts+'.md',handoff);fs.appendFileSync('.claude/tool.log',new Date().toISOString()+' | PRE-COMPACT | handoff saved to '+dir+'/handoff-'+ts+'.md\\n');const sig=[/\\.claude\\/skills\\//,/\\.claude\\/rules\\//,/\\.claude\\/settings/,/CLAUDE\\.md/];const edits=log.split('\\n').filter(l=>l.includes('Edit')||l.includes('Write')).filter(l=>sig.some(s=>s.test(l)));if(edits.length>0){process.stderr.write('WARNING: '+edits.length+' structural changes detected this session. Run /wrap to update MEMORY.md before context is lost.\\n');}\""
           }
         ]
       }
