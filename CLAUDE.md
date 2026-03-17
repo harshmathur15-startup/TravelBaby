@@ -24,6 +24,9 @@
 ## Core Features
 [List the core features of this project]
 
+## Agents
+- **Lena** — quality enforcer. Audits project health, file quality, outstanding actions. Run via `/mother`. Nora's sister — same firmness, product scope.
+
 ## Conventions
 - Use TypeScript strict mode everywhere
 - API routes follow REST conventions: `/api/v1/<resource>`
