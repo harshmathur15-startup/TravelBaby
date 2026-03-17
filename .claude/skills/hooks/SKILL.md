@@ -1,3 +1,8 @@
+---
+name: hooks
+description: Hooks Reference
+---
+
 # Hooks Reference
 
 Hooks are shell commands that fire automatically at lifecycle events.

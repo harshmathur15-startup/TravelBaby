@@ -1,8 +1,11 @@
+---
+name: level
+description: Full project setup assessment — proxy scoring across 6 layers + behavioral habits audit.
+---
+
 # Level Skill
 
-Full self-assessment — proxy scoring, behavioral habits, partnership quality, and sentiment. One skill, one run, complete picture.
-
-Consolidates: level-prompting, level-context, level-collaboration, sentiment.
+Full project assessment — proxy scoring and behavioral habits. Measures how well the Claude Code setup is configured, not AI personality.
 
 ## Part 1: Proxy Scoring (scan files)
 
@@ -33,7 +36,7 @@ Read in parallel, score each layer:
 
 ## Part 2: Behavioral Assessment (one agent)
 
-Spawn ONE agent to assess all behavioral dimensions. Agent scores each habit 0-4:
+Spawn ONE agent to assess behavioral dimensions. Agent scores each habit 0-4:
 
 | Rating | Pts |
 |---|---|
@@ -55,7 +58,7 @@ Spawn ONE agent to assess all behavioral dimensions. Agent scores each habit 0-4
 9. Keep tasks focused — avoid scope creep
 10. Break large tasks down
 
-### Dimension B — Context (8 habits, max 32)
+### Dimension B — Context Management (8 habits, max 32)
 1. Uses /kickoff at session start
 2. States goal and "done" criteria upfront
 3. Uses /compact proactively before context fills
@@ -65,29 +68,17 @@ Spawn ONE agent to assess all behavioral dimensions. Agent scores each habit 0-4
 7. Keeps prompts tight — no filler
 8. Corrects wrong outputs before they compound
 
-### Dimension C — Collaboration (10 habits, max 40)
+### Dimension C — Project Quality (10 habits, max 40)
 1. Correction precision — "wrong because X, do Y"
-2. Corrections persist across sessions
-3. Meta-awareness — knows how they work, not just what they want
-4. Relationship design — explicitly negotiated behavior
-5. Catches Claude overreach
-6. Tolerates honest feedback — invites it
-7. Delegation quality — trusts without micromanaging
+2. Corrections persist across sessions via memory
+3. Specs written before code
+4. Architecture decisions documented
+5. Test discipline — tests accompany features
+6. Code review before merge
+7. Delegation quality — clear scope, clear constraints
 8. System thinking — rules + memory + skills together
-9. Challenges Claude's reasoning — doesn't accept blindly
-10. Consistent identity across sessions
-
-### Dimension D — Sentiment + Performance (max 20)
-Classify all user messages into: Neutral | Curious | Satisfied | Teaching | Assertive | Frustrated | Playful | Vulnerable
-
-Then score Kira on 5 metrics (0-4 each):
-1. Accuracy — correct answers, no fabrication
-2. Honesty — says what it thinks
-3. Proactiveness — supplies structure without overstepping
-4. Memory discipline — updates, audits, no staleness
-5. Conciseness — short, direct
-
-**Behavioral total: A(/40) + B(/32) + C(/40) + D(/20) = X/132**
+9. Challenges AI reasoning — doesn't accept blindly
+10. Consistent standards across sessions
 
 ## Output Format
 
@@ -102,13 +93,10 @@ Then score Kira on 5 metrics (0-4 each):
 | 4 | Memory | X/25 | — | ... |
 | 5 | Context | X/25 | X/32 = Y% | ... |
 | 6 | Advanced | X/25 | — | ... |
-| — | Collaboration | — | X/40 = Y% | ... |
-| — | Sentiment/Perf | — | X/20 = Y% | ... |
+| — | Project Quality | — | X/40 = Y% | ... |
 
-Proxy: X/150 | Behavioral: X/132 = Y%
-
-Sentiment: Productive X% | Corrective X% | Human X%
-Red flags: [any metric <50% or corrective >25%]
+Proxy: X/150 | Behavioral: X/112 = Y%
+Red flags: [any metric <50%]
 ```
 
 ### Global Distribution

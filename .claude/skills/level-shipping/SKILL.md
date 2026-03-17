@@ -1,3 +1,8 @@
+---
+name: level-shipping
+description: Level Shipping Skill
+---
+
 # Level Shipping Skill
 
 Measure what was shipped — speed, quality, and reliability. Only meaningful in product projects with git history.
@@ -72,4 +77,4 @@ Run `git log --oneline --stat --since="90 days ago"` to gather raw data. Score 8
 - If no specs/ folder, score O4=5
 - If no test files, score O2=5
 - Be honest — do not inflate
-- This skill is meaningless in identity-only projects — say so if run in Kira
+- This skill requires git history with conventional commits — if <10 commits exist, note insufficient data

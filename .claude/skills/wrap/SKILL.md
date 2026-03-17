@@ -41,10 +41,9 @@ Print the session summary, then update MEMORY.md.
 **Next Session Should Start With**
 - <the single most important thing to pick up>
 
-**Session Sentiment**
-| Emotion | This Session | Overall Engagement |
-|---|---|---|
-| <emotion> | X% | Y% |
+**Session Quality**
+- Corrections from user: <count>
+- Key decisions: <list or "none">
 ```
 
 ## MEMORY.md Update
@@ -60,10 +59,11 @@ After printing the summary, update `MEMORY.md`:
 After updating MEMORY.md, spawn a **Template Sync Agent** using the Agent tool:
 - Agent name: Template Sync Agent
 - What it reads: `.claude/skills/`, `.claude/rules/`, `d:/AI/_template/.claude/skills/`, `d:/AI/_template/.claude/rules/`
-- What it does: compares both sides, copies missing items to template (never overwrites)
-- What it returns: sync report — X skills copied, Y rules copied, or "Already in sync"
+- What it does: compares both sides, updates skills that **already exist in template** (never creates new ones)
+- What it returns: sync report — X skills updated, Y rules updated, or "Already in sync"
 - Iteration cap: 5 | Write scope: `d:/AI/_template/` only
-- Skip project-specific rules (e.g. domain-specific rules)
+- **Never push new skills to template.** Template controls its own inventory — only update what's already there.
+- Skip project-specific rules (e.g. domain-specific rules, partnership rules)
 
 ## Instructions
 - Keep the summary under 20 lines — this is a snapshot, not a report
