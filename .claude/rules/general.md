@@ -23,3 +23,20 @@
 - No function longer than 40 lines — extract if it grows beyond that
 - Avoid nested ternaries — use early returns or explicit if/else
 - Prefer `const` over `let` — use `let` only when reassignment is necessary
+
+## Build Protocols
+
+### Phase Checkpoints (#11)
+Multi-phase builds require explicit approval between phases. Present what was built, get approval, then proceed. No skipping phases — the Product Launch Roadmap sequence is binding.
+
+### Mandatory Learning Recording (#47)
+A task is not complete until the learning is recorded. After significant work: what was learned, what would be done differently, what pattern emerged. Gate, not suggestion. Lena audits.
+
+### File Ownership (#60)
+During parallel agent work, each file has exactly one owner. Declare ownership before starting. Interface contracts between owners are immutable during a work phase. Conflicts go to the orchestrator.
+
+### HITL Approval Gates (#63)
+Irreversible actions require human approval before execution: database migrations, payment processing, user-facing deployments, data deletions. Risk-scored: Low (proceed with log), Medium (confirm before), High (block until explicit approval). Timeout after 10 minutes → escalate, don't auto-proceed.
+
+### TDD Gate (#66)
+Agent deliverables that include testable code must include test evidence. No "it works" without proof. Agent contract addition: if the output is code, the output includes test results or a reason why tests aren't applicable.
