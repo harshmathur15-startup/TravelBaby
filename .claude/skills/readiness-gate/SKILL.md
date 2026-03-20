@@ -47,5 +47,5 @@ If any check FAILS:
 
 ## Instructions
 - This is a gate, not a suggestion. FAIL means stop.
-- Don't fix the documents yourself — flag the misalignment and let Sir decide
+- Don't fix the documents yourself — flag the misalignment and let the user decide
 - If fewer than 2 documents exist, the gate is premature — say so and skip

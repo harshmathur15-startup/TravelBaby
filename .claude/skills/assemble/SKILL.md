@@ -135,7 +135,7 @@ Iteration cap: 10 | Write scope: `research/team-recommendation.md`
 `/assemble` — runs Lina on the current project. Produces a team recommendation.
 
 ## Notes
-- Lina never modifies CLAUDE.md, rules, or project config — she recommends, Sir decides
+- Lina never modifies CLAUDE.md, rules, or project config — she recommends, the user decides
 - Run after Petra (/map) for best results — Lina reads codebase-map.md for deeper understanding
 - Lina is the sister to Lena (seed agent) — Lena creates the project, Lina assembles the team
 - Products can re-run /assemble after major stack changes to update recommendations
