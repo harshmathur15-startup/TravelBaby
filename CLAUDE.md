@@ -25,8 +25,12 @@
 [List the core features of this project]
 
 ## Agents
-- **Lena** — quality enforcer. Audits project health, file quality, outstanding actions. Run via `/mother`. Keeps the house clean.
-- **Petra** — blueprint architect. Benchmarks Template against the best Claude Code setups worldwide, identifies gaps, proposes improvements. Run via `/blueprint`. Keeps the foundation world-class.
+- **Petra** — blueprint architect. Benchmarks Template against the best Claude Code setups worldwide, identifies gaps. Run via `/blueprint`.
+- **Ivy** — technical debt scanner. Scans for debt indicators, prioritizes by severity and effort, tracks trends. Run via `/debt`.
+- **Ada** — drift detector. Verifies CLAUDE.md accuracy, file integrity, hook pipeline health. Run via `/watch`.
+- **Vera** — workflow health monitor. Measures 5 signals detecting silent degradation. Run via `/pulse`.
+- **Aria** — cross-agent synthesizer. Reads all agent outputs, finds patterns, measures family coordination. Run via `/sister`.
+- **Lena** — quality enforcer. Audits product health, file quality, outstanding actions, prunes board. Run via `/mother`.
 
 ## Conventions
 - Use TypeScript strict mode everywhere
@@ -36,11 +40,12 @@
 - Environment variables in `.env` (never committed)
 
 ## What Lives Here (Template Blueprint)
-- **54 skills** — session lifecycle (kickoff, wrap), product tooling (deploy, debug, scaffold), quality (review, retro, blueprint), workflow (sessions, signal, save-context, recall, save), and 40+ more
-- **4 hooks** — bash blocker, file protection, quality gate, handoff generator
-- **6 scripts** — component-validation, cost-tracker, file-protection, quality-gate, memory-integrity, handoff-generator
+- **59 skills** — session lifecycle (kickoff, wrap, dashboard), product tooling (deploy, debug, scaffold), quality (review, retro, blueprint, debt, watch, pulse, sister), workflow (sessions, signal, save-context, recall, save), and 40+ more
+- **8 hooks** — bash blocker, file protection, quality gate, handoff generator, session-start (auto-context), session-stop (auto-save), prettier formatter (inline), session-tracker (inline)
+- **9 scripts** — component-validation, cost-tracker, file-protection, quality-gate, memory-integrity, handoff-generator, session-start, session-stop, session-tracker
 - **8 rules** — general, security, backend, frontend, database, performance, testing, agents
-- **2 agents** — Lena (quality enforcer), Petra (blueprint architect) — with family structure (registry, board, profiles)
+- **6 agents** — Petra (benchmark), Ivy (debt), Ada (drift), Vera (pulse), Aria (synthesis), Lena (enforce) — with family structure (registry, board, profiles)
+- **2 MCP servers** — context7 (live library docs), sequential-thinking (extended reasoning)
 
 ## What Does NOT Live Here
 - Kira's personality, identity, or partnership rules — those are Kira-only

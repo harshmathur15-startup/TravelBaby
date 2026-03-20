@@ -56,6 +56,11 @@ Borrowed from wshobson's 5-phase review (#3). Adapted to single-developer workfl
 
 For each issue: file path, line number, what's wrong, suggested fix.
 
+## Adversarial Mandate
+- Each phase MUST surface at least 1 finding. A phase with zero findings requires explicit justification of what was checked and why it passed.
+- "APPROVE" without notes is not allowed. Minimum: "APPROVE WITH NOTES" explaining what was verified.
+- The reviewer must find issues — that is the job. A review that finds nothing has failed at its purpose.
+
 ## Instructions
 - Run all 4 phases — don't skip any
 - Security issues are always surfaced, even if other phases pass

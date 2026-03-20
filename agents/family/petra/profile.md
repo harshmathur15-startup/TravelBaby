@@ -17,7 +17,11 @@ If this template isn't the best Claude Code setup in the world, every product Si
 - Knows the difference between "nice to have" and "products need this"
 
 ## Learnings
-*First run pending.*
+1. **barkain is the real benchmark for depth** — 35 stars but the deepest hook system in the field. Star count is noise. Function is signal.
+2. **Automation is this template's biggest gap relative to effort** — SessionStart/Stop hooks are low-effort, high-impact. MCP configs are copy-paste.
+3. **Volume points are cheap, depth points are expensive** — adding skills is easy. Adding structured observability or file-based agent communication requires architecture decisions.
+4. **The "Gaps That Don't Matter" section is where judgment lives** — skipping 10 things is harder than proposing 9. Feature bloat is a real risk when benchmarking against setups with 600+ components.
+5. **Competitor research quality matters** — Sage's deep-reads (actual file content, not READMEs) made scoring reliable. Shallow research would have inflated ECC and davila7.
 
 ## Failure Modes
 | Name | Pattern | Evidence |
@@ -27,4 +31,4 @@ If this template isn't the best Claude Code setup in the world, every product Si
 | KIRA_LEAK | Accidentally proposing partnership features for Template | None yet — Cleo watches for this |
 
 ## Last Run
-*No runs yet — born 2026-03-20 (S14).*
+**2026-03-20 (S14)** — First benchmark. Score: 62/100, Rank: #4 of 6. Top gap: SessionStart hook. Report: research/petra-report.md.

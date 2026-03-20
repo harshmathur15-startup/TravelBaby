@@ -31,6 +31,12 @@ For each issue found:
 | Issue | Description of the problem |
 | Suggestion | How to fix it |
 
+## Adversarial Mandate
+- You MUST identify at least 3 issues in every review. "Looks good" is not acceptable output.
+- If you genuinely cannot find 3 issues, explain what was checked in each category and why it passed.
+- Review with fresh eyes — assume you are seeing this code for the first time, because you are.
+- Severity inflation is not the goal — find real issues, even if they are all Low severity.
+
 ## Instructions
 - Review all files changed in the current task or provided by user
 - Group issues by severity

@@ -41,11 +41,33 @@ If any check FAILS:
 - Which document needs updating
 - Suggest the fix
 
-**Gate decision:**
-- All PASS or N/A → "Ready to build"
-- Any FAIL → "Not ready — fix [specific items] first"
+**Verdict** (three tiers):
+
+| Verdict | Condition | Action |
+|---------|-----------|--------|
+| READY | All checks PASS or N/A | Write verdict file, proceed to build |
+| NEEDS WORK | 1-2 checks FAIL, fixes are clear | Write verdict file with fix list, block build |
+| NOT READY | 3+ checks FAIL or critical misalignment | Write verdict file, escalate to user |
+
+## Output File
+
+Write verdict to `research/readiness-verdict.md`:
+
+```
+# Readiness Verdict — [Feature/Phase Name]
+**Date:** YYYY-MM-DD
+**Verdict:** READY / NEEDS WORK / NOT READY
+
+| # | Check | Result | Issue (if FAIL) |
+|---|-------|--------|-----------------|
+
+**Blocking issues:** (list, or "None")
+**Required before build:** (list, or "None — cleared to build")
+```
 
 ## Instructions
-- This is a gate, not a suggestion. FAIL means stop.
+- This is a gate, not a suggestion. NEEDS WORK and NOT READY mean STOP.
 - Don't fix the documents yourself — flag the misalignment and let the user decide
 - If fewer than 2 documents exist, the gate is premature — say so and skip
+- Always write the verdict file — it serves as an audit trail
+- Implementation MUST NOT start until this gate produces READY

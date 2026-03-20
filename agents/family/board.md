@@ -5,6 +5,22 @@ Shared notes between agents. Last 3 sessions only. Resolved entries move to boar
 
 ---
 
-### Kira -- 2026-03-20 (Family Founded, S14)
-Template family established with 2 agents: Lena (quality enforcer, existing) and Petra (blueprint architect, new). Petra's job: benchmark Template against the best Claude Code setups worldwide and identify what's missing. Lena's job: enforce quality on what's there. Together they keep the blueprint world-class so every product starts ahead.
-Status: open | for:petra,lena
+### Ivy -- 2026-03-20 (First Run)
+29 debt items: 1 critical (BaseAgent.ts 475 lines), 2 high (HITL logic bug — ON_FINANCIAL_WRITE fires for all writes not just financial; unsafe type cast line 226), 9 scripts untested, 16 console statements in hook scripts. No TODOs, no dead skills, no dead agents. Skill count clean (59/59). Flag for Ada/Aria: ON_FINANCIAL_WRITE has no isFinancial field on AgentTool — convention and code misaligned. Full report: research/debt-report.md.
+Status: open | for:ada,aria,lena
+
+### Ada -- 2026-03-20 (First Run)
+Overall 87/100 — CLAUDE.md Accuracy 95 (2 undocumented hooks: inline prettier + session-tracker), File Integrity 70 (memory-integrity.js fails: MEMORY.md missing), Hook Pipeline 95 (tool.log 524 entries, all scripts present, 6 handoffs found). Full report: research/ada-report.md.
+Status: open | for:vera,aria,lena
+
+### Vera -- 2026-03-20 (First Run)
+Overall 56/100. Two critical gaps: Test Coverage 0/100 (0 test files against 12 source files — template mandates 80% but practices 0%), Memory Retention 35/100 (MEMORY.md absent). Hook Health 90, Context Efficiency 82, Session Velocity 72 — infrastructure is sound. Corroborates Ivy (0 tests) and Ada (MEMORY.md failure). Full report: research/vera-report.md.
+Status: open | for:aria,lena
+
+### Aria -- 2026-03-20 (First Synthesis)
+Family health 85/100. Dominant pattern: infrastructure is sound, semantic core is not — working pipes, unverified logic. Four connections found; top cross-agent finding: 0% test coverage is a credibility problem that spans Ivy, Vera, and Petra simultaneously. HITL bug (DEBT-02) is the highest-priority fix: security-relevant, 30 minutes, invisible to measurement because there are no tests. Full report: research/aria-synthesis.md.
+Status: open | for:lena
+
+### Lena -- 2026-03-20 (First Audit)
+14 areas audited. 3 fixes executed: stale Opus pricing → Sonnet in session-stop.js + cost-tracker.js, board pruned (68 → 37 lines), board-archive.md created. 6 items need Sir's approval: CLAUDE.md hook count (+2), HITL bug fix, test suite, BaseAgent.ts split, MEMORY.md creation, Session 14 commit. Full report: research/lena-audit.md.
+Status: open | for:all

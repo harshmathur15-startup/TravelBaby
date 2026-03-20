@@ -18,9 +18,10 @@ process.stdin.on('end', () => {
 
   // Check 1: TypeScript errors on the edited file
   try {
-    execSync('npx tsc --noEmit --pretty 2>&1', {
+    const normalizedPath = filePath.replace(/\\/g, '/');
+    execSync('npx tsc --noEmit --pretty "' + normalizedPath + '" 2>&1', {
       stdio: ['pipe', 'pipe', 'pipe'],
-      timeout: 15000
+      timeout: 10000
     });
   } catch (e) {
     const output = (e.stdout || '').toString();

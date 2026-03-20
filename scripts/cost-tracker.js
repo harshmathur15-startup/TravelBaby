@@ -46,11 +46,11 @@ for (const line of latest) {
 }
 
 // Rough estimate: ~500 input tokens per tool call, ~1000 output tokens per response
-// Opus pricing: $15/M input, $75/M output (as of 2025)
+// Sonnet pricing: $3/M input, $15/M output (as of 2026)
 const totalCalls = Object.values(toolCounts).reduce((a, b) => a + b, 0);
 const estInputTokens = totalCalls * 500;
 const estOutputTokens = totalCalls * 1000;
-const estCostUsd = (estInputTokens * 15 + estOutputTokens * 75) / 1000000;
+const estCostUsd = (estInputTokens * 3 + estOutputTokens * 15) / 1000000;
 
 const entry = {
   date: new Date().toISOString().split('T')[0],

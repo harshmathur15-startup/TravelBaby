@@ -24,7 +24,10 @@ Anthropic pricing. Claude Code does not expose actual token counts in tool.log.
 Label all cost figures as estimates.
 
 PHASE 1 — DATA COLLECTION
-1. Read .claude/tool.log (if exists) — this is your primary data source
+1a. Read .claude/sessions/<today>.jsonl (structured JSONL — preferred source)
+   - Each line: { ts, tool, target, exit }
+   - Identify session boundaries (gaps > 30 minutes = new session)
+1b. Fall back to .claude/tool.log if JSONL doesn't exist
    - Extract: timestamps, tool names, file targets, durations
    - Count: total tool calls, agent spawns, file reads, file writes, bash commands, greps, globs
    - Identify session boundaries (gaps > 30 minutes = new session)

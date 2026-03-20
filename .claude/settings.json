@@ -4,6 +4,17 @@
     "allow": []
   },
   "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/session-start.js"
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Bash",
@@ -41,7 +52,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node -e \"let b='';process.stdin.on('data',c=>b+=c);process.stdin.on('end',()=>{const d=JSON.parse(b);const f=d.tool_input&&d.tool_input.file_path||'';if(f.match(/\\.(ts|tsx|js|jsx)$/)){const {execSync}=require('child_process');try{execSync('npx prettier --write \"'+f+'\" 2>/dev/null',{stdio:'ignore'});}catch(e){}}});\""
+            "command": "node -e \"let b='';process.stdin.on('data',c=>b+=c);process.stdin.on('end',()=>{const d=JSON.parse(b);const f=d.tool_input&&d.tool_input.file_path||'';if(f.match(/\\.(ts|tsx|js|jsx)$/)){const {execSync}=require('child_process');try{execSync('npx prettier --write \\\"'+f+'\\\" 2>/dev/null',{stdio:'ignore'});}catch(e){}}});\""
           },
           {
             "type": "command",
@@ -54,10 +65,37 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node -e \"let b='';process.stdin.on('data',c=>b+=c);process.stdin.on('end',()=>{const d=JSON.parse(b);const log=new Date().toLocaleString('sv',{timeZone:'Asia/Kolkata'}).replace(' ','T')+' | '+d.tool_name+' | '+(d.tool_input&&d.tool_input.command||d.tool_input&&d.tool_input.file_path||'')+' | exit:'+(d.exit_code||0)+'\\n';require('fs').appendFileSync('.claude/tool.log',log);});\""
+            "command": "node scripts/session-tracker.js"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/session-stop.js"
           }
         ]
       }
     ]
+  },
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic/mcp-sequential-thinking"
+      ]
+    }
   }
 }

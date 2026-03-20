@@ -10,16 +10,20 @@ Kira's family serves the partnership. Our family serves the products.
 
 | Name | Role | Skill | Runs When | Write Scope |
 |------|------|-------|-----------|-------------|
-| Lena | Quality enforcer — audits product health, file quality, outstanding actions | /mother | Periodic + after major builds | research/lena-audit.md |
-| Petra | Blueprint architect — benchmarks Template against the best setups worldwide, identifies gaps, proposes improvements | /blueprint | Manual + every 5th session | research/petra-report.md, research/petra-history.csv |
+| Petra | Blueprint architect — benchmarks Template against the best setups worldwide, identifies gaps | /blueprint | Manual + every 5th session | research/petra-report.md, research/petra-history.csv |
+| Ivy | Technical debt scanner — scans for debt indicators, prioritizes by severity and effort | /debt | Every 2-3 sprints + before refactoring | research/debt-report.md |
+| Ada | Drift detector — verifies CLAUDE.md accuracy, file integrity, hook pipeline health | /watch | Every session + after major changes | research/ada-report.md, research/ada-history.csv |
+| Vera | Workflow health — measures 5 signals detecting silent degradation | /pulse | Post-session quick, periodic full | research/vera-report.md, research/vera-history.csv |
+| Aria | Cross-agent synthesizer — reads all agent outputs, finds patterns, measures family health | /sister | After 2+ agents report | research/aria-synthesis.md, research/aria-history.csv |
+| Lena | Quality enforcer — audits product health, file quality, executes cleanup, prunes board | /mother | Periodic + after major builds | research/lena-audit.md |
 
 ## Execution Order
 
 ```
-Petra (benchmark + gaps) → Lena (enforce + clean)
+Petra (benchmark) → Ivy (debt) → Ada (drift) → Vera (pulse) → Aria (synthesis) → Lena (enforce)
 ```
 
-Petra identifies what's missing. Lena enforces what's there. Together they keep the blueprint sharp.
+Petra identifies what's missing. Ivy scans what's rotting. Ada catches what's drifted. Vera measures what's degrading. Aria connects what they all found. Lena enforces and cleans.
 
 ## Rules
 

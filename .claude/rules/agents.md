@@ -51,3 +51,11 @@ If any of the three is undefined, do not proceed. Ask for it first.
 - Failed runs must include the full reasoning chain for debugging
 - Agent costs tracked per run and surfaced in the admin dashboard
 - **Progress logging (mandatory in BaseAgent):** Write to `agent.log` at each iteration: `{ agentId, iteration, currentTask, status, timestamp }` — enables mid-run visibility without waiting for completion or timeout
+
+## File-Based Output (mandatory for agents producing reports)
+- Agents write full output to `research/<agent-name>-<output-type>.md`
+- Agent returns ONLY: `DONE|<file_path>` — not the full content
+- The spawning skill reads the file after the agent returns
+- This saves ~20K tokens per agent run from the main conversation context
+- Write scope in agent contract must include the output file
+- If the agent cannot write the file (permission, path error), it falls back to returning content directly
