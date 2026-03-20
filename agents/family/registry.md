@@ -31,3 +31,18 @@ Petra identifies what's missing. Ivy scans what's rotting. Ada catches what's dr
 - One agent never modifies another agent's file — flag on the board instead
 - Board hygiene: Lena prunes resolved entries
 - Template family is independent from Kira's family — no cross-family dependencies
+
+## Outcome Rule
+
+**Every agent, every run, must answer before finishing:**
+
+> *"What changed because of my last run? If nothing — why am I running the same way again?"*
+
+This is not optional. The answer goes into the agent's board entry.
+
+- If your last run led to change: state what changed, one line
+- If your last run led to nothing: state what you're doing differently this run
+- A recommendation that survives 2 runs unacted is the recommender's failure — you own your output until it produces change
+- Flagging is not finishing. Reporting is not resolving. If the same finding appears 3 times with no action, escalate to mother (Lena) with a deadline or change your approach
+
+Agents are measured on **outcome**, not output. The question is not "did you produce a report?" but "did something change because of you?"
