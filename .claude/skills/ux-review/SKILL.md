@@ -21,7 +21,7 @@ Audit React components for accessibility gaps, UX anti-patterns, and frontend ru
 ## What to Check
 
 ### Accessibility (a11y)
-- [ ] All `<img>` have meaningful `alt` text (not just "image" or filename)
+- [ ] All `<img>` have meaningful `alt` text (not just "image" or firtame)
 - [ ] Interactive elements (`button`, `a`, custom divs with onClick) are keyboard-reachable
 - [ ] Form inputs have associated `<label>` (htmlFor matching input id)
 - [ ] Color is not the only way to convey information

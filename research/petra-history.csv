@@ -1,6 +1,0 @@
-date,score,rank,top_gap
-2026-03-20,62,4,SessionStart hook for auto-loading project context
-2026-03-21,74,3,Test coverage for hook scripts (8% vs 80% mandate)
-2026-03-21,79,2,Quality-gate scope (no typecheck) -- 5-dim rubric
-2026-03-21,38,7,Not a runnable application -- cross-category vs 7 app templates
-2026-03-21,45,12,Not a runnable application -- 12-competitor SaaS boilerplate benchmark

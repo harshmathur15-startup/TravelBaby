@@ -31,7 +31,7 @@
 Multi-phase builds require explicit approval between phases. Present what was built, get approval, then proceed. No skipping phases — the Product Launch Roadmap sequence is binding.
 
 ### Mandatory Learning Recording (#47)
-A task is not complete until the learning is recorded. After significant work: what was learned, what would be done differently, what pattern emerged. Gate, not suggestion. Lena audits.
+A task is not complete until the learning is recorded. After significant work: what was learned, what would be done differently, what pattern emerged. Gate, not suggestion.
 
 ### File Ownership (#60)
 During parallel agent work, each file has exactly one owner. Declare ownership before starting. Interface contracts between owners are immutable during a work phase. Conflicts go to the orchestrator.

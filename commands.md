@@ -10,7 +10,7 @@
 | `/cost` | Show token usage statistics |
 | `/diff` | Open interactive diff viewer for uncommitted changes |
 | `/doctor` | Diagnose Claude Code installation and settings |
-| `/export [filename]` | Export conversation as plain text |
+| `/export [firtame]` | Export conversation as plain text |
 | `/fast [on\|off]` | Toggle fast mode |
 | `/feedback` | Submit feedback / report a bug |
 | `/fork [name]` | Fork the current conversation at this point |

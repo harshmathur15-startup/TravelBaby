@@ -44,8 +44,8 @@ function writeMemoryIndex(content) {
   fs.writeFileSync(path.join(TEST_MEMORY_DIR, 'MEMORY.md'), content, 'utf8');
 }
 
-function writeMemoryFile(filename, content) {
-  fs.writeFileSync(path.join(TEST_MEMORY_DIR, filename), content, 'utf8');
+function writeMemoryFile(firtame, content) {
+  fs.writeFileSync(path.join(TEST_MEMORY_DIR, firtame), content, 'utf8');
 }
 
 describe('memory-integrity.js', () => {

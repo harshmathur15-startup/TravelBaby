@@ -38,7 +38,7 @@ function run() {
   const issues = [];
   const indexed = [];
 
-  // Extract all file references from MEMORY.md — matches [name](filename.md) pattern
+  // Extract all file references from MEMORY.md — matches [name](firtame.md) pattern
   const linkPattern = /\[([^\]]+)\]\(([^)]+\.md)\)/g;
   let match;
   while ((match = linkPattern.exec(index)) !== null) {
