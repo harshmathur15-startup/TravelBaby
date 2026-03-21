@@ -50,7 +50,28 @@ Print a structured session brief — keep it concise:
 **Suggested starting point:**
 <Based on recent commits + open specs + git status + handoff, recommend what to work on next — one clear sentence>
 
+**Skills to run this session:**
+<Based on triggers below, recommend 2-5 relevant skills>
+
 ---
+
+## Skill Recommendations (part of session brief)
+
+Check these triggers against project state and recommend matching skills:
+
+| Trigger | Skills to Recommend |
+|---|---|
+| New code since last session (git diff) | /test, /review, /edge-case-check |
+| New pages or components added | /lighthouse, /seo-audit, /a11y-audit |
+| Sanity schemas changed | /cms-sync |
+| Dependencies not checked in 7+ days | /upgrade-deps |
+| No /security-scan in last 5 sessions | /security-scan |
+| Approaching deployment (roadmap status) | /prod-ready, /env-check, /public-ready |
+| New or updated specs | /readiness-gate |
+| Entering a new roadmap phase | /readiness-gate |
+| No /cleanup in last 10 sessions | /cleanup |
+
+Keep this section to 2-5 recommendations max. Don't list every skill — only what's relevant NOW.
 
 ## Upstream Extraction (runs in background)
 

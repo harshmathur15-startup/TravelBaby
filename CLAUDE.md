@@ -66,7 +66,7 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) to activate the backend.
 ### AI Harness
 | Layer | Count | What It Does |
 |-------|-------|-------------|
-| **Skills** | 20 | Session lifecycle, commits, reviews, debugging, deployment |
+| **Skills** | 66 | Session lifecycle, commits, reviews, debugging, deployment, readiness checks, edge cases, prompt optimization, agent seeding, frontend audits, dependency management, cleanup, agent governance, quality gates, observability, mid-session assessment |
 | **Hooks** | 8 | Auto-format, file protection, quality gates, session tracking |
 | **Scripts** | 9 | Hook execution scripts |
 | **Rules** | 8 | Standards for code, security, testing, performance, agents |

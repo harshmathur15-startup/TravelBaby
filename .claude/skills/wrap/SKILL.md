@@ -44,7 +44,26 @@ Print the session summary, then update MEMORY.md.
 **Session Quality**
 - Corrections from user: <count>
 - Key decisions: <list or "none">
+
+**Skills Gap Check**
+- <list skills that should have run based on what was changed, but didn't>
+- "All covered" if no gaps
 ```
+
+## Skills Gap Check (part of wrap output)
+
+Before wrapping, check what was changed this session against what skills ran:
+
+| What Happened | Expected Skill | Ran? |
+|---|---|---|
+| New code written | /test | Check git log for test runs |
+| New pages added | /lighthouse, /a11y-audit | Check if mentioned in session |
+| API endpoints changed | /security-scan | Check if mentioned |
+| CMS schemas changed | /cms-sync | Check if mentioned |
+| Dependencies updated | /test (verify) | Check if tests ran after |
+| Approaching deployment | /prod-ready | Check if mentioned |
+
+Report only genuine gaps — if the session was planning/research with no code, skip this section. Max 3 gaps — the most important ones only.
 
 ## MEMORY.md Update
 
