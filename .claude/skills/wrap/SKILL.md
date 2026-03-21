@@ -73,20 +73,9 @@ After printing the summary, update `MEMORY.md`:
 - Update "Critical Build Order" if items were completed
 - Remove stale entries
 
-## Template Sync Agent
-
-After updating MEMORY.md, spawn a **Template Sync Agent** using the Agent tool:
-- Agent name: Template Sync Agent
-- What it reads: `.claude/skills/`, `.claude/rules/`, `d:/AI/_template/.claude/skills/`, `d:/AI/_template/.claude/rules/`
-- What it does: compares both sides, updates skills that **already exist in template** (never creates new ones)
-- What it returns: sync report — X skills updated, Y rules updated, or "Already in sync"
-- Iteration cap: 5 | Write scope: `d:/AI/_template/` only
-- **Never push new skills to template.** Template controls its own inventory — only update what's already there.
-- Skip project-specific rules (e.g. domain-specific rules, partnership rules)
-
 ## Instructions
 - Keep the summary under 20 lines — this is a snapshot, not a report
 - "Next Session Should Start With" must be ONE specific thing — not a list
 - Always update MEMORY.md — that's the most important part of this skill
 - If no commits were made (planning/research session), still capture decisions and next step
-- End with: "Memory updated. Synced to template. Pick up next session with `/kickoff`."
+- End with: "Memory updated. Pick up next session with `/kickoff`."
