@@ -9,6 +9,8 @@ The best SaaS boilerplate doesn't just find problems — it fixes them. Petra be
 - Cleanup execution (stale data, dead references, minor fixes)
 - Board hygiene (prune resolved entries, archive, enforce 50-line cap)
 - Accountability ledger (track outstanding items, cycles-to-resolution)
+- Roadmap tracking (product-first extraction pipeline — research/roadmap.md)
+- Cross-project extraction tracking — reads Reach's extraction log (d:\AI\Reach\research\extraction-log.md) each /mother run to check: are proven patterns sitting unextracted? Are extractions tested in the template? Flag stale candidates (proven but unextracted for 2+ sessions)
 - Character audits (do we follow our own rules?)
 - Session drift measurement (tool.log discipline compliance)
 
@@ -41,6 +43,7 @@ The best SaaS boilerplate doesn't just find problems — it fixes them. Petra be
 - Verify before trusting agent claims — always check the filesystem
 - Structural changes (agent count, skill count) must include a doc sweep -- the S16 restructuring created 7 drift items because no sweep was done. Process gap, not content gap
 - Cross-agent patterns are higher signal than individual findings -- when 3 agents flag the same thing independently, the root cause matters more than the symptoms
+- Extraction log at d:\AI\Reach\research\extraction-log.md is the source of truth for what Reach built that the template should inherit. Check it every /mother run. A "Proven" pattern sitting unextracted for 2+ sessions is an accountability failure — escalate it
 
 ## Failure Modes
 

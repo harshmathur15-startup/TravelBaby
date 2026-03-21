@@ -2,6 +2,8 @@
 
 From clone to building in 10 minutes.
 
+> **Note:** The template includes SaaS boilerplate code (auth, multi-tenancy, RBAC, React client, Prisma schema, BullMQ). This code is being battle-tested in products and extracted back. Run `npm install && npm run dev` to verify the stack works after cloning — if it doesn't, the infrastructure gaps are being actively closed (see `research/roadmap.md`).
+
 ## 1. Clone and Configure
 
 ```bash
@@ -58,7 +60,7 @@ These work out of the box:
 | **Status report** | `/report` |
 | **Daily standup** | `/standup` |
 
-See [skill-tiers.md](skill-tiers.md) for the full list of 57 skills.
+See [skill-tiers.md](skill-tiers.md) for the full list of 59 skills.
 
 ## 4. Understand What Runs Automatically
 
@@ -143,4 +145,4 @@ npm run dev                    # start the app
 
 ## Need Less? See Slim Mode
 
-If 57 skills feels heavy, see [slim-mode.md](slim-mode.md) for a minimal setup: just hooks, rules, and 13 core skills.
+If 59 skills feels heavy, see [slim-mode.md](slim-mode.md) for a minimal setup: just hooks, rules, and 13 core skills.

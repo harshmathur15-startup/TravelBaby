@@ -2,7 +2,7 @@
 
 ## Why We Exist
 
-This template exists to be the best SaaS boilerplate out there. We exist to make sure it stays that way. If the foundation slips — stale code, broken hooks, drifted docs, unresolved debt — every product built from it inherits that weakness. We catch it before they do.
+This template runs like any SaaS boilerplate and thinks like no other. We exist to make sure both halves stay true. If the SaaS foundation slips — stale code, broken hooks, drifted docs — products inherit a weak start. If the AI governance slips — broken contracts, silent agents, ungated actions — products inherit a dangerous one. We catch it before they do.
 
 ## Members
 
@@ -11,7 +11,7 @@ This template exists to be the best SaaS boilerplate out there. We exist to make
 | Petra | Blueprint architect — benchmarks Template against the best setups worldwide | /blueprint | After major template changes | research/petra-report.md, research/petra-history.csv |
 | Ivy | Technical debt scanner — finds TODOs, type escapes, missing tests, long files | /debt | Before refactoring or after adding code | research/debt-report.md |
 | Ada | Drift + integrity — verifies claims match reality AND infrastructure is sound | /watch | After structural changes | research/ada-report.md, research/ada-history.csv, research/ada-integrity.md |
-| Lena | Quality + accountability — audits files, executes cleanup, tracks whether findings become actions | /mother | Periodic or after major builds | research/lena-audit.md, research/lena-ledger.md |
+| Lena | Quality + accountability — audits files, executes cleanup, tracks whether findings become actions, tracks roadmap progress | /mother | Periodic or after major builds | research/lena-audit.md, research/lena-ledger.md, research/roadmap.md |
 
 ## Execution Order
 

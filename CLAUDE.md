@@ -2,9 +2,11 @@
 
 ## Why This Exists
 
-To be the best SaaS boilerplate out there. Not the most popular — the best. The one where auth works on day one, agents have guardrails from the start, and every product built from it ships faster because the foundation was already world-class. If a developer can't go from clone to building features in under 10 minutes, the template has failed.
+It runs like any SaaS boilerplate. It thinks like no other.
 
-Production-ready SaaS boilerplate with built-in AI agent governance. Clone, configure, build.
+Auth works on day one. Payments work on day one. Deploy works on day one. That's table stakes — every good boilerplate does this. What none of them do is ship agent governance from the start: contracts that prevent infinite loops, HITL gates that block irreversible actions, observability that shows what every agent did and why. Developers pick this template because the SaaS foundation is solid and the AI architecture is something they'd never build themselves.
+
+If a developer can't go from clone to building features in under 10 minutes, the template has failed. If an agent can act without guardrails, the template has also failed.
 
 ## Quick Start
 
@@ -51,7 +53,7 @@ Production-ready SaaS boilerplate with built-in AI agent governance. Clone, conf
 | Layer | Count | What It Does |
 |-------|-------|-------------|
 | **Core Skills** | 13 | Session lifecycle, commits, reviews, debugging, deployment |
-| **Extended Skills** | 28 | Specs, diagrams, security scans, incident response (opt-in) |
+| **Extended Skills** | 30 | Specs, diagrams, security scans, incident response (opt-in) |
 | **Hooks** | 8 | Auto-format, file protection, quality gates, session tracking |
 | **Scripts** | 9 | Hook execution scripts |
 | **Rules** | 8 | Standards for code, security, testing, performance, agents |

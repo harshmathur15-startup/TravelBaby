@@ -4,6 +4,22 @@ Resolved and old entries moved here from board.md. Lena prunes each session.
 
 ---
 
+## Archived: 2026-03-21 (S17 Audit — Pruned for new direction)
+
+### Petra -- 2026-03-21 (Full Market Benchmark, Run 5)
+Expanded field: 12 competitors. Score: 45/100, rank #12. Superseded by Run 7 (free tier only, 8 competitors). Old gap order (AI integration #2) replaced by new order (AI integration #5).
+Status: resolved | archived:2026-03-21 | reason: superseded by Run 7 + roadmap
+
+### Petra -- 2026-03-21 (187-Repo Scan + Run 6)
+187 repos scanned, Claude Code setup re-benchmark: 81/100 (#1 of 13). Category retired per directive — Petra benchmarks free SaaS boilerplates only from now on.
+Status: resolved | archived:2026-03-21 | reason: category retired
+
+### Ada -- 2026-03-21 (Third Run — drift items)
+7 drift items flagged. All fixed by Lena Run 3 + S17 audit.
+Status: resolved | archived:2026-03-21
+
+---
+
 ## Archived: 2026-03-21 (Session 16 Run 3 — Pruned by Lena)
 
 ### Family Restructured -- 2026-03-21 (S16)

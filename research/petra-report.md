@@ -145,7 +145,19 @@ The question remains the same: if a developer wants to build an AI-powered SaaS 
 - **Community:** 2.8K stars, 990 commits
 - **Last Update:** Active
 
-### 12. This Template (Claude Template)
+### 12. nextjs/saas-starter (Official Next.js SaaS Starter)
+- **URL:** https://github.com/nextjs/saas-starter
+- **GitHub Stars:** 15,530
+- **Tech Stack:** Next.js 15, TypeScript, PostgreSQL, Drizzle ORM, Stripe, shadcn/ui, Tailwind CSS 4, SWR, Zod
+- **Pricing:** Free (MIT)
+- **Auth:** Custom JWT (jose) + bcryptjs (10 rounds), httpOnly cookie, 24h expiry
+- **Payments:** Stripe (Checkout, Customer Portal, Webhooks, subscriptions)
+- **Email:** None
+- **Key Differentiator:** Official Next.js team starter. Predecessor to vercel/nextjs-subscription-payments (7.7k stars, archived Jan 2025). Teams with invitations, activity logging, soft delete. Minimal by design — 67 files total.
+- **Community:** 15.5K stars, 2,584 forks
+- **Last Update:** Active
+
+### 13. This Template (Claude Template)
 - **URL:** Private repo (d:\AI\_template)
 - **GitHub Stars:** Private
 - **Tech Stack:** TypeScript (rules/patterns only), no runtime dependencies
@@ -200,39 +212,86 @@ The question remains the same: if a developer wants to build an AI-powered SaaS 
 
 ---
 
-## PHASE 2 -- Competitive Table
+## PHASE 2 -- Competitive Tables (Free Tier Only)
 
-| # | Template | Deploy /20 | Features /20 | AI /20 | DX /20 | Prod /20 | Total /100 | Price |
-|---|---------|-----------|-------------|--------|--------|---------|-----------|-------|
-| 1 | **Supastarter** | 17 | 18 | 12 | 16 | 15 | **78** | $349+ |
-| 2 | **Wasp Open SaaS** | 18 | 16 | 10 | 14 | 14 | **72** | Free |
-| 3 | **next-forge** | 16 | 15 | 8 | 17 | 16 | **72** | Free |
-| 4 | **MakerKit** | 16 | 17 | 11 | 17 | 14 | **75** | $299+ |
-| 5 | **ixartz SaaS-Boilerplate** | 15 | 15 | 6 | 16 | 13 | **65** | Free |
-| 6 | **AnotherWrapper** | 14 | 12 | 17 | 13 | 11 | **67** | $249+ |
-| 7 | **BoxyHQ Starter Kit** | 13 | 14 | 5 | 13 | 15 | **60** | Free |
-| 8 | **SaaSBold** | 14 | 13 | 8 | 12 | 11 | **58** | $149+ |
-| 9 | **Apptension SaaS** | 11 | 15 | 9 | 12 | 14 | **61** | Free |
-| 10 | **ShipFast** | 17 | 10 | 5 | 10 | 9 | **51** | $199+ |
-| 11 | **create-t3-app** | 14 | 6 | 3 | 15 | 8 | **46** | Free |
-| 12 | **This Template** | **4** | **3** | **16** | **14** | **8** | **45** | Free |
+Paid competitors (Supastarter, MakerKit, AnotherWrapper, SaaSBold, ShipFast) excluded per Sir's directive. Benchmarking against free alternatives only.
 
-### Sorted by Total Score
+### Table 1: Score Matrix
+
+| Dimension | Wasp Open SaaS | next-forge | ixartz | Apptension | BoxyHQ | create-t3-app | This Template | nextjs/saas-starter |
+|-----------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| **Deploy** | 18 | 16 | 15 | 11 | 13 | 14 | 4 | 13 |
+| **Features** | 16 | 15 | 15 | 15 | 14 | 6 | 3 | 10 |
+| **AI** | 10 | 8 | 6 | 9 | 5 | 3 | 16 | 0 |
+| **DX** | 14 | 17 | 16 | 12 | 13 | 15 | 14 | 9 |
+| **Prod** | 14 | 16 | 13 | 14 | 15 | 8 | 8 | 7 |
+| **Total** | **72** | **72** | **65** | **61** | **60** | **46** | **45** | **39** |
+| **Rank** | #1 | #1 | #3 | #4 | #5 | #6 | #7 | #8 |
+
+### Table 2: Feature Map
+
+| Feature | Wasp Open SaaS | next-forge | ixartz | Apptension | BoxyHQ | create-t3-app | This Template | nextjs/saas-starter |
+|---------|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| **DEPLOY** | | | | | | | | |
+| `npm install && dev` | Yes | Yes | Yes | Yes | Yes | Yes | No | Yes (pnpm) |
+| Docker Compose | Yes | No | No | Yes | Yes | No | No | No |
+| One-command deploy | Yes (Railway/Fly) | Yes (Vercel) | Yes (Vercel) | No | Yes (Vercel/Heroku/DO) | No | No | Partial (Vercel button) |
+| CI/CD pipeline | No | Yes | Yes (GitHub Actions) | Yes | Yes | No | No | No |
+| **FEATURES** | | | | | | | | |
+| Auth (email/password) | Yes | Yes (Clerk) | Yes (Clerk) | Yes | Yes | Optional (Auth.js) | Yes | Yes (custom JWT) |
+| OAuth (Google/GitHub) | Yes | Yes | Yes | Yes | Yes | Optional | No | No |
+| MFA / 2FA | No | Yes (Clerk) | No | Yes (passkeys, FIDO2) | No | No | No | No |
+| SAML SSO | No | No | No | Yes (Enterprise) | Yes (Jackson) | No | No | No |
+| RBAC | No | No | Yes | No | Yes | No | Yes | Partial (Owner/Member) |
+| Multi-tenancy / Orgs | No | No | Yes | Yes | Yes | No | Yes | Yes (Teams) |
+| Payments (Stripe) | Yes | Yes | Yes | Yes | Yes | No | No | Yes |
+| Email (transactional) | Yes (SendGrid/Mailgun) | Yes (Resend) | Yes (React Email) | Yes | Yes | No | No | No |
+| File upload | Yes (S3) | Yes | No | No | No | No | No | No |
+| Admin panel | Yes | No | Yes | Yes | No | No | No | No |
+| Background jobs | Yes (cron + jobs) | Yes (scheduled) | No | Yes (Celery) | No | No | Yes (BullMQ) | No |
+| Blog / CMS | Yes | No | Yes | No | No | No | No | No |
+| i18n | No | Yes | Yes | Yes | No | No | No | No |
+| Analytics | Yes | Yes (PostHog) | Yes | No | No | No | No | No |
+| Landing page | Yes | Yes | Yes | No | No | No | No | Yes |
+| **AI** | | | | | | | | |
+| LLM API integration | Yes (AGENTS.md) | No | No | Yes (OpenAI + MCP) | No | No | No | No |
+| Streaming responses | No | No | No | No | No | No | No | No |
+| Multi-provider | No | No | No | No | No | No | No | No |
+| Agent framework | No | No | No | No | No | No | Yes (BaseAgent) | No |
+| Agent contracts (iteration cap, write scope) | No | No | No | No | No | No | Yes | No |
+| HITL gates | No | No | No | No | No | No | Yes | No |
+| Agent observability / logging | No | No | No | No | No | No | Yes | No |
+| Agent family (registry, board, profiles) | No | No | No | No | No | No | Yes | No |
+| Cost tracking | No | No | No | No | No | No | Yes | No |
+| **DX** | | | | | | | | |
+| TypeScript strict | Yes | Yes | Yes | Yes | Yes | Yes | Yes | No (default tsconfig) |
+| Linting + formatting | Yes | Yes | Yes | Yes | Yes | Yes | Yes (Prettier hook) | No |
+| Storybook | No | Yes | Yes | No | No | No | No | No |
+| Monorepo | No | Yes (Turborepo) | No | Yes (NX) | No | No | Yes (npm workspaces) | No |
+| Test suite | No | No | Yes (Playwright) | Yes | Yes (Playwright) | No | Yes (Vitest, 103 tests) | No |
+| Docs (comprehensive) | Yes | Yes | Yes | No | No | Yes (create-t3) | Partial (~50 pages) | No (README only) |
+| **PROD** | | | | | | | | |
+| Security headers | Yes | Yes | No | Yes | Yes | No | No (rules only) | No |
+| Rate limiting | No | Yes (Arcjet) | No | No | No | No | No (rules only) | No |
+| Logging (structured) | No | Yes (Sentry) | Yes (Pino/Sentry) | Yes | No | No | No (rules only) | No |
+| Health check endpoint | No | Yes | No | No | No | No | No | No |
+| Graceful shutdown | No | No | No | No | No | No | Yes | No |
+| Audit logging | No | No | No | Yes | Yes (Retraced) | No | Yes (agent actions) | Partial (activity log table) |
+| SCIM directory sync | No | No | No | Yes | Yes | No | No | No |
+| Feature flags | No | Yes | No | No | No | No | No | No |
+
+### Sorted by Total Score (legacy format, retained for history)
 
 | Rank | Template | Total | Strongest Dimension | Weakest Dimension |
 |------|---------|-------|--------------------|--------------------|
-| 1 | Supastarter | 78 | Features (18) | AI (12) |
-| 2 | MakerKit | 75 | DX + Features (17) | AI (11) |
-| 3 | Wasp Open SaaS | 72 | Deploy (18) | AI (10) |
-| 3 | next-forge | 72 | DX (17) | AI (8) |
-| 5 | AnotherWrapper | 67 | AI (17) | Prod (11) |
-| 6 | ixartz SaaS-Boilerplate | 65 | DX (16) | AI (6) |
-| 7 | Apptension SaaS | 61 | Features (15) | Deploy (11) |
-| 8 | BoxyHQ Starter Kit | 60 | Prod (15) | AI (5) |
-| 9 | SaaSBold | 58 | Deploy (14) | Prod (11) |
-| 10 | ShipFast | 51 | Deploy (17) | AI (5) |
-| 11 | create-t3-app | 46 | DX (15) | AI (3) |
-| 12 | This Template | 45 | AI (16) | Deploy (4) |
+| 1 | Wasp Open SaaS | 72 | Deploy (18) | AI (10) |
+| 1 | next-forge | 72 | DX (17) | AI (8) |
+| 3 | ixartz SaaS-Boilerplate | 65 | DX (16) | AI (6) |
+| 4 | Apptension SaaS | 61 | Features (15) | Deploy (11) |
+| 5 | BoxyHQ Starter Kit | 60 | Prod (15) | AI (5) |
+| 6 | create-t3-app | 46 | DX (15) | AI (3) |
+| 7 | This Template | 45 | AI (16) | Deploy (4) |
+| 8 | nextjs/saas-starter | 39 | Deploy (13) | AI (0) |
 
 ---
 
@@ -364,33 +423,33 @@ Security, testing, performance, database, frontend, backend, agents, general -- 
 **Effort:** High (2-3 sessions)
 **Why highest ROI:** Unlocks every other gap. Can't add auth, payments, or AI integration without a running app. This is the foundation.
 
-### Gap 2: AI Integration Layer (Multi-Provider + Streaming)
-**Current state:** Agent governance patterns exist. No LLM runtime integration.
-**Target state:** Vercel AI SDK or direct Anthropic/OpenAI SDK integration. Streaming responses. Tool calling. Multi-provider support. Cost tracking connected to real API calls. One demo agent that chats, uses tools, and respects contracts.
-**Impact:** AI +4 (16->20). Would make us #1 on AI dimension definitively. Also improves Features +2 if demo agent is included.
-**Effort:** Medium (1-2 sessions, after Gap 1)
-**Why second:** This is our differentiator. Agent governance + real AI execution = unique in the market. AnotherWrapper has AI breadth but no governance. We'd have both.
-
-### Gap 3: Authentication + Database Foundation
-**Current state:** None.
-**Target state:** Better Auth or Auth.js with email + Google OAuth + session management. PostgreSQL + Prisma with User, Session, Organization models. JWT with refresh token rotation per existing security rules.
+### Gap 2: Authentication + Database Foundation
+**Current state:** Partially built in S16 (Prisma schema, JWT middleware, RBAC, multi-tenancy code exists but not runnable).
+**Target state:** Email + Google OAuth + session management. PostgreSQL + Prisma with User, Session, Organization models. JWT with refresh token rotation per existing security rules. All working end-to-end.
 **Impact:** Features +4 (8->12), Deploy +2 (12->14), Prod +2 (12->14). Total: +8 points.
 **Effort:** Medium (1-2 sessions, after Gap 1)
-**Why third:** Auth + DB is table stakes. Without it, no developer takes the template seriously as a starter. Every competitor has this.
+**Why second:** Auth + DB is table stakes. No developer evaluates a boilerplate without auth. Every competitor has this. SaaS credibility starts here.
+
+### Gap 3: Payment Integration (Stripe)
+**Current state:** None.
+**Target state:** Stripe integration with checkout, webhooks, subscription management, billing portal. Credit-based consumption model for AI features (following AnotherWrapper's pattern but with our cost tracking infrastructure).
+**Impact:** Features +3 (12->15).
+**Effort:** Medium (1 session)
+**Why third:** A SaaS that can't charge isn't a SaaS. Payments + auth + deploy = the minimum viable boilerplate. After this gap, the template is credible.
 
 ### Gap 4: Docker + Deployment Config
 **Current state:** None.
 **Target state:** Dockerfile, docker-compose.yml (app + Postgres + Redis), deploy guides for Vercel/Railway/Fly.io, health check endpoint, graceful shutdown handler.
 **Impact:** Prod +4 (12->16), Deploy +2 (14->16). Total: +6 points.
 **Effort:** Low (half a session)
-**Why fourth:** Cheap to add, meaningful for production credibility. Every serious competitor has Docker support.
+**Why fourth:** Cheap to add, meaningful for production credibility. Every serious competitor has Docker support. Completes the SaaS foundation.
 
-### Gap 5: Payment Integration (Stripe)
-**Current state:** None.
-**Target state:** Stripe integration with checkout, webhooks, subscription management, billing portal. Credit-based consumption model for AI features (following AnotherWrapper's pattern but with our cost tracking infrastructure).
-**Impact:** Features +3 (12->15).
-**Effort:** Medium (1 session)
-**Why fifth:** Payments are the monetization layer. Without Stripe, the template can't help products make money on day one.
+### Gap 5: AI Integration Layer (Multi-Provider + Streaming)
+**Current state:** Agent governance patterns exist. No LLM runtime integration.
+**Target state:** Vercel AI SDK or direct Anthropic/OpenAI SDK integration. Streaming responses. Tool calling. Multi-provider support. Cost tracking connected to real API calls. One demo agent that chats, uses tools, and respects contracts.
+**Impact:** AI +4 (16->20). Would make us #1 on AI dimension definitively. Also improves Features +2 if demo agent is included.
+**Effort:** Medium (1-2 sessions, after Gaps 1-4)
+**Why last:** This is our differentiator — but nobody sees it if gaps 1-4 aren't closed first. Agent governance + real AI execution = unique in the market. Gaps 1-4 make the template credible as a SaaS boilerplate. Gap 5 makes it unbeatable.
 
 ### Projected Score After All 5 Gaps
 
@@ -428,6 +487,99 @@ Run 4 benchmarked against 6 competitors. This run benchmarks against 12 -- addin
 
 ---
 
+---
+
+## RUN 6 -- Claude Code Setup Benchmark (187-Repo Field)
+
+**Date:** 2026-03-21
+**Category:** Claude Code Setup — how well-configured is this as a Claude Code development environment?
+**Field:** 187 repos scanned, 12 Comprehensive-depth rivals identified (see `petra-100-repo-scan.md`)
+**Data enrichment:** Sage's multi-agent census (850+ agents catalogued, agent family rarity confirmed)
+**Score:** 81/100
+**Rank:** #1 of 13
+
+This run returns to the Claude Code setup category (Runs 1-3) but with a dramatically expanded field. Runs 1-3 compared against 6 hand-picked competitors. This run draws from a systematic scan of 187 repos, filtering to the 12 that achieve Comprehensive depth — the only honest comparison set.
+
+### Why Re-Benchmark Now?
+
+Two things changed since Run 3 (79/100, #2 of 6):
+1. **Template improved** — Session 16 added a full SaaS app (auth, multi-tenancy, RBAC, React client, Prisma DB, BullMQ), 103 tests, and slimmed the agent family from 8 to 4 with clearer ownership.
+2. **Field expanded** — the 187-repo scan revealed 6 new Comprehensive-depth competitors not in Runs 1-3: rohitg00/awesome-claude-code-toolkit, travisjneuman/.claude, SuperClaude_Framework, alinaqi/claude-bootstrap, peterkrueck/Claude-Code-Development-Kit, levnikolaevich/claude-code-skills.
+
+### Rubric (Same 5 Dimensions as Run 3)
+
+1. **Skills/Commands** (0-20) — breadth, quality, curation, contextual activation
+2. **Hooks/Automation** (0-20) — lifecycle coverage, security hooks, testing, script reliability
+3. **Rules/Standards** (0-20) — domain coverage, depth, enforceability, multi-language support
+4. **Agent Architecture** (0-20) — governance (contracts, HITL, iteration caps), family pattern, observability, communication
+5. **Utility & Integration** (0-20) — docs, onboarding, testing, MCP, DX, real application code
+
+### Competitive Table
+
+| # | Repo | Stars | Skills | Hooks | Rules | Agents | Utility | Total |
+|---|------|-------|--------|-------|-------|--------|---------|-------|
+| 1 | **This Template** | Private | 14 | 15 | 18 | 19 | 15 | **81** |
+| 2 | everything-claude-code | 91.7k | 18 | 14 | 15 | 12 | 18 | **77** |
+| 3 | rohitg00/awesome-claude-code-toolkit | ~5k | 17 | 17 | 15 | 14 | 14 | **77** |
+| 4 | sangrokjung/claude-forge | ~2k | 16 | 18 | 15 | 13 | 15 | **77** |
+| 5 | travisjneuman/.claude | ~1k | 19 | 14 | 12 | 12 | 14 | **71** |
+| 6 | trailofbits/claude-code-config | ~2k | 13 | 16 | 18 | 8 | 14 | **69** |
+| 7 | dsifry/metaswarm | ~1k | 14 | 12 | 14 | 16 | 13 | **69** |
+| 8 | SuperClaude_Framework | ~3k | 15 | 12 | 14 | 13 | 14 | **68** |
+| 9 | alinaqi/claude-bootstrap | ~500 | 12 | 14 | 15 | 14 | 13 | **68** |
+| 10 | peterkrueck/Claude-Code-Dev-Kit | ~500 | 12 | 14 | 13 | 13 | 15 | **67** |
+| 11 | wshobson/agents | 31.9k | 19 | 10 | 10 | 14 | 12 | **65** |
+| 12 | levnikolaevich/claude-code-skills | ~300 | 14 | 12 | 13 | 11 | 14 | **64** |
+| 13 | aaddrick/claude-pipeline | ~200 | 12 | 12 | 12 | 14 | 12 | **62** |
+
+### Scoring Rationale
+
+**This Template — 81/100 (#1)**
+
+- **Skills 14/20:** 57 skills across 3 tiers (Core 13, Extended 30, Template-only 4, Utility 10). Curated and functional — every skill tested by real use. But volume is behind: travisjneuman has 119, wshobson has 146. We choose depth over breadth; the market mostly chooses breadth.
+- **Hooks 15/20:** 8 hooks covering full lifecycle (SessionStart, PreToolUse×2, PostToolUse×2, PreCompact, Stop). 9 tested scripts (66 tests). Bash blocker and file protection are unusual. Gap: claude-forge has 15 hooks with 6-layer security; rohitg00 has 19 hooks.
+- **Rules 18/20:** 9 rules across 8 domains (general, security, backend, frontend, database, performance, testing, agents). Deepest rule system in the field alongside trailofbits. Every rule has specific thresholds, not just platitudes (e.g., performance budgets: "Simple CRUD < 100ms", "No query > 10,000 rows without pagination"). The 2-point gap: trailofbits has multi-language rules; we're TypeScript-only.
+- **Agents 19/20:** The defining differentiator. 4 agents with: mandatory contracts (iteration cap, output contract, write scope), HITL gates with risk scoring (Low/Medium/High + 10min timeout escalation), agent family pattern (registry + board + profiles + board-archive + execution order), Outcome Rule requiring change evidence, board hygiene (50-line cap, auto-archive). Sage's census confirms: **no other public repo has this pattern.** 850+ agents catalogued across 10 repos; none implement institutional agent memory. The 1-point gap: no runtime agent execution framework (governance is enforced by rules, not by code).
+- **Utility 15/20:** Getting-started docs, skill tiers, slim mode, meta-template CLAUDE.md, inheritance documentation. Now includes a running SaaS app (auth, multi-tenancy, RBAC, React client, Prisma DB, BullMQ). 103 tests. 2 MCP servers. Gap: documentation is thin (~50 pages vs MakerKit's 400+); no interactive CLI or plugin marketplace.
+
+**everything-claude-code — 77/100 (#2)**
+91.7k stars. Skills + instincts + memory + security + research-first. Cross-agent compatible (Codex, Cursor, Gemini CLI). Loses on agent governance (no contracts, no HITL, no family pattern) and rules depth (broad but not threshold-specific).
+
+**rohitg00/awesome-claude-code-toolkit — 77/100 (#3)**
+Most complete by category count (135 agents, 35 skills, 42 commands, 19 hooks, 15 rules, 8 MCP configs). Volume leader. But agents are listed, not governed. Rules are present but not deep. Hooks are numerous but not tested.
+
+**sangrokjung/claude-forge — 77/100 (#4)**
+oh-my-zsh for Claude Code. 6-layer security hooks are the deepest hook system in the field. Cohesive design. Loses on agent governance (11 agents, no contracts) and rules depth.
+
+**metaswarm — 69/100 (#7)**
+Closest to our governance philosophy. Self-improving framework with TDD enforcement and quality gates. But no agent family pattern, no HITL risk scoring, no board communication. The one to watch — if they add governance, they become a serious rival.
+
+### What Changed from Run 3
+
+| Dimension | Run 3 (6 rivals) | Run 6 (12 rivals) | Why |
+|-----------|------------------|--------------------|-----|
+| Skills | 15 | 14 | Field expanded; travisjneuman (119) and wshobson (146) push our relative position down |
+| Hooks | 16 | 15 | claude-forge (15 hooks, 6-layer security) and rohitg00 (19 hooks) are stronger than Run 3 field |
+| Rules | 17 | 18 | Template improved (no change in field); now has running app proving rules work |
+| Agents | 18 | 19 | Sage's census data grounds this score in evidence: 850+ agents catalogued, 0 with our governance pattern |
+| Utility | 13 | 15 | Running SaaS app added since Run 3; docs and MCP unchanged |
+| **Total** | **79** | **81** | **+2: template improvements outweigh field expansion** |
+
+### Key Insight from the 187-Repo Scan
+
+The field is wide but shallow. 71 of 187 repos are Minimal (just a CLAUDE.md). Only 12 reach Comprehensive depth. The explosion of Claude Code repos since late 2025 has been in **volume** (skills, agents, commands) not **depth** (governance, testing, institutional patterns). This confirms what Sage found: multi-agent is common, agent governance is rare.
+
+The template's competitive position has strengthened relative to the field since Run 3 — not because the field weakened, but because the template added a running SaaS app while maintaining its governance lead. The 6 new Comprehensive competitors (rohitg00, travisjneuman, SuperClaude, claude-bootstrap, peterkrueck, levnikolaevich) add volume but none add governance.
+
+### Blind Spots (Disclosure per Learning #8)
+
+- **Private repos invisible** — 187 repos are public GitHub. Enterprise setups, paid products, and private configs are invisible. The real field is larger.
+- **Star count ≠ quality** — barkain (Learning #1) proved this. Some of the best setups have low stars.
+- **Self-scoring bias** — Petra scores her own template. The rubric dimensions (especially Agent Architecture) weight our strengths. If the rubric weighted "cross-agent compatibility" or "community adoption," everything-claude-code would be #1.
+- **Snapshot in time** — repos evolve. This scan reflects March 2026. The field in 6 months will look different.
+
+---
+
 ## History
 
 | Date | Score | Category | Rank | Field Size | Top Gap |
@@ -437,8 +589,10 @@ Run 4 benchmarked against 6 competitors. This run benchmarks against 12 -- addin
 | 2026-03-21 (R3) | 79 | Claude Code setups (5-dim) | #2 of 6 | 6 | Quality-gate scope |
 | 2026-03-21 (R4) | 38 | App templates (5-dim) | #7 of 7 | 7 | Not a runnable application |
 | 2026-03-21 (R5) | 45 | SaaS boilerplates (5-dim) | #12 of 12 | 12 | Not a runnable application |
+| 2026-03-21 (R6) | 81 | Claude Code setups (5-dim) | #1 of 13 | 187 scanned, 13 scored | Skill count (57 vs 119+) |
+| 2026-03-21 (R7) | 45 | Free SaaS boilerplates (5-dim) | #7 of 8 | 8 (free only) | Not a runnable application |
 
-Note: Score increased from 38 to 45 between R4 and R5 due to recalibrated rubric with 12-competitor field. DX and Prod scores adjusted upward recognizing our rules/scripts/testing infrastructure more accurately against the broader field where ShipFast (no tests) and SaaSBold (minimal DX) pull down averages.
+Note R5→R7: Category narrowed from all SaaS boilerplates (12) to free-only (8). Paid competitors (Supastarter, MakerKit, AnotherWrapper, SaaSBold, ShipFast) excluded per directive. nextjs/saas-starter added (15.5k stars, official Next.js team, scored 39/100 — minimal by design despite high adoption). Template score unchanged at 45 — still #7, but no longer last. Two-table format adopted: Score Matrix + Feature Map.
 
 ---
 

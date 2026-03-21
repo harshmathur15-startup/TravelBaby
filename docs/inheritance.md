@@ -6,7 +6,7 @@ Clear mapping of what transfers from template to product and what doesn't.
 
 | What | Path | Notes |
 |------|------|-------|
-| All skills | `.claude/skills/` | 57 skills. Consider removing Template-only tier (4 skills) |
+| All skills | `.claude/skills/` | 59 skills. Consider removing Template-only tier (4 skills) |
 | Hook configuration | `.claude/settings.json` | 8 hooks, all functional |
 | Hook scripts | `scripts/` | 9 scripts + test files |
 | Rules | `.claude/rules/` | 8 domain rules (304 lines total) |

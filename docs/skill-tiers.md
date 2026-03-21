@@ -1,6 +1,6 @@
 # Skill Tiers
 
-57 skills organized by when you need them.
+59 skills organized by when you need them.
 
 ## Core (13) — Every product, from day 1
 
