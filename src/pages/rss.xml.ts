@@ -1,9 +1,9 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
-import { POSTS } from '@lib/blog-data';
+import { getAllPosts } from '@lib/blog-data';
 
-export function GET(context: APIContext) {
-  const posts = Object.values(POSTS).sort(
+export async function GET(context: APIContext) {
+  const posts = (await getAllPosts()).sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 

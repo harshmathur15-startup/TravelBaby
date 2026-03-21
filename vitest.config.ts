@@ -5,8 +5,8 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     include: [
-      'server/src/**/*.test.ts',
-      'shared/src/**/*.test.ts',
+      'tests/**/*.test.ts',
+      'src/**/*.test.ts',
     ],
     coverage: {
       provider: 'v8',

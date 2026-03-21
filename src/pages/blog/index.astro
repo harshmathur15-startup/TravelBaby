@@ -4,69 +4,9 @@ import Container from '@components/ui/Container.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
 import Badge from '@components/ui/Badge.astro';
 import CtaSection from '@components/sections/CtaSection.astro';
+import { getAllPosts } from '@lib/blog-data';
 
-const posts = [
-  {
-    slug: 'building-design-system',
-    title: 'Building a Design System from Scratch',
-    description: 'Learn how to create a scalable design system with tokens, components, and documentation that keeps your team aligned.',
-    category: 'Design',
-    author: 'Maria Garcia',
-    date: '2025-03-15',
-    readTime: '8 min read',
-    image: '/blog/design-system.svg',
-  },
-  {
-    slug: 'seo-best-practices-2025',
-    title: 'SEO Best Practices for Modern Websites',
-    description: 'A practical guide to technical SEO, content structure, and performance optimizations that actually move the needle.',
-    category: 'Development',
-    author: 'Alex Johnson',
-    date: '2025-03-10',
-    readTime: '6 min read',
-    image: '/blog/seo.svg',
-  },
-  {
-    slug: 'getting-started-with-astro',
-    title: 'Getting Started with Astro: A Practical Guide',
-    description: 'Everything you need to know to build your first Astro site, from project setup to deployment.',
-    category: 'Tutorial',
-    author: 'David Lee',
-    date: '2025-03-05',
-    readTime: '10 min read',
-    image: '/blog/astro-guide.svg',
-  },
-  {
-    slug: 'responsive-layouts-guide',
-    title: 'Responsive Layouts Without the Headaches',
-    description: 'Modern CSS techniques for building layouts that look great on every screen size.',
-    category: 'Design',
-    author: 'Sarah Chen',
-    date: '2025-02-28',
-    readTime: '7 min read',
-    image: '/blog/responsive.svg',
-  },
-  {
-    slug: 'cms-integration-tips',
-    title: 'CMS Integration Tips for Static Sites',
-    description: 'How to connect a headless CMS to your static site generator for the best of both worlds.',
-    category: 'Development',
-    author: 'James Wilson',
-    date: '2025-02-20',
-    readTime: '5 min read',
-    image: '/blog/cms.svg',
-  },
-  {
-    slug: 'web-performance-checklist',
-    title: 'The Web Performance Checklist',
-    description: 'A step-by-step checklist to audit and improve your site speed, Core Web Vitals, and user experience.',
-    category: 'Tutorial',
-    author: 'Alex Johnson',
-    date: '2025-02-15',
-    readTime: '9 min read',
-    image: '/blog/performance.svg',
-  },
-];
+const posts = await getAllPosts();
 
 function formatDate(dateStr: string): string {
   const date = new Date(dateStr);

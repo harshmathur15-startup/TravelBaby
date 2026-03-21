@@ -1,6 +1,9 @@
 # Skill Tiers
 
-59 skills organized by when you need them.
+66 skills organized by when you need them.
+
+**Core skills** live in `.claude/skills/` and work out of the box.
+**Extended skills** live in `.claude/skills-extended/`. To activate one, move its folder into `.claude/skills/`.
 
 ## Core (13) — Every product, from day 1
 

@@ -27,15 +27,8 @@ Read [docs/getting-started.md](docs/getting-started.md) for full setup including
 - **Design:** CSS custom properties design token system
 - **SEO:** Open Graph, Twitter cards, JSON-LD, sitemap, robots.txt
 
-**SaaS Upgrade (opt-in):**
-- **Backend:** Node.js, Express, TypeScript
-- **Database:** PostgreSQL, Prisma ORM
-- **Jobs:** BullMQ + Redis
-- **Auth:** JWT (15min) + httpOnly refresh tokens (30d, rotated)
-- **AI/Agents:** Claude API (Anthropic SDK), BaseAgent framework
-- **Testing:** Vitest, React Testing Library
-
-See [docs/saas-upgrade.md](docs/saas-upgrade.md) to activate the backend.
+**SaaS Upgrade (planned):**
+See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when you need auth, API, database, or background jobs.
 
 ## Project Structure
 
@@ -43,11 +36,7 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) to activate the backend.
 /src              - Astro frontend (pages, components, styles, lib)
 /sanity           - CMS schemas, desk structure
 /public           - Static assets, robots.txt, favicon
-/server           - Express API (opt-in SaaS upgrade)
-/client           - React SPA (opt-in SaaS upgrade)
-/shared           - Shared types and utilities
-/agents           - BaseAgent framework
-/prisma           - Schema, migrations, seed
+/agents           - Agent family (governance)
 /scripts          - Hook execution scripts
 /docs             - Setup guides, skill tiers, inheritance
 ```
@@ -66,7 +55,8 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) to activate the backend.
 ### AI Harness
 | Layer | Count | What It Does |
 |-------|-------|-------------|
-| **Skills** | 66 | Session lifecycle, commits, reviews, debugging, deployment, readiness checks, edge cases, prompt optimization, agent seeding, frontend audits, dependency management, cleanup, agent governance, quality gates, observability, mid-session assessment |
+| **Core Skills** | 13 | Session lifecycle, commits, reviews, debugging, deployment, planning, context management |
+| **Extended Skills** | 53 | In `.claude/skills-extended/` — opt-in. Move any skill back to `.claude/skills/` to activate |
 | **Hooks** | 8 | Auto-format, file protection, quality gates, session tracking |
 | **Scripts** | 9 | Hook execution scripts |
 | **Rules** | 8 | Standards for code, security, testing, performance, agents |

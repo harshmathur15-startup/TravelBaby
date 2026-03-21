@@ -25,9 +25,8 @@ npm run dev                    # localhost:4321
 /src              - Astro frontend (pages, components, styles, lib)
 /sanity           - CMS schemas, desk structure
 /public           - Static assets, robots.txt, favicon
-/server           - Express API (opt-in SaaS upgrade)
-/client           - React SPA (opt-in SaaS upgrade)
-/agents           - BaseAgent framework
+/agents           - Agent family (governance)
+/scripts          - Hook execution scripts
 /docs             - Setup guides and reference
 ```
 
@@ -40,9 +39,9 @@ npm run dev                    # localhost:4321
 
 ## What's Included
 
-- **6 UI primitives** — Badge, Button, Card, Container, Input, SectionHeading
+- **7 UI primitives** — Badge, Button, Card, Container, Input, SectionHeading, ThemeToggle
 - **9 section components** — Navbar, Hero, Features, Stats, Testimonials, PricingCards, FAQ, CTA, Footer
-- **8 pages** — Home, Features, Pricing, About, Contact, Get Started, Blog listing, Blog posts
+- **11 pages** — Home, Features, Pricing, About, Contact, Get Started, Blog listing, Blog posts, Components, 404, 500
 - **14 CMS schemas** — page builder, blog, pricing, testimonials, FAQ, site settings
 - **Design token system** — colors, typography, spacing, shadows, radii, transitions
 - **SEO foundation** — BaseLayout with OG, Twitter, canonical, JSON-LD
@@ -50,4 +49,5 @@ npm run dev                    # localhost:4321
 ## Documentation
 
 - [Getting Started](docs/getting-started.md) — full setup walkthrough
-- [SaaS Upgrade](docs/saas-upgrade.md) — activate Express + Prisma + React backend
+- [Skill Tiers](docs/skill-tiers.md) — 13 core + 53 extended skills, organized by need
+- [SaaS Upgrade](docs/saas-upgrade.md) — planned guide for adding auth, API, and database

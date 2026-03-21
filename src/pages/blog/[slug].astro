@@ -3,17 +3,15 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Container from '@components/ui/Container.astro';
 import Badge from '@components/ui/Badge.astro';
 import Button from '@components/ui/Button.astro';
-import { POSTS, RELATED_POSTS } from '@lib/blog-data';
-import type { BlogPost } from '@lib/blog-data';
+import { getAllSlugs, getPostBySlug, getAllPosts } from '@lib/blog-data';
 
-export function getStaticPaths() {
-  return Object.keys(POSTS).map((slug) => ({
-    params: { slug },
-  }));
+export async function getStaticPaths() {
+  const slugs = await getAllSlugs();
+  return slugs.map((slug) => ({ params: { slug } }));
 }
 
 const { slug } = Astro.params;
-const post = POSTS[slug as string];
+const post = await getPostBySlug(slug as string);
 
 if (!post) {
   return Astro.redirect('/blog');
@@ -38,7 +36,8 @@ function badgeVariant(category: string): 'primary' | 'accent' | 'success' | 'def
   return map[category] ?? 'default';
 }
 
-const relatedPosts = RELATED_POSTS.filter((p) => p.slug !== slug).slice(0, 2);
+const allPosts = await getAllPosts();
+const relatedPosts = allPosts.filter((p) => p.slug !== slug).slice(0, 2);
 
 const jsonLd = {
   '@context': 'https://schema.org',
