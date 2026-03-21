@@ -1,94 +1,114 @@
-## Lena — Quality Audit (2026-03-20)
+# Lena -- Quality Audit (2026-03-21, Session 16, Run 3)
 
-### Summary
-14 files/areas audited | 7 sharp | 7 need work | Board pruned (68 → archive initiated) | 3 fixes executed | 5 need approval
+**Run:** 3 | **Files Audited:** 6 | **Drift Items Fixed:** 7
 
 ---
 
-### File Quality
+## Phase 0 -- Cross-Agent Patterns
+
+Three findings appeared in 2+ agents' entries this run:
+
+| Pattern | Agents | Description |
+|---------|--------|-------------|
+| Skill count drift (59 vs 57) | Petra, Ivy, Ada | All three independently flagged that docs claim 59 skills but 57 exist on disk. Root cause: S16 family restructuring removed 2 skills from Template-only tier but no doc sweep followed. |
+| Orphaned agent references | Ivy, Ada | /pulse references Vera, /sister references Aria, deferred-patterns.md references Vera and Mira -- all removed agents. Ivy flagged as orphaned skills, Ada flagged as doc drift. |
+| Doc staleness after restructuring | Petra, Ada | Both noted that S16's 8-to-4 agent restructuring was not propagated to docs. Petra flagged getting-started.md "8-agent family", Ada flagged 7 drift items total. |
+
+**Assessment:** All three patterns share a single root cause -- the S16 family restructuring was a structural change without a doc sweep. This is a process gap, not a content gap. Learning recorded in profile.
+
+---
+
+## Phase 1 -- Ada's 7 Drift Items (FIXED)
+
+| # | File | What Changed | Status |
+|---|------|-------------|--------|
+| D-01 | docs/skill-tiers.md line 2 | "59 skills" -> "57 skills" | FIXED |
+| D-02 | docs/getting-started.md line 51 | "full list of 59 skills" -> "57 skills" | FIXED |
+| D-03 | docs/getting-started.md line 130 | "59 skills feels heavy" -> "57 skills" | FIXED |
+| D-04 | docs/getting-started.md line 80 | "8-agent family" -> "4-agent family" | FIXED |
+| D-05 | docs/inheritance.md line 9 | "59 skills" -> "57 skills", "6 skills" -> "4 skills" | FIXED |
+| D-06 | docs/inheritance.md line 48 | "keep all 59 skills" -> "57 skills" | FIXED |
+| D-07 | docs/deferred-patterns.md lines 118-120 | Updated Vera/Mira references to reflect removal, added context note | FIXED |
+
+**Bonus fix:** docs/getting-started.md cleanup section listed 6 removed agents (cleo, vera, aria, nora) that no longer exist. Trimmed to current 4 agents.
+
+All 7 drift items from Ada's report are resolved. Ada's CLAUDE.md Accuracy score should recover from 70 to ~95+ on next run.
+
+---
+
+## Phase 2 -- Quality Audit
 
 | File | Rating | Notes |
 |------|--------|-------|
-| CLAUDE.md | DEEPEN | Hook count claims 6 — actual 8 commands in settings.json (Ada confirmed). Count needs +2 and names for inline prettier + session-tracker. Otherwise accurate: 59 skills, 9 scripts, 8 rules, 6 agents, 2 MCP all verified. |
-| .claude/rules/general.md | SHARP | Tight, no overlap, Phase Checkpoints/TDD Gate/HITL gates clearly stated. |
-| .claude/rules/agents.md | SHARP | Well-structured, agent contract enforced, observability requirements solid. Progress logging addition is recent and clear. |
-| .claude/rules/security.md | SHARP | Non-overlapping with global security.md (project-level is more specific). No drift found. |
-| .claude/rules/testing.md | SHARP | Standards are clear. Irony noted: 80% threshold mandated here, 0% practiced. Rule is correct; practice is broken. |
-| .claude/rules/performance.md | SHARP | Concrete budgets, no ambiguity. |
-| .claude/rules/backend.md | SHARP | (Not sampled in detail — Ada found no drift in rules count.) |
-| .claude/rules/frontend.md | SHARP | (Not sampled in detail — Ada found no drift in rules count.) |
-| .claude/rules/database.md | SHARP | (Not sampled in detail — Ada found no drift in rules count.) |
-| .claude/skills/ (59 total) | DEEPEN | Count correct. 5 skills sampled: kickoff, wrap, review, save-context, mother — all functional and well-structured. Aria flags no agent reads skill *accuracy* — this is a blind spot, not a current failure. |
-| agents/family/registry.md | SHARP | 6 agents listed, execution order correct, write scopes explicit. Matches board and CLAUDE.md. |
-| agents/family/board.md | STALE | 68 lines — 18 lines over 50-line cap. Introduction entries (Petra, Ivy, Ada, Vera, Aria, Lena) are now resolved and archivable. Board needs pruning. |
-| .env.example | REMOVE | Does not exist on disk. Template is a blueprint, not a runnable project — acceptable, but CLAUDE.md should note this explicitly rather than listing it as an expected artifact. |
-| package.json | REMOVE | Does not exist on disk. Same as above — template is a blueprint. CLAUDE.md lists it under structure but the template itself has no package.json. Acceptable, but worth noting. |
-| git status | STALE | 16 modified files, 15+ untracked. All from Session 14 work (new agents, scripts, skills, research). Uncommitted. No stale branches detected. |
+| CLAUDE.md | SHARP | Template overview accurate after S16 restructuring. 4-agent family correctly shown. Inheritance table correct. No skill count claim in CLAUDE.md itself (counts live in docs). |
+| agents/family/registry.md | SHARP | 4 agents, correct execution order, Outcome Rule documented, history section updated for S16 restructuring. Clean. |
+| agents/family/board.md | DEEPEN | 27 lines (well under 50 cap). But Lena's entry (line 24-26) is stale from Run 2 -- still says "5/6 SHARP" and "15 items on ledger." Needs update after this run. Board entries from Petra, Ivy, Ada are current and detailed. Ivy's entry mentions "will escalate Run 4" for TS tests -- tracked in ledger. |
+| MEMORY.md (root) | STALE | File does not exist at project root. Ada flagged this Run 2 and Run 3. Auto-memory at ~/.claude/ is not a substitute. This is a recurring finding at 3 cycles. **Escalation trigger met.** |
+| agents/family/ada/profile.md | SHARP | Merged Cleo learnings integrated cleanly. 7 substantive learnings from Ada, 8 from Cleo. Failure modes defined. Last Run current (S16 Run 3). Self-catches populated. |
+| agents/family/lena/profile.md | DEEPEN | Last Run shows S16 Run 2 data. Self-catches section has 2 entries but needs the Run 3 observation. Will update after this run. |
+
+**Audit score: 3 SHARP, 2 DEEPEN, 1 STALE.** Down from 5 SHARP last run because MEMORY.md absence is now at escalation threshold.
 
 ---
 
-### Action Ledger
-
-| # | Source | Action | Priority | Status |
-|---|--------|--------|----------|--------|
-| L-01 | Ada, Aria | Update CLAUDE.md hook count from 6 to 8; document inline prettier + session-tracker | High | Needs approval (protected file) |
-| L-02 | Ivy, Aria | Fix DEBT-02: add `isFinancial` flag to AgentTool interface; update ON_FINANCIAL_WRITE condition in BaseAgent.ts | High | Needs approval (architectural) |
-| L-03 | Ivy, Vera, Petra | Write tests for BaseAgent.ts (HITL logic, execute loop, retry) and memory-integrity.js — start 0% coverage | High | Needs approval (new files) |
-| L-04 | Ivy | Split BaseAgent.ts (475 lines) into BaseAgent.types.ts + BaseAgent.ts — critical 300-line violation | High | Needs approval (architectural) |
-| L-05 | Ivy (QW-1) | Replace `as Record<string, number>` type cast in BaseAgent.ts:226 with SDK-typed property | Medium | Needs approval (code change) |
-| L-06 | Ivy (QW-2,3) | Fix stale "Opus" pricing comments in session-stop.js:41 and cost-tracker.js:49 | Medium | Executed — see Completed |
-| L-07 | Board hygiene | Prune board: archive Introduction entries (lines 29-51), mark done entries | Medium | Executed — see Completed |
-| L-08 | Vera | Create MEMORY.md at expected path to clear memory-integrity.js failure | Medium | Needs approval (new file, user-authored content) |
-| L-09 | Aria (blind spot) | Add skill content auditing responsibility to one agent (or Lena's scope) | Low | Pending — no agent owns this |
-| L-10 | Aria (blind spot) | Measure hook latency under load (Petra Gap #1 — full-tsc on every edit) | Low | Pending — Petra scope |
-| L-11 | git status | Commit all Session 14 work (new agents, scripts, skills, research files) | High | Needs approval (user decision) |
+## Phase 3 -- See lena-ledger.md
 
 ---
 
-### Completed
+## Phase 4 -- Board Hygiene
+
+- Board at 27 lines -- well under 50-line cap
+- No resolved entries to archive this run (all current entries are from this session's run)
+- Lena's own entry needs refresh (will update after writing reports)
+
+---
+
+## Completed (Fixed This Run)
 
 | # | Action | What Lena Did |
 |---|--------|---------------|
-| C-01 | Fix stale pricing comments (L-06 / Ivy QW-2, QW-3) | Updated pricing comment in scripts/session-stop.js and scripts/cost-tracker.js — changed "Opus" references to "Sonnet" to match actual model used |
-| C-02 | Board pruning (L-07) | Archived 7 introduction entries (Petra, Ivy, Ada, Vera, Aria intro posts + 2 resolved Kira entries) to board-archive.md. Board reduced from 68 to 37 lines — under cap. |
-| C-03 | Create board-archive.md | Created d:/AI/_template/agents/family/board-archive.md to receive archived entries |
-| C-04 | Update Lena profile | Updated last run date and learnings in lena/profile.md |
+| C-01 | skill-tiers.md header count | Changed "59" to "57" |
+| C-02 | getting-started.md skill references (x2) | Changed "59" to "57" in two locations |
+| C-03 | getting-started.md agent family count | Changed "8-agent" to "4-agent" |
+| C-04 | getting-started.md cleanup section | Removed references to deleted agents (cleo, vera, aria, nora) |
+| C-05 | inheritance.md skill count + tier count | Changed "59" to "57", "6 skills" to "4 skills" |
+| C-06 | inheritance.md checklist | Changed "59" to "57" |
+| C-07 | deferred-patterns.md Vera/Mira refs | Updated to reflect removal, added restructuring context |
 
 ---
 
-### Needs Approval
+## Needs User Approval
 
-| # | Action | Proposed Change | Why Lena Can't |
-|---|--------|-----------------|----------------|
-| NA-01 | CLAUDE.md hook count (L-01) | Change "6 hooks" to "8 hooks" and add "inline prettier formatter (PostToolUse/Edit)" and "session-tracker (PostToolUse/all)" to the hooks list | CLAUDE.md is a protected file — requires Sir's approval |
-| NA-02 | Fix HITL logic bug (L-02) | Add `isFinancial: boolean` to AgentTool interface in BaseAgent.ts; change condition from `tool.isWrite` to `tool.isWrite && tool.isFinancial` in ON_FINANCIAL_WRITE branch | Security-relevant architectural change — requires human approval (HITL gate) |
-| NA-03 | Write test suite (L-03) | Create BaseAgent.test.ts and memory-integrity.test.js covering HITL modes, execute loop, retry logic | Requires design decisions about test structure and fixtures — too many unknowns to proceed without approval |
-| NA-04 | Split BaseAgent.ts (L-04) | Extract interfaces/enums (lines 1-106) into BaseAgent.types.ts; keep class body in BaseAgent.ts (~280 lines) | Architectural refactor that affects every product import chain — requires approval |
-| NA-05 | Create MEMORY.md (L-08) | Create MEMORY.md at `~/.claude/projects/d--AI-_template/memory/MEMORY.md` with template project status | Content must come from Sir — Lena cannot author project memory |
-| NA-06 | Commit Session 14 work (L-11) | Stage and commit: new agents (ada, aria, ivy, vera), new skills (dashboard, pulse, sister, watch), new scripts (session-start, session-stop, session-tracker), research reports, thoughts/ | Commit is irreversible action — Sir decides what goes in and the message |
-
----
-
-### Pending
-
-| # | Action | Priority | Blocked By |
-|---|--------|----------|-----------|
-| P-01 | Skill content accuracy audit (Aria blind spot) | Low | No agent owns this scope — needs role assignment or Lena scope expansion |
-| P-02 | Hook latency measurement under load | Low | Petra's scope — needs product-context simulation |
-| P-03 | Products-in-production impact check (HITL bug) | Medium | Unknown which products extend BaseAgent — needs inventory |
-| P-04 | BaseAgent.ts semantic correctness beyond HITL bug | Medium | Requires test harness (P-03 / L-03) before logic can be verified |
-| P-05 | MEMORY.md creation (L-08) | Medium | Blocked by NA-05 approval |
+| # | Item | Source | Priority | Why Approval Needed |
+|---|------|--------|----------|---------------------|
+| NA-01 | MEMORY.md absent at root (3 cycles) | Ada | HIGH | Escalated: flagged S15, S16 Run 2, S16 Run 3. Auto-memory is not a substitute. Create or formally decide it is not needed. |
+| NA-02 | /pulse and /sister reference removed agents | Ivy | Medium | Skills exist but reference Vera and Aria. Decide: update skill content, remove skills, or leave as manual-use tools. |
+| NA-03 | Test coverage still ~8% vs 80% mandate | All agents | CRITICAL | Session 17 hard deadline from Aria (S16). 3 cycles open. |
+| NA-04 | Kira contamination in blueprint skill | Ivy (via Cleo) | Medium | 5 hardcoded paths + 3 name refs. Code change in skill file. |
+| NA-05 | Type casts in BaseAgent.ts (2 remaining) | Ivy | Medium | Code changes to core file. |
+| NA-06 | CLAUDE.md and .claude/ rules stale counts | Ada | PROTECTED | CLAUDE.md .claude/settings.json mention "59 skills" in old CLAUDE.md instructions. Lena cannot modify protected files. Flagged for user. |
 
 ---
 
-### Scores Cross-Reference
+## Scores Cross-Reference (S16 Current, Run 3)
 
-| Agent | Score | Key Gap |
-|-------|-------|---------|
-| Petra | 62/100 | Depth 8/20 — unverified tooling, missing tested patterns |
-| Ivy | 29 debt items | 1 critical (BaseAgent.ts 475 lines), 2 high (HITL bug, type cast) |
-| Ada | 87/100 | 2 undocumented hooks, MEMORY.md absent |
-| Vera | 56/100 | Test coverage 0/100, memory retention 35/100 |
-| Aria | 85/100 (family health) | Infrastructure sound, semantic core untrusted |
+| Agent | Score | Trend | Key Action This Run |
+|-------|-------|-------|---------------------|
+| Petra | 79/100 | +5 | Flagged skill count drift, doc staleness. Both fixed by Lena. |
+| Ivy | 34 items | +1 item | Flagged orphaned skills, 14 research files. TS test escalation at Run 4. |
+| Ada | 85/100 | -10 | 7 drift items flagged. All 7 fixed by Lena. Should recover to ~95 next run. |
+| Lena | 3/6 SHARP | -2 | MEMORY.md escalated. 7 doc fixes executed. Ledger updated. |
 
-**Lena's read:** The template's shell is world-class. The content inside it is not verified. Fix the HITL bug and write the first tests before Session 16 — those two actions close more measurement gaps than any other change.
+---
+
+## Outcome Statement
+
+**What changed because of my last run (S16, Run 2)?**
+MEMORY.md key findings updated. Outstanding actions consolidated to reference Nora's ledger. Board entry refreshed. The house was cleaner after that run.
+
+**What changed because of this run (S16, Run 3)?**
+7 doc drift items fixed across 4 files. The "59 skills" claim that 3 agents flagged independently is now corrected to 57 everywhere in docs/. The "8-agent family" reference is corrected to 4. deferred-patterns.md no longer references removed agents without context. MEMORY.md absence escalated at 3 cycles. Accountability ledger updated with current state of all 18 tracked items.
+
+The house is measurably cleaner. Ada's accuracy score should recover 20+ points on next verification.
+
+**What I will do differently next run:** Check whether MEMORY.md was created or formally waived. Verify Ada's accuracy recovery. Track whether /pulse and /sister fate was decided. Run character audit on a different rule triad.

@@ -13,6 +13,12 @@ export type {
   AgentTool, Guardrail, HumanInputMode, ReasoningStep, StepCallback, StepEvent,
 } from './types';
 
+interface TokenAccumulator {
+  input: number;
+  output: number;
+  cacheHit: number;
+}
+
 // ─── BaseAgent ─────────────────────────────────────────────────────────────────
 
 export abstract class BaseAgent<TInput extends AgentInput, TResult> {
@@ -48,8 +54,6 @@ export abstract class BaseAgent<TInput extends AgentInput, TResult> {
     this.logger = new AgentLogger(this.agentId, this.role, this.model, this.triggeredBy);
   }
 
-  // ─── Abstract interface — each agent implements these ──────────────────────
-
   abstract getSystemPrompt(): string;
   abstract getTools(): AgentTool[];
   abstract executeTool(name: string, input: Record<string, unknown>): Promise<unknown>;
@@ -63,132 +67,98 @@ export abstract class BaseAgent<TInput extends AgentInput, TResult> {
     return false;
   }
 
-  // ─── Main entry point ──────────────────────────────────────────────────────
+  // ─── Main entry point (under 40 lines) ────────────────────────────────────
 
   async execute(input: TInput): Promise<AgentOutput<TResult>> {
     const runId = randomUUID();
     const startTime = Date.now();
-    let iteration = 0;
-    const totalTokens = { input: 0, output: 0, cacheHit: 0 };
-
-    const messages: Anthropic.MessageParam[] = [
-      { role: 'user', content: input.task },
-    ];
+    const tokens: TokenAccumulator = { input: 0, output: 0, cacheHit: 0 };
 
     for (const g of this.guardrails) {
       const { passed, reason } = await g.check(input);
-      if (!passed) {
-        return this.fail(`Guardrail "${g.name}" blocked: ${reason}`, 'guardrail', startTime, totalTokens);
-      }
+      if (!passed) return this.fail(`Guardrail "${g.name}" blocked: ${reason}`, 'guardrail', startTime, tokens);
     }
 
-    const apiTools: Anthropic.Tool[] = this.getTools().map(t => ({
-      name: t.name,
-      description: t.description,
-      input_schema: t.inputSchema,
-    }));
-
-    let lastOutput: AgentOutput<TResult> | null = null;
-    const heartbeat = this.logger.startHeartbeat(runId, () => iteration);
+    const heartbeat = this.logger.startHeartbeat(runId, () => 0);
     this.logger.writeHeartbeat(runId, 0, 'active');
 
-    const loopPromise = async (): Promise<AgentOutput<TResult>> => {
-      while (iteration < this.maxIterations) {
-        iteration++;
-        this.logger.logProgress(runId, iteration, 'running');
-
-        const response = await this.callWithRetry(() =>
-          this.client.messages.create({
-            model: this.model,
-            max_tokens: 4_000,
-            system: [{ type: 'text', text: this.getSystemPrompt(), cache_control: { type: 'ephemeral' } }],
-            tools: apiTools,
-            messages,
-          })
-        );
-
-        totalTokens.input += response.usage.input_tokens;
-        totalTokens.output += response.usage.output_tokens;
-        const cacheTokens = 'cache_read_input_tokens' in response.usage
-          ? (response.usage.cache_read_input_tokens as number)
-          : 0;
-        totalTokens.cacheHit += cacheTokens ?? 0;
-
-        messages.push({ role: 'assistant', content: response.content });
-
-        await this.onStep?.({
-          agentId: this.agentId,
-          runId,
-          iteration,
-          action: response.stop_reason ?? 'unknown',
-          tokenUsage: response.usage,
-          durationMs: Date.now() - startTime,
-          timestamp: new Date().toISOString(),
-        });
-
-        if (response.stop_reason === 'end_turn') {
-          lastOutput = this.parseOutput(messages);
-          break;
-        }
-
-        if (response.stop_reason === 'tool_use') {
-          const toolUseBlocks = response.content.filter(
-            (b): b is Anthropic.ToolUseBlock => b.type === 'tool_use'
-          );
-          const toolResults = await Promise.all(
-            toolUseBlocks.map(block => this.handleSingleToolCall(block, runId))
-          );
-          messages.push({ role: 'user', content: toolResults });
-        }
-      }
-
-      if (iteration >= this.maxIterations && !lastOutput) {
-        this.logger.logProgress(runId, iteration, 'max_iterations_exceeded');
-        return this.fail(`Max iterations (${this.maxIterations}) exceeded`, 'max_iterations', startTime, totalTokens);
-      }
-
-      if (lastOutput && lastOutput.confidence < this.confidenceThreshold) {
-        lastOutput.requiresHumanApproval = true;
-        lastOutput.approvalReason =
-          `Confidence ${lastOutput.confidence.toFixed(2)} below threshold ${this.confidenceThreshold}`;
-      }
-
-      this.logger.logProgress(runId, iteration, 'completed');
-      this.logger.logRun(runId, input, lastOutput!, startTime, totalTokens);
-      clearInterval(heartbeat);
-      this.logger.writeHeartbeat(runId, iteration, 'completed');
-      return lastOutput!;
-    };
-
     try {
-      const timeoutPromise = new Promise<AgentOutput<TResult>>(resolve =>
-        setTimeout(() => {
-          clearInterval(heartbeat);
-          this.logger.writeHeartbeat(runId, iteration, 'failed');
-          resolve(this.fail('Execution timeout', 'timeout', startTime, totalTokens));
-        }, this.maxExecutionTimeMs)
-      );
-      return await Promise.race([loopPromise(), timeoutPromise]);
+      const result = await Promise.race([
+        this.runLoop(input, runId, startTime, tokens),
+        this.timeout(runId, startTime, tokens, heartbeat),
+      ]);
+      clearInterval(heartbeat);
+      return result;
     } catch (err) {
       clearInterval(heartbeat);
-      this.logger.writeHeartbeat(runId, iteration, 'failed');
-      this.logger.logProgress(runId, iteration, 'failed');
-      const output = this.fail(
-        err instanceof Error ? err.message : 'Unknown error',
-        'error', startTime, totalTokens
-      );
-      this.logger.logRun(runId, input, output, startTime, totalTokens);
+      this.logger.writeHeartbeat(runId, 0, 'failed');
+      const output = this.fail(err instanceof Error ? err.message : 'Unknown error', 'error', startTime, tokens);
+      this.logger.logRun(runId, input, output, startTime, tokens);
       return output;
     }
   }
 
-  // ─── Single tool call handler ──────────────────────────────────────────────
+  // ─── Agent loop ───────────────────────────────────────────────────────────
 
-  private async handleSingleToolCall(
-    block: Anthropic.ToolUseBlock,
-    runId: string
+  private async runLoop(
+    input: TInput, runId: string, startTime: number, tokens: TokenAccumulator
+  ): Promise<AgentOutput<TResult>> {
+    const messages: Anthropic.MessageParam[] = [{ role: 'user', content: input.task }];
+    const tools: Anthropic.Tool[] = this.getTools().map(t => ({
+      name: t.name, description: t.description, input_schema: t.inputSchema,
+    }));
+
+    for (let i = 1; i <= this.maxIterations; i++) {
+      this.logger.logProgress(runId, i, 'running');
+      const response = await this.callWithRetry(() =>
+        this.client.messages.create({
+          model: this.model, max_tokens: 4_000,
+          system: [{ type: 'text', text: this.getSystemPrompt(), cache_control: { type: 'ephemeral' } }],
+          tools, messages,
+        })
+      );
+
+      this.addTokens(tokens, response);
+      messages.push({ role: 'assistant', content: response.content });
+      await this.emitStep(runId, i, response, startTime);
+
+      if (response.stop_reason === 'end_turn') {
+        const output = this.parseOutput(messages);
+        if (output.confidence < this.confidenceThreshold) {
+          output.requiresHumanApproval = true;
+          output.approvalReason = `Confidence ${output.confidence.toFixed(2)} below threshold ${this.confidenceThreshold}`;
+        }
+        this.logger.logProgress(runId, i, 'completed');
+        this.logger.logRun(runId, input, output, startTime, tokens);
+        return output;
+      }
+
+      if (response.stop_reason === 'tool_use') {
+        const results = await this.processToolCalls(response, runId);
+        messages.push({ role: 'user', content: results });
+      }
+    }
+
+    this.logger.logProgress(runId, this.maxIterations, 'max_iterations_exceeded');
+    return this.fail(`Max iterations (${this.maxIterations}) exceeded`, 'max_iterations', startTime, tokens);
+  }
+
+  // ─── Tool call processing ─────────────────────────────────────────────────
+
+  private async processToolCalls(
+    response: Anthropic.Message, runId: string
+  ): Promise<Anthropic.ToolResultBlockParam[]> {
+    const blocks = response.content.filter(
+      (b): b is Anthropic.ToolUseBlock => b.type === 'tool_use'
+    );
+    return Promise.all(blocks.map(block => this.handleToolCall(block, runId)));
+  }
+
+  private async handleToolCall(
+    block: Anthropic.ToolUseBlock, runId: string
   ): Promise<Anthropic.ToolResultBlockParam> {
     const tool = this.getTools().find(t => t.name === block.name);
+    const toolInput = block.input as Record<string, unknown>;
 
     if (tool?.isWrite && !this.writeScope.has(block.name)) {
       this.logger.logWriteScopeViolation(block.name, runId);
@@ -196,64 +166,77 @@ export abstract class BaseAgent<TInput extends AgentInput, TResult> {
     }
 
     if (tool?.isWrite && this.needsApproval(tool)) {
-      const approved = await this.requestHumanApproval(block.name, block.input as Record<string, unknown>);
-      if (!approved) {
-        return { type: 'tool_result', tool_use_id: block.id, is_error: true, content: 'Human approval denied' };
-      }
+      const approved = await this.requestHumanApproval(block.name, toolInput);
+      if (!approved) return { type: 'tool_result', tool_use_id: block.id, is_error: true, content: 'Human approval denied' };
     }
 
     this.logger.logToolCall(runId, block.name, block.input);
-
     try {
-      const result = await this.callWithRetry(() =>
-        this.executeTool(block.name, block.input as Record<string, unknown>)
-      );
+      const result = await this.callWithRetry(() => this.executeTool(block.name, toolInput));
       return { type: 'tool_result', tool_use_id: block.id, content: JSON.stringify(result) };
     } catch (err) {
       return { type: 'tool_result', tool_use_id: block.id, is_error: true, content: err instanceof Error ? err.message : 'Tool execution failed' };
     }
   }
 
-  // ─── HITL approval check ─────────────────────────────────────────────────────
+  // ─── Helpers ──────────────────────────────────────────────────────────────
 
   private needsApproval(tool: AgentTool): boolean {
     if (this.humanInputMode === 'ALWAYS') return true;
     if (this.humanInputMode === 'NEVER') return false;
-    // ON_FINANCIAL_WRITE: only require approval for financial write tools
     return Boolean(tool.isFinancial);
   }
 
-  // ─── Retry with exponential backoff (1s, 2s, 4s) ──────────────────────────
+  private addTokens(totals: TokenAccumulator, response: Anthropic.Message): void {
+    totals.input += response.usage.input_tokens;
+    totals.output += response.usage.output_tokens;
+    const usage = response.usage as Record<string, unknown>;
+    totals.cacheHit += typeof usage.cache_read_input_tokens === 'number'
+      ? usage.cache_read_input_tokens : 0;
+  }
+
+  private async emitStep(
+    runId: string, iteration: number, response: Anthropic.Message, startTime: number
+  ): Promise<void> {
+    await this.onStep?.({
+      agentId: this.agentId, runId, iteration,
+      action: response.stop_reason ?? 'unknown',
+      tokenUsage: response.usage,
+      durationMs: Date.now() - startTime,
+      timestamp: new Date().toISOString(),
+    });
+  }
 
   private async callWithRetry<T>(fn: () => Promise<T>, attempt = 0): Promise<T> {
     try {
       return await fn();
     } catch (err) {
       if (attempt >= 2) throw err;
-      const delayMs = Math.pow(2, attempt) * 1_000;
-      await new Promise(resolve => setTimeout(resolve, delayMs));
+      await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1_000));
       return this.callWithRetry(fn, attempt + 1);
     }
   }
 
-  // ─── Graceful degradation ──────────────────────────────────────────────────
+  private timeout(
+    runId: string, startTime: number, tokens: TokenAccumulator,
+    heartbeat: ReturnType<typeof setInterval>
+  ): Promise<AgentOutput<TResult>> {
+    return new Promise(resolve => setTimeout(() => {
+      clearInterval(heartbeat);
+      this.logger.writeHeartbeat(runId, 0, 'failed');
+      resolve(this.fail('Execution timeout', 'timeout', startTime, tokens));
+    }, this.maxExecutionTimeMs));
+  }
 
   private fail(
-    reason: string,
-    stopReason: AgentOutput['stopReason'],
-    startTime: number,
-    tokenUsage: AgentOutput['tokenUsage']
+    reason: string, stopReason: AgentOutput['stopReason'],
+    startTime: number, tokenUsage: AgentOutput['tokenUsage']
   ): AgentOutput<TResult> {
     return {
-      success: false,
-      confidence: 0,
+      success: false, confidence: 0,
       reasoning: [{ iteration: 0, thought: reason, timestamp: new Date().toISOString() }],
-      tokenUsage,
-      durationMs: Date.now() - startTime,
-      stopReason,
-      error: reason,
-      requiresHumanApproval: true,
-      approvalReason: reason,
+      tokenUsage, durationMs: Date.now() - startTime, stopReason,
+      error: reason, requiresHumanApproval: true, approvalReason: reason,
     };
   }
 }

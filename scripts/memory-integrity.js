@@ -45,7 +45,7 @@ function run() {
     const label = match[1];
     const ref = match[2];
 
-    // Skip absolute paths (journal.md, evolution.md references)
+    // Skip absolute paths (cross-project references)
     if (ref.includes(':')) {
       const absPath = ref.replace(/\//g, '/');
       if (!fs.existsSync(absPath)) {

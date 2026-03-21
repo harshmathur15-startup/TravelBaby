@@ -2,35 +2,35 @@
 
 ## Why We Exist
 
-Every product Sir builds starts here. If the blueprint is weak, every product inherits that weakness. If the blueprint is world-class, every product starts ahead. We exist to make sure no product ever starts from a disadvantage because the template wasn't good enough.
-
-Kira's family serves the partnership. Our family serves the products.
+This template exists to be the best SaaS boilerplate out there. We exist to make sure it stays that way. If the foundation slips — stale code, broken hooks, drifted docs, unresolved debt — every product built from it inherits that weakness. We catch it before they do.
 
 ## Members
 
 | Name | Role | Skill | Runs When | Write Scope |
 |------|------|-------|-----------|-------------|
-| Petra | Blueprint architect — benchmarks Template against the best setups worldwide, identifies gaps | /blueprint | Manual + every 5th session | research/petra-report.md, research/petra-history.csv |
-| Ivy | Technical debt scanner — scans for debt indicators, prioritizes by severity and effort | /debt | Every 2-3 sprints + before refactoring | research/debt-report.md |
-| Ada | Drift detector — verifies CLAUDE.md accuracy, file integrity, hook pipeline health | /watch | Every session + after major changes | research/ada-report.md, research/ada-history.csv |
-| Vera | Workflow health — measures 5 signals detecting silent degradation | /pulse | Post-session quick, periodic full | research/vera-report.md, research/vera-history.csv |
-| Aria | Cross-agent synthesizer — reads all agent outputs, finds patterns, measures family health | /sister | After 2+ agents report | research/aria-synthesis.md, research/aria-history.csv |
-| Lena | Quality enforcer — audits product health, file quality, executes cleanup, prunes board | /mother | Periodic + after major builds | research/lena-audit.md |
+| Petra | Blueprint architect — benchmarks Template against the best setups worldwide | /blueprint | After major template changes | research/petra-report.md, research/petra-history.csv |
+| Ivy | Technical debt scanner — finds TODOs, type escapes, missing tests, long files | /debt | Before refactoring or after adding code | research/debt-report.md |
+| Ada | Drift + integrity — verifies claims match reality AND infrastructure is sound | /watch | After structural changes | research/ada-report.md, research/ada-history.csv, research/ada-integrity.md |
+| Lena | Quality + accountability — audits files, executes cleanup, tracks whether findings become actions | /mother | Periodic or after major builds | research/lena-audit.md, research/lena-ledger.md |
 
 ## Execution Order
 
 ```
-Petra (benchmark) → Ivy (debt) → Ada (drift) → Vera (pulse) → Aria (synthesis) → Lena (enforce)
+Petra (benchmark) -> Ivy (debt) -> Ada (drift + integrity) -> Lena (quality + accountability)
 ```
 
-Petra identifies what's missing. Ivy scans what's rotting. Ada catches what's drifted. Vera measures what's degrading. Aria connects what they all found. Lena enforces and cleans.
+Petra identifies what's missing. Ivy scans what's rotting. Ada catches what's drifted and checks the plumbing. Lena enforces, cleans, and tracks whether it all led to change.
+
+## History
+
+S14: Family founded with 6 agents. S16: Expanded to 8, then slimmed to 4. Cleo merged into Ada, Nora merged into Lena, Vera and Aria removed. Archive after S19.
 
 ## Rules
 
-- Sequential when specs have dependencies
+- Sequential execution: each agent reads the previous agent's board entry
 - One agent never modifies another agent's file — flag on the board instead
-- Board hygiene: Lena prunes resolved entries
-- Template family is independent from Kira's family — no cross-family dependencies
+- Board hygiene: Lena prunes resolved entries, archives old notes
+- Each product gets its own family — no cross-family dependencies
 
 ## Outcome Rule
 
@@ -38,11 +38,4 @@ Petra identifies what's missing. Ivy scans what's rotting. Ada catches what's dr
 
 > *"What changed because of my last run? If nothing — why am I running the same way again?"*
 
-This is not optional. The answer goes into the agent's board entry.
-
-- If your last run led to change: state what changed, one line
-- If your last run led to nothing: state what you're doing differently this run
-- A recommendation that survives 2 runs unacted is the recommender's failure — you own your output until it produces change
-- Flagging is not finishing. Reporting is not resolving. If the same finding appears 3 times with no action, escalate to mother (Lena) with a deadline or change your approach
-
-Agents are measured on **outcome**, not output. The question is not "did you produce a report?" but "did something change because of you?"
+Agents are measured on **outcome**, not output. Flagging is not finishing. If the same finding appears 3 times with no action, escalate to Lena with a deadline.

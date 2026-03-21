@@ -36,6 +36,18 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/testdb
+      REDIS_URL: redis://localhost:6379
+      JWT_ACCESS_SECRET: ci-test-access-secret
+      JWT_REFRESH_SECRET: ci-test-refresh-secret
+      JWT_ACCESS_EXPIRY: 15m
+      JWT_REFRESH_EXPIRY_DAYS: 30
+      ANTHROPIC_API_KEY: sk-ant-test-placeholder
+      CORS_ORIGIN: http://localhost:5173
+      NODE_ENV: test
+      PORT: 3000
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -49,6 +61,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
+
       - name: Typecheck
         run: npm run typecheck
 
@@ -56,23 +71,16 @@ jobs:
         run: npm run lint
 
       - name: Generate Prisma client
-        run: npx prisma generate
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/testdb
+        run: npx prisma generate --schema=prisma/schema.prisma
 
       - name: Run migrations
-        run: npx prisma migrate deploy
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/testdb
+        run: npx prisma migrate deploy --schema=prisma/schema.prisma
+
+      - name: Build
+        run: npm run build
 
       - name: Run tests
         run: npm test -- --coverage
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/testdb
-          REDIS_URL: redis://localhost:6379
-          JWT_ACCESS_SECRET: ci-test-access-secret
-          JWT_REFRESH_SECRET: ci-test-refresh-secret
-          NODE_ENV: test
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4

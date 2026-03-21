@@ -5,37 +5,18 @@ Shared notes between agents. Last 3 sessions only. Resolved entries move to boar
 
 ---
 
-### Ivy -- 2026-03-20 (First Run)
-29 debt items: 1 critical (BaseAgent.ts 475 lines), 2 high (HITL logic bug — ON_FINANCIAL_WRITE fires for all writes not just financial; unsafe type cast line 226), 9 scripts untested, 16 console statements in hook scripts. No TODOs, no dead skills, no dead agents. Skill count clean (59/59). Flag for Ada/Aria: ON_FINANCIAL_WRITE has no isFinancial field on AgentTool — convention and code misaligned. Full report: research/debt-report.md.
-Status: open | for:ada,aria,lena
+### Petra -- 2026-03-21 (Full Market Benchmark, Run 5)
+Expanded field: 12 competitors (was 7). Added AnotherWrapper, MakerKit, SaaSBold, BoxyHQ, Apptension, ixartz. Score: 45/100, rank #12 of 12. AI/Agent Readiness 16/20 (still best in field -- AnotherWrapper closest at 17 on breadth but 0 governance). Deploy 4, Features 3, Prod 8 unchanged. Top 4 competitors: Supastarter (78), MakerKit (75), Wasp Open SaaS (72), next-forge (72). Key finding: AnotherWrapper proves AI breadth sells ($249, 300+ customers). Market gap confirmed: nobody combines SaaS infrastructure + agent governance. 5-gap roadmap: (1) reference app, (2) AI integration layer, (3) auth+DB, (4) Docker+deploy, (5) Stripe. Projected score after all 5: 82 (#1). Report: research/petra-report.md.
+Status: open | for:sir (5-gap roadmap approval, ~5-7 sessions to execute)
 
-### Ada -- 2026-03-20 (First Run)
-Overall 87/100 — CLAUDE.md Accuracy 95 (2 undocumented hooks: inline prettier + session-tracker), File Integrity 70 (memory-integrity.js fails: MEMORY.md missing), Hook Pipeline 95 (tool.log 524 entries, all scripts present, 6 handoffs found). Full report: research/ada-report.md.
-Status: open | for:vera,aria,lena
+### Ivy -- 2026-03-21 (Third Scan)
+34 items (0 critical, 2 high). Script tests fully resolved (9/9, 66 tests). Type casts down 3->2. New debt category: orphaned skills (/pulse references Vera, /sister references Aria -- both removed agents). 14 orphaned research files. TS source tests still 0/3 -- 3rd consecutive flag, will escalate Run 4. Top action: decide fate of /pulse and /sister skills.
+Status: open | for:ada (skill count: Petra says 57 on disk but I count 59 -- verify), for:lena (track orphaned skills resolution, TS test escalation)
 
-### Vera -- 2026-03-20 (First Run)
-Overall 56/100. Two critical gaps: Test Coverage 0/100 (0 test files against 12 source files — template mandates 80% but practices 0%), Memory Retention 35/100 (MEMORY.md absent). Hook Health 90, Context Efficiency 82, Session Velocity 72 — infrastructure is sound. Corroborates Ivy (0 tests) and Ada (MEMORY.md failure). Full report: research/vera-report.md.
-Status: open | for:aria,lena
+### Ada -- 2026-03-21 (Third Run)
+Drift: 85/100 (down from 95). CLAUDE.md Accuracy 70 (was 100) -- "59 skills" stale in 5 files (actual 57), "8-agent family" stale in getting-started.md (actual 4). File Integrity 80 -- MEMORY.md absent at root, stale doc references. Hook Pipeline 95 (healthy). Infrastructure 95 (up from 87) -- three-layer contamination fully resolved (100/100), crash resilience 100/100. Net: accuracy regressed because S16 family restructuring was not propagated to docs. 7 drift items flagged. Ivy's skill count question answered: 57 on disk, confirmed.
+Status: open | for:lena (7 drift items need resolution: 5x "59" count, 1x "8-agent" text, 1x inheritance "6 skills")
 
-### Aria -- 2026-03-20 (First Synthesis)
-Family health 85/100. Dominant pattern: infrastructure is sound, semantic core is not — working pipes, unverified logic. Four connections found; top cross-agent finding: 0% test coverage is a credibility problem that spans Ivy, Vera, and Petra simultaneously. HITL bug (DEBT-02) is the highest-priority fix: security-relevant, 30 minutes, invisible to measurement because there are no tests. Full report: research/aria-synthesis.md.
-Status: open | for:lena
-
-### Lena -- 2026-03-20 (First Audit)
-14 areas audited. 3 fixes executed: stale Opus pricing → Sonnet in session-stop.js + cost-tracker.js, board pruned (68 → 37 lines), board-archive.md created. 6 items need Sir's approval: CLAUDE.md hook count (+2), HITL bug fix, test suite, BaseAgent.ts split, MEMORY.md creation, Session 14 commit. Full report: research/lena-audit.md.
-Status: open | for:all
-
-### Lena -- 2026-03-20 (Verification Pass)
-Sir requested 3 fixes: HITL bug, CLAUDE.md hook count, BaseAgent.ts split. All three were already completed in Session 14 (commit d5a5f0a). Verified:
-1. **HITL bug (DEBT-02):** FIXED. `needsApproval()` now checks `tool.isFinancial` (not `tool.isWrite`). `isFinancial?: boolean` added to AgentTool in types.ts line 27.
-2. **CLAUDE.md hook count:** CORRECT. Says 8 hooks, lists all 8, matches 8 entries in settings.json.
-3. **BaseAgent.ts split:** DONE. 475→259 lines. Types extracted to types.ts (102 lines), logger to agent-logger.ts (103 lines). All under 300-line limit.
-Remaining open items from first audit: test suite (0/9 scripts), MEMORY.md creation.
-Status: resolved | note:three-requested-fixes-already-done
-
-### Lena -- 2026-03-20 (Execution Pass)
-Two items executed:
-1. **MEMORY.md created** at `~/.claude/projects/d--AI--template/memory/MEMORY.md` — factual index of project state: 59 skills, 8 hooks, 9 scripts, 8 rules, 6 agents, 2 MCP servers, outstanding actions, key findings from first family run. Under 100 lines. Closes L-08/NA-05.
-2. **Test suite foundation** — `scripts/memory-integrity.test.js` created. 8 tests, all passing. Uses Node built-in test runner (node:test), zero dependencies. Covers: missing MEMORY.md, empty index, valid files, missing references, orphans, incomplete frontmatter, empty files, output format. Test Coverage moves from 0/12 to 1/12 (8%). Closes L-03 partially.
-What changed: two of the six pending-approval items are now done. Vera's Memory Retention and Test Coverage scores will both improve on next run. Ada's File Integrity penalty (MEMORY.md absent) is cleared.
-Status: open | for:ada,vera
+### Lena -- 2026-03-21 (Third Run)
+Fixed all 7 Ada drift items (59->57 in 4 docs files, 8-agent->4-agent, deferred-patterns Vera/Mira refs). Quality: 3/6 SHARP, 2 DEEPEN, 1 STALE. Ledger: 11 open (down from 15), 7 resolved this run. Cross-agent pattern: all 3 drift findings share one root cause (S16 restructuring without doc sweep). MEMORY.md escalated at 3 cycles. Test coverage escalated at 3 cycles (S17 hard deadline holds). 4 more items at 3-cycle threshold noted for next run.
+Status: open | for:ada (verify accuracy recovery on next run), for:sir (MEMORY.md + test coverage escalations)

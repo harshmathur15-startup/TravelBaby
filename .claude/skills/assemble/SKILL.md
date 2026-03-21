@@ -8,7 +8,7 @@ description: Team configurator — Lina detects the project stack, recommends wh
 Lina auto-detects the project's tech stack and recommends the optimal agent team. Run on new projects, after major stack changes, or when setting up a product's agent family.
 
 ## Attribution
-Inspired by [vijaythecoder/awesome-claude-agents](https://github.com/vijaythecoder/awesome-claude-agents) team-configurator — MIT licensed. Adapted to three-layer architecture (Kira/Template/Products) with Lena seed pattern integration. Unlike the source, Lina recommends but never modifies project config.
+Inspired by [vijaythecoder/awesome-claude-agents](https://github.com/vijaythecoder/awesome-claude-agents) team-configurator — MIT licensed. Adapted to three-layer architecture (Identity/Template/Products) with Lena seed pattern integration. Unlike the source, Lina recommends but never modifies project config.
 
 ## Workflow
 
@@ -80,11 +80,11 @@ If family recommended:
    - What quality gates matter for THIS type of application?
 2. Suggest a name for each agent (warm, short, human, mostly female)
 3. Suggest execution order based on dependencies
-4. Draft a starter registry.md (same format as Kira's)
+4. Draft a starter registry.md (standard format from agents/family/registry.md)
 
 Three-layer awareness:
 - Skills from template (.claude/skills/) = inherited by products automatically
-- Kira-specific skills (/watch, /pulse, /mirror, etc.) = never recommended for products
+- Identity-project-specific skills (/mirror, /rank-kira, etc.) = never recommended for products
 - Product-specific skills = created only when the product has unique needs template doesn't cover
 
 PHASE 4 — OUTPUT

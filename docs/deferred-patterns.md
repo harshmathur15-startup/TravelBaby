@@ -115,9 +115,9 @@ Designs for 13 infrastructure patterns borrowed from competitor studies. Each is
 ## #69 Workflow Metrics as Structured Data
 **Trigger:** Trending and comparison across sessions becomes important
 **Source:** SuperClaude
-**What it does:** Convert Vera's signals and Mira's dimensions from markdown reports to JSONL/CSV with timestamps. Enables: "plot memory retention over 20 sessions."
-**Implementation:** Vera and Mira already write to CSV history files (vera-history.csv, mira-history.csv). Extend with more dimensions and timestamps. No new infrastructure needed — just richer CSV output.
-**Note:** Partially done — Vera has history CSV. Mira needs one.
+**What it does:** Convert workflow health signals and quality dimensions from markdown reports to JSONL/CSV with timestamps. Enables: "plot memory retention over 20 sessions."
+**Implementation:** Workflow signals already write to CSV history files (e.g., vera-history.csv). Extend with more dimensions and timestamps. No new infrastructure needed — just richer CSV output.
+**Note:** Partially done — history CSV exists. Additional dimensions need tracking. (Vera and Mira were removed agents in S16 family restructuring -- their signal work is now checked manually or via /pulse and /sister skills.)
 
 ---
 

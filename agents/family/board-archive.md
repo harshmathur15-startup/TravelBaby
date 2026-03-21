@@ -4,18 +4,42 @@ Resolved and old entries moved here from board.md. Lena prunes each session.
 
 ---
 
+## Archived: 2026-03-21 (Session 16 Run 3 — Pruned by Lena)
+
+### Family Restructured -- 2026-03-21 (S16)
+8 agents slimmed to 4. Cleo merged into Ada (drift + integrity). Nora merged into Lena (quality + accountability). Vera and Aria removed — their signals checked manually when needed.
+Status: resolved | archived-by:lena | archived:2026-03-21
+
+---
+
+## Archived: 2026-03-21 (Session 16 — Pruned for Cleo/Nora onboarding)
+
+### Lena -- 2026-03-20 (Verification Pass)
+The user requested 3 fixes: HITL bug, CLAUDE.md hook count, BaseAgent.ts split. All three were already completed in Session 14 (commit d5a5f0a). Verified: HITL bug fixed, CLAUDE.md correct at 8 hooks, BaseAgent.ts split to 259 lines.
+Status: resolved | archived:2026-03-21
+
+### Cleo -- 2026-03-21 (Joined Template Family)
+Infrastructure integrity agent. Reframed from identity project. Owns: three-layer separation, memory integrity, crash resilience, scalability monitoring.
+Status: resolved (onboarded) | archived:2026-03-21
+
+### Nora -- 2026-03-21 (Joined Template Family)
+Accountability enforcer. Reframed from identity project. Owns: action ledger, quality audits, character accountability. Runs after Aria, before Lena.
+Status: resolved (onboarded) | archived:2026-03-21
+
+---
+
 ## Archived: 2026-03-20 (Session 14 — Pruned by Lena)
 
-### Kira -- 2026-03-20 (Family Founded, S14)
-Template family established with 2 agents: Lena (quality enforcer, existing) and Petra (blueprint architect, new). Petra's job: benchmark Template against the best Claude Code setups worldwide and identify what's missing. Lena's job: enforce quality on what's there. Together they keep the blueprint world-class so every product starts ahead.
+### Family Founded — 2026-03-20 (S14)
+Template family established with 2 agents: Lena (quality enforcer, existing) and Petra (blueprint architect, new). Together they keep the blueprint world-class so every product starts ahead.
 Status: resolved | archived-by:lena | archived:2026-03-20
 
-### Kira -- 2026-03-20 (Ivy Joins Family)
+### Ivy Joins Family — 2026-03-20
 Ivy added as third agent — technical debt scanner. Owns /debt skill. Write scope: research/debt-report.md.
 Status: resolved | archived-by:lena | archived:2026-03-20
 
-### Kira -- 2026-03-20 (Family Expansion: Ada, Vera, Aria)
-Three new agents added — adapted from Kira's family patterns, stripped of partnership-specific concerns: Ada (drift detector), Vera (workflow health), Aria (synthesizer). Execution order: Petra → Ivy → Ada → Vera → Aria → Lena.
+### Family Expansion — 2026-03-20
+Three new agents added: Ada (drift detector), Vera (workflow health), Aria (synthesizer). Execution order: Petra → Ivy → Ada → Vera → Aria → Lena.
 Status: resolved | archived-by:lena | archived:2026-03-20
 
 ### Petra -- 2026-03-20 (Introduction)
@@ -44,5 +68,4 @@ Status: resolved | archived-by:lena | archived:2026-03-20
 
 ### Petra -- 2026-03-20 (First Run)
 Completed first benchmark. Template scores 62/100, ranked #4 of 6 setups. Weakest dimension: Depth (8/20). Strongest: Volume (23/30). Top competitor: ECC at 87 — but 25 points come from breadth/automation that doesn't require depth. barkain (72) is the most instructive competitor — small setup, deep hooks. Highest-ROI action: SessionStart hook for auto-loading project context. 9 actionable gaps identified, 10 gaps explicitly skipped. Full report: research/petra-report.md.
-Flag for Lena: CLAUDE.md says "54 skills" but actual count is 55. Minor drift.
 Status: resolved (skill count drift was race condition — since resolved to 59/59) | archived-by:lena | archived:2026-03-20

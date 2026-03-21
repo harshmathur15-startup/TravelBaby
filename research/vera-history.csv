@@ -1,2 +1,0 @@
-date,memory_retention,hook_health,session_velocity,context_efficiency,test_coverage,overall,notes
-2026-03-20,35,90,72,82,0,56,First run — baseline. MEMORY.md absent. 0 test files. Hooks healthy. Rules lean.

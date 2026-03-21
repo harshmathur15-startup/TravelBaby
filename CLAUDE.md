@@ -1,59 +1,117 @@
-# [Project Name]
+# Claude Code SaaS Template
 
-## Project Overview
-[Brief description of the project and its agentic capabilities.]
+## Why This Exists
+
+To be the best SaaS boilerplate out there. Not the most popular — the best. The one where auth works on day one, agents have guardrails from the start, and every product built from it ships faster because the foundation was already world-class. If a developer can't go from clone to building features in under 10 minutes, the template has failed.
+
+Production-ready SaaS boilerplate with built-in AI agent governance. Clone, configure, build.
+
+## Quick Start
+
+1. Clone this repo, run `npm install && docker compose up -d && npx prisma migrate dev`
+2. Read [docs/getting-started.md](docs/getting-started.md) for full setup
+3. Fill in the product sections below (marked with `<!-- PRODUCT -->`)
+4. Delete `research/` and `agents/examples/` (template artifacts)
+5. Build your own agent family using the pattern in `agents/family/`
+6. Run `/kickoff` to start your first session
 
 ## Tech Stack
-- **Frontend:** React 18+ with TypeScript, Vite, Tailwind CSS
-- **Backend:** Node.js with Express, TypeScript
-- **Database:** PostgreSQL with Prisma ORM
-- **AI/Agents:** Claude API (Anthropic SDK) for agentic workflows
-- **Auth:** JWT-based authentication
-- **State Management:** Zustand
+
+- **Frontend:** React 18, TypeScript, Vite, Tailwind CSS, Zustand
+- **Backend:** Node.js, Express, TypeScript
+- **Database:** PostgreSQL, Prisma ORM
+- **Jobs:** BullMQ + Redis
+- **AI/Agents:** Claude API (Anthropic SDK), BaseAgent framework
+- **Auth:** JWT (15min) + httpOnly refresh tokens (30d, rotated)
 - **Testing:** Vitest, React Testing Library
 
 ## Project Structure
+
 ```
 /client          - React frontend (Vite)
-/server          - Node.js/Express backend
+/server          - Express API, services, middleware
 /shared          - Shared types and utilities
-/agents          - AI agent definitions and workflows
-/prisma          - Database schema and migrations
+/agents          - BaseAgent framework, examples, family
+/prisma          - Schema, migrations, seed
+/scripts         - Hook execution scripts
+/docs            - Setup guides, skill tiers, inheritance
 ```
 
 ## Core Features
-[List the core features of this project]
 
-## Agents
-- **Petra** — blueprint architect. Benchmarks Template against the best Claude Code setups worldwide, identifies gaps. Run via `/blueprint`.
-- **Ivy** — technical debt scanner. Scans for debt indicators, prioritizes by severity and effort, tracks trends. Run via `/debt`.
-- **Ada** — drift detector. Verifies CLAUDE.md accuracy, file integrity, hook pipeline health. Run via `/watch`.
-- **Vera** — workflow health monitor. Measures 5 signals detecting silent degradation. Run via `/pulse`.
-- **Aria** — cross-agent synthesizer. Reads all agent outputs, finds patterns, measures family coordination. Run via `/sister`.
-- **Lena** — quality enforcer. Audits product health, file quality, outstanding actions, prunes board. Run via `/mother`.
+- **Auth:** JWT access + httpOnly refresh with rotation, password hashing (bcrypt 12+)
+- **Multi-tenancy:** Org-scoped data isolation, tenant middleware
+- **RBAC:** Role-based access control, server-side ownership checks
+- **Background jobs:** BullMQ + Redis with progress tracking and timeouts
+- **AI agents:** BaseAgent with iteration caps, write scopes, HITL gates, guardrails
+- **Observability:** Agent run logging, session tracking, cost estimation
 
-## Conventions
-- Use TypeScript strict mode everywhere
-- API routes follow REST conventions: `/api/v1/<resource>`
-- Components use PascalCase, utilities use camelCase
-- All AI agent actions are logged for auditability
+## What You Inherit
+
+| Layer | Count | What It Does |
+|-------|-------|-------------|
+| **Core Skills** | 13 | Session lifecycle, commits, reviews, debugging, deployment |
+| **Extended Skills** | 28 | Specs, diagrams, security scans, incident response (opt-in) |
+| **Hooks** | 8 | Auto-format, file protection, quality gates, session tracking |
+| **Scripts** | 9 | Hook execution scripts |
+| **Rules** | 8 | Standards for code, security, testing, performance, agents |
+| **MCP Servers** | 2 | Live library docs, extended reasoning |
+
+See [docs/skill-tiers.md](docs/skill-tiers.md) for the full skill breakdown.
+
+## Hooks (Run Automatically)
+
+| When | What | Why |
+|------|------|-----|
+| Session starts | Load last handoff + git state | Context continuity |
+| Before bash | Block destructive commands | Safety |
+| Before file edit | Check protected file patterns | Prevent accidental config edits |
+| Before compaction | Generate session handoff | Preserve context |
+| After file edit | Run prettier + quality gate | Code quality |
+| After any tool | Log to session tracker | Observability |
+| Session ends | Save memory + cost estimate | Continuity |
+
+## Rules (8 Domains)
+
+| Rule | Covers |
+|------|--------|
+| general.md | Naming, file discipline, git, code quality |
+| security.md | Secrets, input validation, auth, audit logging |
+| backend.md | API design, error handling, logging |
+| frontend.md | Components, state, performance, accessibility |
+| database.md | Schema, indexing, migrations, queries |
+| performance.md | Response budgets, frontend metrics, background jobs |
+| testing.md | Test structure, mocking, coverage thresholds |
+| agents.md | Agent contracts, HITL, retry, observability |
+
+## Agent Family (Template's Own)
+
+4 agents maintain the template itself. Products build their own families using the same pattern.
+
+```
+Petra (benchmark) -> Ivy (debt) -> Ada (drift + integrity) -> Lena (quality + accountability)
+```
+
+See `agents/family/registry.md` for the pattern your product should follow.
+
+---
+
+<!-- PRODUCT: Replace everything below with your product's specifics -->
+
+## Product: [Your Project Name]
+
+### Overview
+[What this product does and who it's for]
+
+### Core Features
+[Your feature list]
+
+### Agents
+[Your product's agent family — built from the template pattern]
+
+### Conventions
+- TypeScript strict mode everywhere
+- API routes: `/api/v1/<resource>`
+- Components: PascalCase, utilities: camelCase
+- All AI agent actions logged for auditability
 - Environment variables in `.env` (never committed)
-
-## What Lives Here (Template Blueprint)
-- **59 skills** — session lifecycle (kickoff, wrap, dashboard), product tooling (deploy, debug, scaffold), quality (review, retro, blueprint, debt, watch, pulse, sister), workflow (sessions, signal, save-context, recall, save), and 40+ more
-- **8 hooks** — bash blocker, file protection, quality gate, handoff generator, session-start (auto-context), session-stop (auto-save), prettier formatter (inline), session-tracker (inline)
-- **9 scripts** — component-validation, cost-tracker, file-protection, quality-gate, memory-integrity, handoff-generator, session-start, session-stop, session-tracker
-- **8 rules** — general, security, backend, frontend, database, performance, testing, agents
-- **6 agents** — Petra (benchmark), Ivy (debt), Ada (drift), Vera (pulse), Aria (synthesis), Lena (enforce) — with family structure (registry, board, profiles)
-- **2 MCP servers** — context7 (live library docs), sequential-thinking (extended reasoning)
-
-## What Does NOT Live Here
-- Kira's personality, identity, or partnership rules — those are Kira-only
-- Agent family profiles, board, registry — each product gets its own family via global agent-family.md pattern
-- Partnership artifacts (journal, evolution, performance tracker) — Kira-only
-- Identity benchmarks (AIE, KCB, Scout rankings) — Kira-only
-
-## What Products Inherit
-- All Template skills, hooks, scripts, rules
-- Global rules (conventions.md, security baselines, kira.md personality)
-- Agent family PATTERN (from global agent-family.md) — but NOT Kira's specific family

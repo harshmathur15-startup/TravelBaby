@@ -1,2 +1,0 @@
-date,family_health,petra_score,ivy_debt_count,ada_score,vera_score,connections_found,top_action,notes
-2026-03-20,85,62,29,87,56,4,Fix HITL logic bug (DEBT-02) in BaseAgent.ts,First synthesis run. All 4 agents ran same session. Zero test coverage is dominant cross-agent theme. Infrastructure sound; semantic core untrusted.
