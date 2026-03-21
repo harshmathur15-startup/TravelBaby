@@ -1,0 +1,138 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import Badge from '@components/ui/Badge.astro';
+import Button from '@components/ui/Button.astro';
+import Card from '@components/ui/Card.astro';
+import Input from '@components/ui/Input.astro';
+---
+
+<BaseLayout title="Components" description="UI component reference for the website boilerplate.">
+  <section class="showcase" aria-labelledby="showcase-heading">
+    <Container>
+      <SectionHeading
+        title="Component Showcase"
+        subtitle="Every UI primitive included in the boilerplate. Copy, customize, compose."
+        as="h1"
+        id="showcase-heading"
+      />
+
+      <!-- Buttons -->
+      <div class="showcase__section">
+        <h2 class="showcase__title">Buttons</h2>
+        <div class="showcase__row">
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="outline">Outline</Button>
+          <Button variant="ghost">Ghost</Button>
+        </div>
+        <div class="showcase__row">
+          <Button variant="primary" size="sm">Small</Button>
+          <Button variant="primary" size="md">Medium</Button>
+          <Button variant="primary" size="lg">Large</Button>
+        </div>
+        <div class="showcase__row">
+          <Button variant="primary" disabled>Disabled</Button>
+          <Button variant="primary" href="#">Link Button</Button>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <div class="showcase__section">
+        <h2 class="showcase__title">Badges</h2>
+        <div class="showcase__row">
+          <Badge variant="default">Default</Badge>
+          <Badge variant="primary">Primary</Badge>
+          <Badge variant="success">Success</Badge>
+          <Badge variant="warning">Warning</Badge>
+          <Badge variant="error">Error</Badge>
+          <Badge variant="accent">Accent</Badge>
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div class="showcase__section">
+        <h2 class="showcase__title">Cards</h2>
+        <div class="showcase__grid">
+          <Card>
+            <h3 class="card-demo__title">Default Card</h3>
+            <p class="card-demo__text">A simple card with default padding and styling.</p>
+          </Card>
+          <Card href="#">
+            <h3 class="card-demo__title">Linked Card</h3>
+            <p class="card-demo__text">This card is a link. Hover for shadow effect.</p>
+          </Card>
+        </div>
+      </div>
+
+      <!-- Inputs -->
+      <div class="showcase__section">
+        <h2 class="showcase__title">Inputs</h2>
+        <div class="showcase__grid">
+          <Input label="Default" name="demo-default" placeholder="Enter text..." />
+          <Input label="Required" name="demo-required" placeholder="Required field" required />
+          <Input label="With Error" name="demo-error" error="This field is required" />
+          <Input label="Email" name="demo-email" type="email" placeholder="you@example.com" />
+        </div>
+      </div>
+
+      <!-- Section Heading -->
+      <div class="showcase__section">
+        <h2 class="showcase__title">Section Heading</h2>
+        <SectionHeading
+          title="Example Heading"
+          subtitle="This is the SectionHeading component with a subtitle."
+        />
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  .showcase {
+    padding: var(--space-16) 0 var(--space-20);
+  }
+  .showcase__section {
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-12);
+    border-bottom: 1px solid var(--color-neutral-200);
+  }
+  .showcase__section:last-child {
+    border-bottom: none;
+  }
+  .showcase__title {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-6);
+  }
+  .showcase__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+  .showcase__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  @media (min-width: 768px) {
+    .showcase__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .card-demo__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-2);
+  }
+  .card-demo__text {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-600);
+    line-height: 1.6;
+  }
+</style>

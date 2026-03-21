@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Container from '../components/ui/Container.astro';
-import SectionHeading from '../components/ui/SectionHeading.astro';
-import Card from '../components/ui/Card.astro';
-import CtaSection from '../components/sections/CtaSection.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import Card from '@components/ui/Card.astro';
+import CtaSection from '@components/sections/CtaSection.astro';
 
 const values = [
   {
@@ -47,6 +47,7 @@ const team = [
           title="Building Tools That Matter"
           subtitle="We are a team of builders, designers, and problem-solvers on a mission to help businesses launch faster and scale smarter."
           as="h1"
+          id="about-hero-heading"
         />
       </div>
     </Container>
@@ -80,6 +81,7 @@ const team = [
       <SectionHeading
         title="What We Stand For"
         subtitle="The principles that guide every decision we make."
+        id="values-heading"
       />
       <div class="about-values__grid">
         {values.map((value) => (
@@ -101,6 +103,7 @@ const team = [
       <SectionHeading
         title="Meet the Team"
         subtitle="The people making it happen."
+        id="team-heading"
       />
       <div class="about-team__grid">
         {team.map((member) => (

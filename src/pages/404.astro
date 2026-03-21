@@ -1,0 +1,55 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@components/ui/Container.astro';
+import Button from '@components/ui/Button.astro';
+---
+
+<BaseLayout title="Page Not Found">
+  <section class="error-page" aria-labelledby="error-heading">
+    <Container size="sm">
+      <div class="error-page__inner">
+        <span class="error-page__code" aria-hidden="true">404</span>
+        <h1 id="error-heading" class="error-page__title">Page Not Found</h1>
+        <p class="error-page__text">
+          The page you are looking for does not exist or has been moved.
+        </p>
+        <Button variant="primary" size="lg" href="/">
+          Back to Home
+        </Button>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  .error-page {
+    padding: var(--space-20) 0;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+  }
+  .error-page__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-4);
+  }
+  .error-page__code {
+    font-family: var(--font-heading);
+    font-size: 8rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-neutral-200);
+  }
+  .error-page__title {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+  }
+  .error-page__text {
+    font-size: var(--text-lg);
+    color: var(--color-neutral-500);
+    max-width: 400px;
+  }
+</style>

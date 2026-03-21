@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Container from '../components/ui/Container.astro';
-import SectionHeading from '../components/ui/SectionHeading.astro';
-import Input from '../components/ui/Input.astro';
-import Button from '../components/ui/Button.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import Input from '@components/ui/Input.astro';
+import Button from '@components/ui/Button.astro';
 ---
 
 <BaseLayout title="Contact Us" description="Get in touch with our team. We would love to hear from you.">
@@ -24,7 +24,8 @@ import Button from '../components/ui/Button.astro';
       <div class="contact-grid">
         <!-- Form -->
         <div class="contact-form-wrapper">
-          <form class="contact-form" method="post" action="/api/contact" novalidate>
+          <!-- TODO: Connect to your form handler (e.g., Formspree, Netlify Forms, or your API) -->
+          <form class="contact-form" method="post" action="https://formspree.io/f/your-form-id" novalidate>
             <div class="contact-form__row">
               <Input label="First Name" name="firstName" placeholder="Jane" required />
               <Input label="Last Name" name="lastName" placeholder="Smith" required />

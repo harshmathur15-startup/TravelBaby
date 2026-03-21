@@ -221,8 +221,9 @@
   --color-neutral-950: var(--color-neutral-950);
 }
 
-/* --- Google Fonts --- */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+/* --- Google Fonts ---
+   Loaded via <link rel="preload"> in BaseLayout.astro for non-blocking rendering.
+   Do NOT use @import here — it blocks rendering. */
 
 /* --- Base resets --- */
 @layer base {

@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from '../ui/ThemeToggle.astro';
+
 const NAV_LINKS = [
   { label: 'Features', href: '/features' },
   { label: 'Pricing', href: '/pricing' },
@@ -27,6 +29,7 @@ const NAV_LINKS = [
     </ul>
 
     <div class="navbar__actions">
+      <ThemeToggle />
       <a href="/get-started" class="navbar__cta" aria-label="Get started with Brand">
         Get Started
       </a>

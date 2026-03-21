@@ -91,4 +91,84 @@ export const POSTS: Record<string, BlogPost> = {
   },
 };
 
+export const POSTS_LIST: BlogPost[] = Object.values(POSTS);
+
+// Additional posts shown on the listing page (no detail page content needed)
+const LISTING_ONLY_POSTS: BlogPost[] = [
+  {
+    slug: 'responsive-layouts-guide',
+    title: 'Responsive Layouts Without the Headaches',
+    description: 'Modern CSS techniques for building layouts that look great on every screen size.',
+    category: 'Design',
+    author: 'Sarah Chen',
+    date: '2025-02-28',
+    readTime: '7 min read',
+    image: '/blog/responsive.svg',
+    content: `
+      <p>Responsive design does not have to be painful. Modern CSS gives us tools like container queries, clamp(), and subgrid that make fluid layouts straightforward.</p>
+
+      <h2>Start Mobile-First</h2>
+      <p>Write your base styles for the smallest screen, then add complexity with min-width media queries. This keeps your CSS lean and your mobile experience fast.</p>
+
+      <h2>Use CSS Grid for Page Layouts</h2>
+      <p>CSS Grid handles two-dimensional layouts better than flexbox. Define your grid template on the parent and let items flow naturally. Use auto-fit and minmax() for responsive grids without media queries.</p>
+
+      <h2>Typography That Scales</h2>
+      <p>Use clamp() for fluid typography that scales smoothly between viewport sizes. No more breakpoint-specific font sizes — one declaration covers the full range.</p>
+    `,
+  },
+  {
+    slug: 'cms-integration-tips',
+    title: 'CMS Integration Tips for Static Sites',
+    description: 'How to connect a headless CMS to your static site generator for the best of both worlds.',
+    category: 'Development',
+    author: 'James Wilson',
+    date: '2025-02-20',
+    readTime: '5 min read',
+    image: '/blog/cms.svg',
+    content: `
+      <p>A headless CMS separates content management from presentation. Your marketing team edits in a visual studio while your site stays fast and static.</p>
+
+      <h2>Choosing a CMS</h2>
+      <p>Consider your team size, content complexity, and budget. Sanity offers real-time collaboration and a flexible schema. Contentful and Strapi are solid alternatives with different trade-offs.</p>
+
+      <h2>Schema Design</h2>
+      <p>Design your schemas around content types, not pages. A "hero" object type can be reused across landing pages, blog posts, and campaigns. Think in building blocks.</p>
+
+      <h2>Preview and Drafts</h2>
+      <p>Set up preview mode so editors can see changes before publishing. Most headless CMS platforms support draft/published states that map cleanly to static generation.</p>
+    `,
+  },
+  {
+    slug: 'web-performance-checklist',
+    title: 'The Web Performance Checklist',
+    description: 'A step-by-step checklist to audit and improve your site speed, Core Web Vitals, and user experience.',
+    category: 'Tutorial',
+    author: 'Alex Johnson',
+    date: '2025-02-15',
+    readTime: '9 min read',
+    image: '/blog/performance.svg',
+    content: `
+      <p>Performance is not an optimization — it is a feature. Slow sites lose visitors, rankings, and revenue. Here is a checklist to audit and improve your site.</p>
+
+      <h2>Measure First</h2>
+      <p>Run Lighthouse, WebPageTest, and check Core Web Vitals in Search Console. Identify your worst metrics before making changes. Profile, do not guess.</p>
+
+      <h2>Reduce JavaScript</h2>
+      <p>Ship less JavaScript. Use static rendering where possible. Lazy-load components that are not visible on initial load. Tree-shake your imports.</p>
+
+      <h2>Optimize Images</h2>
+      <p>Use modern formats (WebP, AVIF), lazy-load below-the-fold images, and serve responsive sizes with srcset. Images are typically the largest payload on any page.</p>
+
+      <h2>Cache and CDN</h2>
+      <p>Set proper cache headers. Use a CDN for static assets. Preconnect to third-party origins. Every millisecond of network latency adds up.</p>
+    `,
+  },
+];
+
+// Merge for listing page and detail page routing
+for (const post of LISTING_ONLY_POSTS) {
+  POSTS[post.slug] = post;
+}
+
 export const RELATED_POSTS: BlogPost[] = Object.values(POSTS);

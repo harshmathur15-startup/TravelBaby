@@ -1,11 +1,11 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Container from '../components/ui/Container.astro';
-import SectionHeading from '../components/ui/SectionHeading.astro';
-import Button from '../components/ui/Button.astro';
-import Features from '../components/sections/Features.astro';
-import Stats from '../components/sections/Stats.astro';
-import CtaSection from '../components/sections/CtaSection.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import Button from '@components/ui/Button.astro';
+import Features from '@components/sections/Features.astro';
+import Stats from '@components/sections/Stats.astro';
+import CtaSection from '@components/sections/CtaSection.astro';
 ---
 
 <BaseLayout title="Features" description="Everything you need to build and launch your website fast.">
@@ -16,6 +16,7 @@ import CtaSection from '../components/sections/CtaSection.astro';
           title="Everything You Need to Ship Fast"
           subtitle="A complete foundation with design system, CMS, SEO, and responsive components."
           as="h1"
+          id="features-hero-heading"
         />
         <div class="features-hero__actions">
           <Button variant="primary" size="lg" href="/get-started">

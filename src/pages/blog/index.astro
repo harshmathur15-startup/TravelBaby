@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Container from '../../components/ui/Container.astro';
-import SectionHeading from '../../components/ui/SectionHeading.astro';
-import Badge from '../../components/ui/Badge.astro';
-import CtaSection from '../../components/sections/CtaSection.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import Badge from '@components/ui/Badge.astro';
+import CtaSection from '@components/sections/CtaSection.astro';
 
 const posts = [
   {
@@ -96,6 +96,7 @@ function badgeVariant(category: string): 'primary' | 'accent' | 'success' | 'def
           title="Blog"
           subtitle="Articles, tutorials, and insights on web development, design, and building great products."
           as="h1"
+          id="blog-hero-heading"
         />
       </div>
     </Container>

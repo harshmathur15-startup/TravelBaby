@@ -55,12 +55,13 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) to activate the backend.
 ## What's Included
 
 ### Website Layer
-- **6 UI primitives:** Badge, Button, Card, Container, Input, SectionHeading
+- **7 UI primitives:** Badge, Button, Card, Container, Input, SectionHeading, ThemeToggle
 - **9 section components:** Navbar, Hero, Features, Stats, Testimonials, PricingCards, FAQ, CtaSection, Footer
-- **7 pages:** Home, Features, Pricing, About, Contact, Blog listing, Blog post
-- **Design tokens:** Full color, typography, spacing, shadow, radius, transition system
+- **11 pages:** Home, Features, Pricing, About, Contact, Get Started, Blog listing, Blog posts, Components, 404, 500
+- **Design tokens:** Full color, typography, spacing, shadow, radius, transition system (dark mode ready)
 - **CMS schemas:** 7 document types + 7 object types (page builder, blog, pricing, testimonials, FAQ)
-- **SEO:** BaseLayout with OG, Twitter, canonical, JSON-LD Organization
+- **SEO:** BaseLayout with OG, Twitter, canonical, JSON-LD, RSS feed, sitemap
+- **Performance:** Non-blocking font loading, View Transitions, Lighthouse CI, path aliases
 
 ### AI Harness
 | Layer | Count | What It Does |
