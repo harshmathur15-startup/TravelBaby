@@ -1,0 +1,160 @@
+---
+---
+
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero__inner">
+    <div class="hero__badge" aria-label="Announcement badge">
+      <span class="hero__badge-dot" aria-hidden="true"></span>
+      Launch Your Product
+    </div>
+
+    <h1 id="hero-heading" class="hero__heading">
+      Build Something<br />People Actually Want.
+    </h1>
+
+    <p class="hero__subtext">
+      A modern website boilerplate with everything you need to launch fast.
+      Design tokens, CMS integration, SEO, and responsive components out of the box.
+    </p>
+
+    <div class="hero__actions">
+      <a href="/get-started" class="hero__cta hero__cta--primary" aria-label="Get started for free">
+        Get Started Free
+      </a>
+      <a href="/features" class="hero__cta hero__cta--ghost" aria-label="Learn more about features">
+        Learn More
+      </a>
+    </div>
+
+    <p class="hero__trust" aria-label="Social proof">
+      Trusted by growing companies
+    </p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding: 6rem 1.5rem 4rem;
+    text-align: center;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--color-bg, #fff) 0%, var(--color-bg-alt, #f9fafb) 100%);
+  }
+
+  .hero__inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-primary, #2563eb);
+    background: var(--color-primary-light, #eff6ff);
+    border: 1px solid var(--color-primary-border, #bfdbfe);
+    border-radius: 999px;
+  }
+
+  .hero__badge-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--color-primary, #2563eb);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero__heading {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+    color: var(--color-text, #111827);
+    margin: 0 0 1.25rem;
+  }
+
+  .hero__subtext {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--color-text-secondary, #6b7280);
+    margin: 0 auto 2rem;
+    max-width: 600px;
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  }
+
+  .hero__cta--primary {
+    background: var(--color-primary, #2563eb);
+    color: #fff;
+    box-shadow: 0 1px 3px rgba(37, 99, 235, 0.3);
+  }
+
+  .hero__cta--primary:hover {
+    background: var(--color-primary-dark, #1d4ed8);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  }
+
+  .hero__cta--ghost {
+    background: transparent;
+    color: var(--color-text, #111827);
+    border: 1px solid var(--color-border, #e5e7eb);
+  }
+
+  .hero__cta--ghost:hover {
+    background: var(--color-bg-alt, #f9fafb);
+    border-color: var(--color-text-secondary, #6b7280);
+  }
+
+  .hero__trust {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text-muted, #9ca3af);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding: 4rem 1.5rem 3rem;
+    }
+
+    .hero__actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero__cta {
+      width: 100%;
+      max-width: 300px;
+      justify-content: center;
+    }
+  }
+</style>

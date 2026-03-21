@@ -1,0 +1,70 @@
+---
+---
+
+<section class="cta-section" aria-labelledby="cta-heading">
+  <div class="cta-section__inner">
+    <h2 id="cta-heading" class="cta-section__heading">Ready to Launch Your Website?</h2>
+    <p class="cta-section__subtext">
+      Clone the boilerplate and start building in minutes. Everything you need is already set up.
+    </p>
+    <a
+      href="/get-started"
+      class="cta-section__btn"
+      aria-label="Get started with the boilerplate"
+    >
+      Get Started
+    </a>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    padding: 5rem 1.5rem;
+    background: linear-gradient(135deg, var(--color-primary, #2563eb), var(--color-primary-dark, #1d4ed8));
+    text-align: center;
+  }
+
+  .cta-section__inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-section__heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.025em;
+    margin: 0 0 1rem;
+  }
+
+  .cta-section__subtext {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+    margin: 0 0 2rem;
+  }
+
+  .cta-section__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.875rem 2.5rem;
+    background: #fff;
+    color: var(--color-primary, #2563eb);
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .cta-section__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  @media (max-width: 640px) {
+    .cta-section {
+      padding: 3.5rem 1.5rem;
+    }
+  }
+</style>

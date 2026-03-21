@@ -1,10 +1,5 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {},
-  "files": [],
-  "references": [
-    { "path": "shared" },
-    { "path": "server" },
-    { "path": "client" }
-  ]
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist", "server", "client", "shared"]
 }

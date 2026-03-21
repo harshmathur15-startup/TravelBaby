@@ -1,0 +1,35 @@
+---
+/**
+ * Container — max-width wrapper with responsive padding.
+ */
+
+interface Props {
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  class?: string;
+  as?: 'div' | 'section' | 'main' | 'article';
+}
+
+const {
+  size = 'xl',
+  class: className = '',
+  as: Tag = 'div',
+} = Astro.props;
+
+const maxWidths: Record<string, string> = {
+  sm: 'max-w-[var(--container-sm)]',
+  md: 'max-w-[var(--container-md)]',
+  lg: 'max-w-[var(--container-lg)]',
+  xl: 'max-w-[var(--container-xl)]',
+};
+
+const classes = [
+  'mx-auto w-full',
+  'px-[var(--container-padding)]',
+  maxWidths[size],
+  className,
+].filter(Boolean).join(' ');
+---
+
+<Tag class={classes}>
+  <slot />
+</Tag>

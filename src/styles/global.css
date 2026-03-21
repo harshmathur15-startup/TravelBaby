@@ -1,0 +1,278 @@
+@import "tailwindcss";
+
+/* ===================================================================
+   Design Tokens
+   Neutral indigo/slate palette — replace with your brand colors.
+   Font: Inter (body/UI) + Poppins (headings) — both Google Fonts.
+   =================================================================== */
+
+@layer base {
+  :root {
+    /* --- Color: Primary (Indigo) --- */
+    --color-primary-50: #eef2ff;
+    --color-primary-100: #e0e7ff;
+    --color-primary-200: #c7d2fe;
+    --color-primary-300: #a5b4fc;
+    --color-primary-400: #818cf8;
+    --color-primary-500: #6366f1;
+    --color-primary-600: #4f46e5;
+    --color-primary-700: #4338ca;
+    --color-primary-800: #3730a3;
+    --color-primary-900: #312e81;
+    --color-primary-950: #1e1b4b;
+
+    /* --- Color: Secondary (Slate) --- */
+    --color-secondary-50: #f8fafc;
+    --color-secondary-100: #f1f5f9;
+    --color-secondary-200: #e2e8f0;
+    --color-secondary-300: #cbd5e1;
+    --color-secondary-400: #94a3b8;
+    --color-secondary-500: #0f172a;
+    --color-secondary-600: #0c1322;
+    --color-secondary-700: #090e19;
+    --color-secondary-800: #060a11;
+    --color-secondary-900: #030508;
+    --color-secondary-950: #010204;
+
+    /* --- Color: Accent (Amber) --- */
+    --color-accent-50: #fffbeb;
+    --color-accent-100: #fef3c7;
+    --color-accent-200: #fde68a;
+    --color-accent-300: #fcd34d;
+    --color-accent-400: #fbbf24;
+    --color-accent-500: #f59e0b;
+    --color-accent-600: #d97706;
+    --color-accent-700: #b45309;
+    --color-accent-800: #92400e;
+    --color-accent-900: #78350f;
+    --color-accent-950: #451a03;
+
+    /* --- Color: Neutral --- */
+    --color-neutral-0: #ffffff;
+    --color-neutral-50: #f8fafc;
+    --color-neutral-100: #f1f5f9;
+    --color-neutral-200: #e2e8f0;
+    --color-neutral-300: #cbd5e1;
+    --color-neutral-400: #94a3b8;
+    --color-neutral-500: #64748b;
+    --color-neutral-600: #475569;
+    --color-neutral-700: #334155;
+    --color-neutral-800: #1e293b;
+    --color-neutral-900: #0f172a;
+    --color-neutral-950: #020617;
+
+    /* --- Color: Semantic --- */
+    --color-success-light: #dcfce7;
+    --color-success: #22c55e;
+    --color-success-dark: #15803d;
+
+    --color-warning-light: #fef9c3;
+    --color-warning: #eab308;
+    --color-warning-dark: #a16207;
+
+    --color-error-light: #fee2e2;
+    --color-error: #ef4444;
+    --color-error-dark: #991b1b;
+
+    --color-info-light: #dbeafe;
+    --color-info: #3b82f6;
+    --color-info-dark: #1e40af;
+
+    /* --- Typography --- */
+    --font-heading: "Poppins", system-ui, sans-serif;
+    --font-body: "Inter", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+    --text-xs: 0.75rem;       /* 12px */
+    --text-sm: 0.875rem;      /* 14px */
+    --text-base: 1rem;        /* 16px */
+    --text-lg: 1.125rem;      /* 18px */
+    --text-xl: 1.25rem;       /* 20px */
+    --text-2xl: 1.5rem;       /* 24px */
+    --text-3xl: 2rem;         /* 32px */
+    --text-4xl: 2.625rem;     /* 42px */
+    --text-5xl: 3.5rem;       /* 56px */
+
+    --leading-tight: 1.3;
+    --leading-normal: 1.6;
+    --leading-relaxed: 1.8;
+
+    --tracking-tight: -0.02em;
+    --tracking-normal: 0;
+    --tracking-wide: 0.02em;
+
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* --- Spacing (4px base) --- */
+    --space-0: 0;
+    --space-1: 0.25rem;   /* 4px */
+    --space-2: 0.5rem;    /* 8px */
+    --space-3: 0.75rem;   /* 12px */
+    --space-4: 1rem;      /* 16px */
+    --space-5: 1.25rem;   /* 20px */
+    --space-6: 1.5rem;    /* 24px */
+    --space-8: 2rem;      /* 32px */
+    --space-10: 2.5rem;   /* 40px */
+    --space-12: 3rem;     /* 48px */
+    --space-16: 4rem;     /* 64px */
+    --space-20: 5rem;     /* 80px */
+    --space-24: 6rem;     /* 96px */
+    --space-32: 8rem;     /* 128px */
+
+    /* --- Shadows --- */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 0 10px 0 rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 0 12px 4px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+    /* --- Border Radii --- */
+    --radius-sm: 0.25rem;   /* 4px */
+    --radius-md: 0.375rem;  /* 6px */
+    --radius-lg: 0.75rem;   /* 12px */
+    --radius-xl: 1rem;      /* 16px */
+    --radius-full: 9999px;
+
+    /* --- Transitions --- */
+    --duration-fast: 150ms;
+    --duration-normal: 300ms;
+    --duration-slow: 400ms;
+    --ease-default: cubic-bezier(0.58, 0.3, 0.005, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* --- Container --- */
+    --container-sm: 640px;
+    --container-md: 768px;
+    --container-lg: 1024px;
+    --container-xl: 1180px;
+    --container-padding: var(--space-4);
+  }
+
+  /* --- Dark mode (toggle .dark on <html>) --- */
+  .dark {
+    --color-neutral-0: #020617;
+    --color-neutral-50: #0f172a;
+    --color-neutral-100: #1e293b;
+    --color-neutral-200: #334155;
+    --color-neutral-300: #475569;
+    --color-neutral-400: #64748b;
+    --color-neutral-500: #94a3b8;
+    --color-neutral-600: #cbd5e1;
+    --color-neutral-700: #e2e8f0;
+    --color-neutral-800: #f1f5f9;
+    --color-neutral-900: #f8fafc;
+    --color-neutral-950: #ffffff;
+
+    --color-primary-500: #818cf8;
+    --color-primary-600: #6366f1;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 0 12px 4px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* --- Tailwind @theme extension --- */
+@theme {
+  --font-heading: "Poppins", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: var(--color-primary-900);
+  --color-primary-950: var(--color-primary-950);
+
+  --color-secondary-50: var(--color-secondary-50);
+  --color-secondary-100: var(--color-secondary-100);
+  --color-secondary-200: var(--color-secondary-200);
+  --color-secondary-300: var(--color-secondary-300);
+  --color-secondary-400: var(--color-secondary-400);
+  --color-secondary-500: var(--color-secondary-500);
+
+  --color-accent-50: var(--color-accent-50);
+  --color-accent-100: var(--color-accent-100);
+  --color-accent-200: var(--color-accent-200);
+  --color-accent-300: var(--color-accent-300);
+  --color-accent-400: var(--color-accent-400);
+  --color-accent-500: var(--color-accent-500);
+
+  --color-neutral-0: var(--color-neutral-0);
+  --color-neutral-50: var(--color-neutral-50);
+  --color-neutral-100: var(--color-neutral-100);
+  --color-neutral-200: var(--color-neutral-200);
+  --color-neutral-300: var(--color-neutral-300);
+  --color-neutral-400: var(--color-neutral-400);
+  --color-neutral-500: var(--color-neutral-500);
+  --color-neutral-600: var(--color-neutral-600);
+  --color-neutral-700: var(--color-neutral-700);
+  --color-neutral-800: var(--color-neutral-800);
+  --color-neutral-900: var(--color-neutral-900);
+  --color-neutral-950: var(--color-neutral-950);
+}
+
+/* --- Google Fonts --- */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+/* --- Base resets --- */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    color: var(--color-neutral-900);
+    background-color: var(--color-neutral-0);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    line-height: var(--leading-tight);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-950);
+  }
+
+  h1 { font-size: var(--text-4xl); }
+  h2 { font-size: var(--text-3xl); }
+  h3 { font-size: var(--text-xl); }
+  h4 { font-size: var(--text-lg); }
+
+  a {
+    color: var(--color-primary-500);
+    text-decoration: none;
+    transition: color var(--duration-normal) var(--ease-in-out);
+  }
+
+  a:hover {
+    color: var(--color-primary-700);
+  }
+
+  /* Visible focus ring for keyboard navigation */
+  :focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+}

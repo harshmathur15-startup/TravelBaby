@@ -1,0 +1,175 @@
+---
+const TESTIMONIALS = [
+  {
+    quote: 'We went from zero to a fully deployed marketing site in under a day. The design tokens and component library saved us weeks of setup work.',
+    name: 'Sarah Chen',
+    role: 'CTO, Launchpad Labs',
+  },
+  {
+    quote: 'The CMS integration was the deciding factor. Our content team can update pages without filing engineering tickets. The SEO setup is excellent too.',
+    name: 'Marcus Rivera',
+    role: 'Lead Developer, Clearview',
+  },
+  {
+    quote: 'Clean code, great documentation, and it actually works out of the box. No mystery configurations or broken dependencies. Just clone and build.',
+    name: 'Priya Sharma',
+    role: 'Founder, Nimbus Studio',
+  },
+];
+---
+
+<section class="testimonials" aria-labelledby="testimonials-heading">
+  <div class="testimonials__inner">
+    <div class="testimonials__header">
+      <span class="testimonials__eyebrow">Testimonials</span>
+      <h2 id="testimonials-heading" class="testimonials__heading">What People Are Saying</h2>
+      <p class="testimonials__subtext">
+        Hear from developers who shipped faster with this boilerplate.
+      </p>
+    </div>
+
+    <div class="testimonials__grid" role="list">
+      {TESTIMONIALS.map((t) => (
+        <blockquote class="testimonials__card" role="listitem">
+          <p class="testimonials__quote">{t.quote}</p>
+          <footer class="testimonials__author">
+            <div class="testimonials__avatar" aria-hidden="true">
+              {t.name.charAt(0)}
+            </div>
+            <div>
+              <cite class="testimonials__name">{t.name}</cite>
+              <span class="testimonials__role">{t.role}</span>
+            </div>
+          </footer>
+        </blockquote>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    padding: 5rem 1.5rem;
+    background: var(--color-bg, #fff);
+  }
+
+  .testimonials__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .testimonials__header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .testimonials__eyebrow {
+    display: inline-block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-primary, #2563eb);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+  }
+
+  .testimonials__heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    color: var(--color-text, #111827);
+    letter-spacing: -0.025em;
+    margin: 0 0 1rem;
+  }
+
+  .testimonials__subtext {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary, #6b7280);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .testimonials__card {
+    padding: 2rem;
+    margin: 0;
+    background: var(--color-bg-alt, #f9fafb);
+    border: 1px solid var(--color-border, #e5e7eb);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .testimonials__quote {
+    font-size: 0.9375rem;
+    color: var(--color-text, #111827);
+    line-height: 1.7;
+    margin: 0;
+    flex: 1;
+  }
+
+  .testimonials__quote::before {
+    content: '\201C';
+    font-size: 1.5rem;
+    color: var(--color-primary, #2563eb);
+    font-weight: 700;
+    line-height: 0;
+    margin-right: 2px;
+  }
+
+  .testimonials__author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .testimonials__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-primary-light, #eff6ff);
+    color: var(--color-primary, #2563eb);
+    font-weight: 700;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+  }
+
+  .testimonials__name {
+    display: block;
+    font-style: normal;
+    font-weight: 600;
+    color: var(--color-text, #111827);
+    font-size: 0.9375rem;
+  }
+
+  .testimonials__role {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary, #6b7280);
+  }
+
+  @media (max-width: 1024px) {
+    .testimonials__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .testimonials {
+      padding: 3.5rem 1.5rem;
+    }
+
+    .testimonials__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,65 @@
+---
+/**
+ * Button — primary action element with variant and size options.
+ * Variants: primary, secondary, outline, ghost.
+ * Sizes: sm, md, lg.
+ */
+
+interface Props {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  disabled = false,
+  type = 'button',
+  class: className = '',
+} = Astro.props;
+
+const variantStyles: Record<string, string> = {
+  primary:
+    'bg-[var(--color-primary-600)] text-white hover:bg-[var(--color-primary-700)] shadow-[var(--shadow-sm)]',
+  secondary:
+    'bg-[var(--color-neutral-100)] text-[var(--color-neutral-800)] hover:bg-[var(--color-neutral-200)]',
+  outline:
+    'border border-[var(--color-neutral-300)] text-[var(--color-neutral-800)] hover:bg-[var(--color-neutral-50)]',
+  ghost:
+    'text-[var(--color-neutral-600)] hover:bg-[var(--color-neutral-100)] hover:text-[var(--color-neutral-800)]',
+};
+
+const sizeStyles: Record<string, string> = {
+  sm: 'text-[var(--text-sm)] px-[var(--space-3)] py-[var(--space-1)] gap-[var(--space-1)]',
+  md: 'text-[var(--text-base)] px-[var(--space-4)] py-[var(--space-2)] gap-[var(--space-2)]',
+  lg: 'text-[var(--text-lg)] px-[var(--space-6)] py-[var(--space-3)] gap-[var(--space-2)]',
+};
+
+const baseStyles = [
+  'inline-flex items-center justify-center',
+  'font-medium leading-none',
+  'rounded-[var(--radius-md)]',
+  'transition-colors duration-200',
+  'cursor-pointer',
+  'focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-400)] focus:ring-offset-2',
+  disabled ? 'opacity-50 pointer-events-none' : '',
+  variantStyles[variant],
+  sizeStyles[size],
+  className,
+].filter(Boolean).join(' ');
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  class={baseStyles}
+  {...href ? { href } : { type, disabled }}
+  aria-disabled={disabled ? 'true' : undefined}
+>
+  <slot />
+</Tag>

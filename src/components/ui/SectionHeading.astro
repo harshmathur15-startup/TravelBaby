@@ -1,0 +1,48 @@
+---
+/**
+ * SectionHeading — title + optional subtitle for page sections.
+ * Alignment: left, center, right.
+ */
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  align?: 'left' | 'center' | 'right';
+  as?: 'h1' | 'h2' | 'h3';
+  class?: string;
+}
+
+const {
+  title,
+  subtitle,
+  align = 'center',
+  as: Tag = 'h2',
+  class: className = '',
+} = Astro.props;
+
+const alignStyles: Record<string, string> = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right',
+};
+
+const wrapperClasses = [
+  'flex flex-col',
+  'gap-[var(--space-3)]',
+  'mb-[var(--space-10)]',
+  alignStyles[align],
+  className,
+].filter(Boolean).join(' ');
+---
+
+<div class={wrapperClasses}>
+  <Tag class="text-[var(--text-3xl)] md:text-[var(--text-4xl)] font-bold tracking-tight text-[var(--color-neutral-900)] font-[var(--font-heading)]">
+    {title}
+  </Tag>
+  {subtitle && (
+    <p class="text-[var(--text-lg)] text-[var(--color-neutral-500)] max-w-[var(--container-sm)] mx-auto">
+      {subtitle}
+    </p>
+  )}
+  <slot />
+</div>

@@ -1,0 +1,319 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import Badge from '../../components/ui/Badge.astro';
+import Button from '../../components/ui/Button.astro';
+import { POSTS, RELATED_POSTS } from '../../lib/blog-data';
+import type { BlogPost } from '../../lib/blog-data';
+
+export function getStaticPaths() {
+  return Object.keys(POSTS).map((slug) => ({
+    params: { slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const post = POSTS[slug as string];
+
+if (!post) {
+  return Astro.redirect('/blog');
+}
+
+function formatDate(dateStr: string): string {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+function badgeVariant(category: string): 'primary' | 'accent' | 'success' | 'default' {
+  const map: Record<string, 'primary' | 'accent' | 'success' | 'default'> = {
+    Development: 'primary',
+    Design: 'accent',
+    Tutorial: 'success',
+    Product: 'default',
+  };
+  return map[category] ?? 'default';
+}
+
+const relatedPosts = RELATED_POSTS.filter((p) => p.slug !== slug).slice(0, 2);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.title,
+  description: post.description,
+  datePublished: post.date,
+  author: {
+    '@type': 'Person',
+    name: post.author,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Your Company',
+    url: 'https://example.com',
+  },
+};
+---
+
+<BaseLayout title={post.title} description={post.description}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <article class="blog-post">
+    <!-- Hero -->
+    <section class="blog-post__hero" aria-labelledby="post-title">
+      <Container size="md">
+        <div class="blog-post__hero-inner">
+          <div class="blog-post__meta">
+            <Badge variant={badgeVariant(post.category)}>{post.category}</Badge>
+            <span class="blog-post__read-time">{post.readTime}</span>
+          </div>
+          <h1 id="post-title" class="blog-post__title">{post.title}</h1>
+          <p class="blog-post__description">{post.description}</p>
+          <div class="blog-post__author-row">
+            <div class="blog-post__avatar" aria-hidden="true">
+              <span>{post.author.split(' ').map((n) => n[0]).join('')}</span>
+            </div>
+            <div>
+              <p class="blog-post__author-name">{post.author}</p>
+              <p class="blog-post__date">{formatDate(post.date)}</p>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <!-- Image -->
+    <section class="blog-post__image-section" aria-hidden="true">
+      <Container size="md">
+        <div class="blog-post__image-placeholder">
+          <span>{post.category}</span>
+        </div>
+      </Container>
+    </section>
+
+    <!-- Content -->
+    <section class="blog-post__content-section">
+      <Container size="sm">
+        <div class="blog-post__content prose" set:html={post.content} />
+      </Container>
+    </section>
+
+    <!-- Back -->
+    <section class="blog-post__back">
+      <Container size="sm">
+        <Button variant="outline" href="/blog">
+          &larr; Back to Blog
+        </Button>
+      </Container>
+    </section>
+  </article>
+
+  <!-- Related Posts -->
+  {relatedPosts.length > 0 && (
+    <section class="blog-related" aria-labelledby="related-heading">
+      <Container>
+        <h2 id="related-heading" class="blog-related__heading">Related Articles</h2>
+        <div class="blog-related__grid">
+          {relatedPosts.map((related) => (
+            <a href={`/blog/${related.slug}`} class="blog-related__card">
+              <div class="blog-related__card-image">
+                <div class="blog-related__placeholder" aria-hidden="true">
+                  <span>{related.category}</span>
+                </div>
+              </div>
+              <div class="blog-related__card-content">
+                <Badge variant={badgeVariant(related.category)}>{related.category}</Badge>
+                <h3 class="blog-related__card-title">{related.title}</h3>
+                <p class="blog-related__card-desc">{related.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </Container>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .blog-post__hero {
+    padding: var(--space-16) 0 var(--space-8);
+    background: linear-gradient(180deg, var(--color-primary-50) 0%, var(--color-neutral-0) 100%);
+  }
+  .blog-post__hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .blog-post__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .blog-post__read-time {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-500);
+  }
+  .blog-post__title {
+    font-size: var(--text-3xl);
+    font-weight: 800;
+    color: var(--color-neutral-900);
+    line-height: 1.2;
+  }
+  .blog-post__description {
+    font-size: var(--text-lg);
+    color: var(--color-neutral-600);
+    line-height: 1.6;
+  }
+  .blog-post__author-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+  .blog-post__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: var(--color-primary-100);
+    color: var(--color-primary-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  .blog-post__author-name {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-neutral-900);
+  }
+  .blog-post__date {
+    font-size: var(--text-xs);
+    color: var(--color-neutral-500);
+  }
+
+  /* Image */
+  .blog-post__image-section {
+    padding: 0 0 var(--space-8);
+  }
+  .blog-post__image-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--color-neutral-100);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-neutral-400);
+    font-size: var(--text-lg);
+    font-weight: 500;
+  }
+
+  /* Content */
+  .blog-post__content-section {
+    padding: 0 0 var(--space-12);
+  }
+  .blog-post__content :global(h2) {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-4);
+  }
+  .blog-post__content :global(p) {
+    font-size: var(--text-base);
+    line-height: 1.8;
+    color: var(--color-neutral-700);
+    margin-bottom: var(--space-4);
+  }
+  .blog-post__content :global(code) {
+    background: var(--color-neutral-100);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm);
+  }
+
+  /* Back */
+  .blog-post__back {
+    padding: 0 0 var(--space-12);
+  }
+
+  /* Related */
+  .blog-related {
+    padding: var(--space-12) 0;
+    background: var(--color-neutral-50);
+  }
+  .blog-related__heading {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-6);
+  }
+  .blog-related__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  .blog-related__card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-neutral-0);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .blog-related__card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .blog-related__card-image {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .blog-related__placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--color-neutral-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-neutral-400);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+  .blog-related__card-content {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .blog-related__card-title {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-neutral-900);
+  }
+  .blog-related__card-desc {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-600);
+    line-height: 1.5;
+  }
+
+  @media (min-width: 768px) {
+    .blog-post__title {
+      font-size: var(--text-4xl);
+    }
+    .blog-related__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .blog-post__hero {
+      padding: var(--space-20) 0 var(--space-10);
+    }
+  }
+</style>

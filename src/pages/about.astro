@@ -1,0 +1,270 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui/Container.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import Card from '../components/ui/Card.astro';
+import CtaSection from '../components/sections/CtaSection.astro';
+
+const values = [
+  {
+    icon: '&#9733;',
+    title: 'Quality First',
+    description: 'We ship when it is ready, not when it is due. Every detail matters.',
+  },
+  {
+    icon: '&#9788;',
+    title: 'Open & Transparent',
+    description: 'Honest communication with our team, our customers, and ourselves.',
+  },
+  {
+    icon: '&#9829;',
+    title: 'Customer Focused',
+    description: 'Every decision starts with the question: does this help our users?',
+  },
+  {
+    icon: '&#9878;',
+    title: 'Built to Scale',
+    description: 'We architect for growth from day one, so our tools grow with you.',
+  },
+];
+
+const team = [
+  { name: 'Jane Smith', role: 'CEO & Co-Founder', image: '/team/placeholder.svg' },
+  { name: 'Alex Johnson', role: 'CTO & Co-Founder', image: '/team/placeholder.svg' },
+  { name: 'Maria Garcia', role: 'Head of Design', image: '/team/placeholder.svg' },
+  { name: 'David Lee', role: 'Lead Engineer', image: '/team/placeholder.svg' },
+  { name: 'Sarah Chen', role: 'Head of Marketing', image: '/team/placeholder.svg' },
+  { name: 'James Wilson', role: 'Head of Sales', image: '/team/placeholder.svg' },
+];
+---
+
+<BaseLayout title="About" description="Learn about our mission, values, and the team behind the product.">
+  <!-- Hero -->
+  <section class="about-hero" aria-labelledby="about-hero-heading">
+    <Container>
+      <div class="about-hero__inner">
+        <SectionHeading
+          title="Building Tools That Matter"
+          subtitle="We are a team of builders, designers, and problem-solvers on a mission to help businesses launch faster and scale smarter."
+          as="h1"
+        />
+      </div>
+    </Container>
+  </section>
+
+  <!-- Mission -->
+  <section class="about-mission" aria-labelledby="mission-heading">
+    <Container>
+      <div class="about-mission__grid">
+        <div class="about-mission__content">
+          <h2 id="mission-heading" class="about-mission__title">Our Mission</h2>
+          <p class="about-mission__text">
+            Great software should be accessible to every business, not just the ones with unlimited budgets and large engineering teams. We build tools that give startups and growing companies the same foundation that enterprise teams take for granted.
+          </p>
+          <p class="about-mission__text">
+            Our platform combines modern design, solid architecture, and developer experience into a single starting point. Whether you are launching your first product or scaling your tenth, we provide the groundwork so you can focus on what makes your business unique.
+          </p>
+        </div>
+        <div class="about-mission__visual">
+          <div class="about-mission__placeholder" aria-hidden="true">
+            <span>Our Mission</span>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Values -->
+  <section class="about-values" aria-labelledby="values-heading">
+    <Container>
+      <SectionHeading
+        title="What We Stand For"
+        subtitle="The principles that guide every decision we make."
+      />
+      <div class="about-values__grid">
+        {values.map((value) => (
+          <Card variant="outlined" padding="lg">
+            <div class="about-values__icon" aria-hidden="true">
+              <Fragment set:html={value.icon} />
+            </div>
+            <h3 class="about-values__card-title">{value.title}</h3>
+            <p class="about-values__card-text">{value.description}</p>
+          </Card>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Team -->
+  <section class="about-team" aria-labelledby="team-heading">
+    <Container>
+      <SectionHeading
+        title="Meet the Team"
+        subtitle="The people making it happen."
+      />
+      <div class="about-team__grid">
+        {team.map((member) => (
+          <div class="about-team__member">
+            <div class="about-team__avatar" aria-hidden="true">
+              <span>{member.name.split(' ').map((n) => n[0]).join('')}</span>
+            </div>
+            <h3 class="about-team__name">{member.name}</h3>
+            <p class="about-team__role">{member.role}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .about-hero {
+    padding: var(--space-16) 0 var(--space-12);
+    background: linear-gradient(180deg, var(--color-primary-50) 0%, var(--color-neutral-0) 100%);
+  }
+  .about-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  /* Mission */
+  .about-mission {
+    padding: var(--space-12) 0;
+  }
+  .about-mission__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+    align-items: center;
+  }
+  .about-mission__title {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-4);
+  }
+  .about-mission__text {
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: var(--color-neutral-600);
+    margin-bottom: var(--space-4);
+  }
+  .about-mission__text:last-child {
+    margin-bottom: 0;
+  }
+  .about-mission__visual {
+    display: flex;
+    justify-content: center;
+  }
+  .about-mission__placeholder {
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 4 / 3;
+    background: var(--color-neutral-100);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-neutral-400);
+    font-size: var(--text-lg);
+    font-weight: 500;
+  }
+  @media (min-width: 768px) {
+    .about-mission__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* Values */
+  .about-values {
+    padding: var(--space-12) 0;
+    background: var(--color-neutral-50);
+  }
+  .about-values__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-8);
+  }
+  .about-values__icon {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-3);
+    color: var(--color-primary-600);
+  }
+  .about-values__card-title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-2);
+  }
+  .about-values__card-text {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--color-neutral-600);
+  }
+  @media (min-width: 768px) {
+    .about-values__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .about-values__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* Team */
+  .about-team {
+    padding: var(--space-12) 0;
+  }
+  .about-team__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+    margin-top: var(--space-8);
+  }
+  .about-team__member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .about-team__avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: var(--radius-full);
+    background: var(--color-primary-100);
+    color: var(--color-primary-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-xl);
+    font-weight: 600;
+    margin-bottom: var(--space-3);
+  }
+  .about-team__name {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-neutral-900);
+  }
+  .about-team__role {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-500);
+    margin-top: var(--space-1);
+  }
+  @media (min-width: 768px) {
+    .about-team__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .about-hero {
+      padding: var(--space-20) 0 var(--space-16);
+    }
+  }
+</style>

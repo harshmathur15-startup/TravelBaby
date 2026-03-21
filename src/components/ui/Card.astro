@@ -1,0 +1,49 @@
+---
+/**
+ * Card — surface container with optional padding and hover state.
+ * Variants: default, outlined, elevated.
+ */
+
+interface Props {
+  variant?: 'default' | 'outlined' | 'elevated';
+  padding?: 'none' | 'sm' | 'md' | 'lg';
+  hover?: boolean;
+  class?: string;
+  as?: 'div' | 'article' | 'section' | 'li';
+}
+
+const {
+  variant = 'default',
+  padding = 'md',
+  hover = false,
+  class: className = '',
+  as: Tag = 'div',
+} = Astro.props;
+
+const variantStyles: Record<string, string> = {
+  default:
+    'bg-[var(--color-neutral-0)] border border-[var(--color-neutral-200)] rounded-[var(--radius-lg)]',
+  outlined:
+    'bg-transparent border border-[var(--color-neutral-300)] rounded-[var(--radius-lg)]',
+  elevated:
+    'bg-[var(--color-neutral-0)] rounded-[var(--radius-lg)] shadow-[var(--shadow-md)]',
+};
+
+const paddingStyles: Record<string, string> = {
+  none: '',
+  sm: 'p-[var(--space-3)]',
+  md: 'p-[var(--space-5)]',
+  lg: 'p-[var(--space-8)]',
+};
+
+const classes = [
+  variantStyles[variant],
+  paddingStyles[padding],
+  hover ? 'transition-shadow duration-200 hover:shadow-[var(--shadow-lg)]' : '',
+  className,
+].filter(Boolean).join(' ');
+---
+
+<Tag class={classes}>
+  <slot />
+</Tag>

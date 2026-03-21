@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui/Container.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import Button from '../components/ui/Button.astro';
+import PricingCards from '../components/sections/PricingCards.astro';
+import FAQ from '../components/sections/FAQ.astro';
+import CtaSection from '../components/sections/CtaSection.astro';
+---
+
+<BaseLayout title="Pricing" description="Simple, transparent pricing for every stage of growth.">
+  <section class="pricing-hero" aria-labelledby="pricing-hero-heading">
+    <Container>
+      <div class="pricing-hero__inner">
+        <SectionHeading
+          title="Simple, Transparent Pricing"
+          subtitle="No hidden fees. No surprises. Pick the plan that fits your needs."
+          as="h1"
+        />
+        <div class="pricing-hero__actions">
+          <Button variant="primary" size="lg" href="#plans" ariaLabel="View plans">
+            View Plans
+          </Button>
+          <Button variant="ghost" size="lg" href="/contact" ariaLabel="Contact sales">
+            Contact Sales
+          </Button>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <div id="plans">
+    <PricingCards />
+  </div>
+  <FAQ />
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  .pricing-hero {
+    padding: var(--space-16) 0 var(--space-12);
+    background: linear-gradient(180deg, var(--color-primary-50) 0%, var(--color-neutral-0) 100%);
+  }
+  .pricing-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+  }
+  .pricing-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+  @media (min-width: 768px) {
+    .pricing-hero {
+      padding: var(--space-20) 0 var(--space-16);
+    }
+  }
+</style>

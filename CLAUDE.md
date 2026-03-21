@@ -1,65 +1,74 @@
-# Claude Code SaaS Template
+# Website Boilerplate (AI-Ready)
 
 ## Why This Exists
 
-It runs like any SaaS boilerplate. It thinks like no other.
+Clone to website in 10 minutes. AI-governed from day one.
 
-Auth works on day one. Payments work on day one. Deploy works on day one. That's table stakes — every good boilerplate does this. What none of them do is ship agent governance from the start: contracts that prevent infinite loops, HITL gates that block irreversible actions, observability that shows what every agent did and why. Developers pick this template because the SaaS foundation is solid and the AI architecture is something they'd never build themselves.
+Static marketing site with CMS, design system, SEO, and responsive components — ready to customize. Optionally activate a full SaaS backend (auth, API, database, background jobs). What makes it different: agent governance ships from the start — contracts that prevent infinite loops, HITL gates that block irreversible actions, observability that shows what every agent did and why.
 
-If a developer can't go from clone to building features in under 10 minutes, the template has failed. If an agent can act without guardrails, the template has also failed.
+If a developer can't go from clone to building features in under 10 minutes, the template has failed.
 
 ## Quick Start
 
-1. Clone this repo, run `npm install && docker compose up -d && npx prisma migrate dev`
-2. Read [docs/getting-started.md](docs/getting-started.md) for full setup
-3. Fill in the product sections below (marked with `<!-- PRODUCT -->`)
-4. Delete `research/` and `agents/examples/` (template artifacts)
-5. Build your own agent family using the pattern in `agents/family/`
-6. Run `/kickoff` to start your first session
+```bash
+git clone <template-repo-url> my-website
+cd my-website
+npm install
+npm run dev          # Astro dev server starts
+```
+
+Read [docs/getting-started.md](docs/getting-started.md) for full setup including Sanity CMS.
 
 ## Tech Stack
 
-- **Frontend:** React 18, TypeScript, Vite, Tailwind CSS, Zustand
+**Default (Static Site):**
+- **Frontend:** Astro 6, TypeScript, Tailwind CSS 4
+- **CMS:** Sanity (headless, page builder, blog, schemas)
+- **Design:** CSS custom properties design token system
+- **SEO:** Open Graph, Twitter cards, JSON-LD, sitemap, robots.txt
+
+**SaaS Upgrade (opt-in):**
 - **Backend:** Node.js, Express, TypeScript
 - **Database:** PostgreSQL, Prisma ORM
 - **Jobs:** BullMQ + Redis
-- **AI/Agents:** Claude API (Anthropic SDK), BaseAgent framework
 - **Auth:** JWT (15min) + httpOnly refresh tokens (30d, rotated)
+- **AI/Agents:** Claude API (Anthropic SDK), BaseAgent framework
 - **Testing:** Vitest, React Testing Library
+
+See [docs/saas-upgrade.md](docs/saas-upgrade.md) to activate the backend.
 
 ## Project Structure
 
 ```
-/client          - React frontend (Vite)
-/server          - Express API, services, middleware
-/shared          - Shared types and utilities
-/agents          - BaseAgent framework, examples, family
-/prisma          - Schema, migrations, seed
-/scripts         - Hook execution scripts
-/docs            - Setup guides, skill tiers, inheritance
+/src              - Astro frontend (pages, components, styles, lib)
+/sanity           - CMS schemas, desk structure
+/public           - Static assets, robots.txt, favicon
+/server           - Express API (opt-in SaaS upgrade)
+/client           - React SPA (opt-in SaaS upgrade)
+/shared           - Shared types and utilities
+/agents           - BaseAgent framework
+/prisma           - Schema, migrations, seed
+/scripts          - Hook execution scripts
+/docs             - Setup guides, skill tiers, inheritance
 ```
 
-## Core Features
+## What's Included
 
-- **Auth:** JWT access + httpOnly refresh with rotation, password hashing (bcrypt 12+)
-- **Multi-tenancy:** Org-scoped data isolation, tenant middleware
-- **RBAC:** Role-based access control, server-side ownership checks
-- **Background jobs:** BullMQ + Redis with progress tracking and timeouts
-- **AI agents:** BaseAgent with iteration caps, write scopes, HITL gates, guardrails
-- **Observability:** Agent run logging, session tracking, cost estimation
+### Website Layer
+- **6 UI primitives:** Badge, Button, Card, Container, Input, SectionHeading
+- **9 section components:** Navbar, Hero, Features, Stats, Testimonials, PricingCards, FAQ, CtaSection, Footer
+- **7 pages:** Home, Features, Pricing, About, Contact, Blog listing, Blog post
+- **Design tokens:** Full color, typography, spacing, shadow, radius, transition system
+- **CMS schemas:** 7 document types + 7 object types (page builder, blog, pricing, testimonials, FAQ)
+- **SEO:** BaseLayout with OG, Twitter, canonical, JSON-LD Organization
 
-## What You Inherit
-
+### AI Harness
 | Layer | Count | What It Does |
 |-------|-------|-------------|
-| **Core Skills** | 13 | Session lifecycle, commits, reviews, debugging, deployment |
-| **Extended Skills** | 30 | Specs, diagrams, security scans, incident response (opt-in) |
+| **Skills** | 20 | Session lifecycle, commits, reviews, debugging, deployment |
 | **Hooks** | 8 | Auto-format, file protection, quality gates, session tracking |
 | **Scripts** | 9 | Hook execution scripts |
 | **Rules** | 8 | Standards for code, security, testing, performance, agents |
-| **MCP Servers** | 2 | Live library docs, extended reasoning |
-
-See [docs/skill-tiers.md](docs/skill-tiers.md) for the full skill breakdown.
 
 ## Hooks (Run Automatically)
 
@@ -80,21 +89,11 @@ See [docs/skill-tiers.md](docs/skill-tiers.md) for the full skill breakdown.
 | general.md | Naming, file discipline, git, code quality |
 | security.md | Secrets, input validation, auth, audit logging |
 | backend.md | API design, error handling, logging |
-| frontend.md | Components, state, performance, accessibility |
+| frontend.md | Astro + React components, state, performance, a11y |
 | database.md | Schema, indexing, migrations, queries |
 | performance.md | Response budgets, frontend metrics, background jobs |
 | testing.md | Test structure, mocking, coverage thresholds |
 | agents.md | Agent contracts, HITL, retry, observability |
-
-## Agent Family (Template's Own)
-
-4 agents maintain the template itself. Products build their own families using the same pattern.
-
-```
-Petra (benchmark) -> Ivy (debt) -> Ada (drift + integrity) -> Lena (quality + accountability)
-```
-
-See `agents/family/registry.md` for the pattern your product should follow.
 
 ---
 
@@ -113,7 +112,7 @@ See `agents/family/registry.md` for the pattern your product should follow.
 
 ### Conventions
 - TypeScript strict mode everywhere
-- API routes: `/api/v1/<resource>`
-- Components: PascalCase, utilities: camelCase
+- Astro components: PascalCase, utilities: camelCase
+- Design tokens via CSS custom properties in `src/styles/global.css`
 - All AI agent actions logged for auditability
 - Environment variables in `.env` (never committed)

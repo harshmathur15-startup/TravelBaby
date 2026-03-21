@@ -1,0 +1,247 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import Badge from '../../components/ui/Badge.astro';
+import CtaSection from '../../components/sections/CtaSection.astro';
+
+const posts = [
+  {
+    slug: 'building-design-system',
+    title: 'Building a Design System from Scratch',
+    description: 'Learn how to create a scalable design system with tokens, components, and documentation that keeps your team aligned.',
+    category: 'Design',
+    author: 'Maria Garcia',
+    date: '2025-03-15',
+    readTime: '8 min read',
+    image: '/blog/design-system.svg',
+  },
+  {
+    slug: 'seo-best-practices-2025',
+    title: 'SEO Best Practices for Modern Websites',
+    description: 'A practical guide to technical SEO, content structure, and performance optimizations that actually move the needle.',
+    category: 'Development',
+    author: 'Alex Johnson',
+    date: '2025-03-10',
+    readTime: '6 min read',
+    image: '/blog/seo.svg',
+  },
+  {
+    slug: 'getting-started-with-astro',
+    title: 'Getting Started with Astro: A Practical Guide',
+    description: 'Everything you need to know to build your first Astro site, from project setup to deployment.',
+    category: 'Tutorial',
+    author: 'David Lee',
+    date: '2025-03-05',
+    readTime: '10 min read',
+    image: '/blog/astro-guide.svg',
+  },
+  {
+    slug: 'responsive-layouts-guide',
+    title: 'Responsive Layouts Without the Headaches',
+    description: 'Modern CSS techniques for building layouts that look great on every screen size.',
+    category: 'Design',
+    author: 'Sarah Chen',
+    date: '2025-02-28',
+    readTime: '7 min read',
+    image: '/blog/responsive.svg',
+  },
+  {
+    slug: 'cms-integration-tips',
+    title: 'CMS Integration Tips for Static Sites',
+    description: 'How to connect a headless CMS to your static site generator for the best of both worlds.',
+    category: 'Development',
+    author: 'James Wilson',
+    date: '2025-02-20',
+    readTime: '5 min read',
+    image: '/blog/cms.svg',
+  },
+  {
+    slug: 'web-performance-checklist',
+    title: 'The Web Performance Checklist',
+    description: 'A step-by-step checklist to audit and improve your site speed, Core Web Vitals, and user experience.',
+    category: 'Tutorial',
+    author: 'Alex Johnson',
+    date: '2025-02-15',
+    readTime: '9 min read',
+    image: '/blog/performance.svg',
+  },
+];
+
+function formatDate(dateStr: string): string {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+function badgeVariant(category: string): 'primary' | 'accent' | 'success' | 'default' {
+  const map: Record<string, 'primary' | 'accent' | 'success' | 'default'> = {
+    Development: 'primary',
+    Design: 'accent',
+    Tutorial: 'success',
+    Product: 'default',
+  };
+  return map[category] ?? 'default';
+}
+---
+
+<BaseLayout title="Blog" description="Articles, tutorials, and insights on web development, design, and building great products.">
+  <section class="blog-hero" aria-labelledby="blog-hero-heading">
+    <Container>
+      <div class="blog-hero__inner">
+        <SectionHeading
+          title="Blog"
+          subtitle="Articles, tutorials, and insights on web development, design, and building great products."
+          as="h1"
+        />
+      </div>
+    </Container>
+  </section>
+
+  <section class="blog-listing" aria-label="Blog posts">
+    <Container>
+      <div class="blog-grid">
+        {posts.map((post) => (
+          <a href={`/blog/${post.slug}`} class="blog-card">
+            <div class="blog-card__image">
+              <div class="blog-card__placeholder" aria-hidden="true">
+                <span>{post.category}</span>
+              </div>
+            </div>
+            <div class="blog-card__content">
+              <div class="blog-card__meta">
+                <Badge variant={badgeVariant(post.category)}>{post.category}</Badge>
+                <span class="blog-card__read-time">{post.readTime}</span>
+              </div>
+              <h2 class="blog-card__title">{post.title}</h2>
+              <p class="blog-card__description">{post.description}</p>
+              <div class="blog-card__footer">
+                <span class="blog-card__author">{post.author}</span>
+                <span class="blog-card__date">{formatDate(post.date)}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  .blog-hero {
+    padding: var(--space-16) 0 var(--space-12);
+    background: linear-gradient(180deg, var(--color-primary-50) 0%, var(--color-neutral-0) 100%);
+  }
+  .blog-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .blog-listing {
+    padding: var(--space-8) 0 var(--space-16);
+  }
+  .blog-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .blog-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-neutral-0);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .blog-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .blog-card__image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .blog-card__placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--color-neutral-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-neutral-400);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+
+  .blog-card__content {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    flex: 1;
+  }
+  .blog-card__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .blog-card__read-time {
+    font-size: var(--text-xs);
+    color: var(--color-neutral-500);
+  }
+  .blog-card__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-neutral-900);
+    line-height: 1.3;
+  }
+  .blog-card__description {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-600);
+    line-height: 1.6;
+  }
+  .blog-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-neutral-100);
+  }
+  .blog-card__author {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-neutral-700);
+  }
+  .blog-card__date {
+    font-size: var(--text-xs);
+    color: var(--color-neutral-500);
+  }
+
+  @media (min-width: 768px) {
+    .blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .blog-hero {
+      padding: var(--space-20) 0 var(--space-16);
+    }
+  }
+  @media (min-width: 1024px) {
+    .blog-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
