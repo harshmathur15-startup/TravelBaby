@@ -9,7 +9,6 @@
     { "key": "rules:frontend", "path": "./.claude/rules/frontend.md" },
     { "key": "rules:database", "path": "./.claude/rules/database.md" },
     { "key": "rules:testing", "path": "./.claude/rules/testing.md" },
-    { "key": "rules:performance", "path": "./.claude/rules/performance.md" },
-    { "key": "family:registry", "path": "./agents/family/registry.md" }
+    { "key": "rules:performance", "path": "./.claude/rules/performance.md" }
   ]
 }

@@ -83,9 +83,12 @@ After cloning:
 - [ ] Copy `.env.example` to `.env`, fill values
 - [ ] Delete `research/` (or keep empty)
 - [ ] Delete `thoughts/` (or keep empty)
+- [ ] Delete template agents from `agents/family/` (Blair, Esme, Nell, Priya, Thea)
+- [ ] Reset `agents/family/registry.md` with your own agents
 - [ ] Decide: keep all skills or trim to Core tier
 - [ ] Copy agent scaffolds: `agents/scaffolds/` → `agents/families/`
 - [ ] Rename agents in each family registry and profile
 - [ ] Wire governance into `/kickoff` and `/wrap`
+- [ ] Recapture baselines: `node scripts/drift-check.cjs capture`
 - [ ] Initialize git: `rm -rf .git && git init`
 - [ ] First commit: `git add -A && git commit -m "feat: initial project from template"`

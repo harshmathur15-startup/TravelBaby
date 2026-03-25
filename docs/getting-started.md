@@ -91,16 +91,33 @@ Skip this if building a simple static site without agents or a multi-phase roadm
 Before your first commit:
 
 ```bash
+# Remove template session data and scaffolds
 rm -rf research/ thoughts/ agents/examples/ agents/scaffolds/
+
+# Remove template's own agent family (you'll build your own)
+rm -rf agents/family/Blair agents/family/Esme agents/family/Nell agents/family/Priya agents/family/Thea
+rm -f agents/family/board.md agents/family/board-archive.md
 ```
 
-Safe to remove — these are scaffolds you've already copied. The originals live in the template repo.
+Then reset `agents/family/registry.md` — replace the template agents with your own. The file structure stays, the content becomes yours.
 
-## 10. Need a Backend?
+Safe to remove — these are template-specific artifacts. The originals live in the template repo.
+
+## 10. Recapture Protected File Baselines
+
+After customizing CLAUDE.md and config files, recapture the drift detection baselines so they match your product — not the template:
+
+```bash
+node scripts/drift-check.cjs capture
+```
+
+This updates `.claude/protected-files.json` with your file hashes. Without this step, drift detection will flag every change you made during setup.
+
+## 11. Need a Backend?
 
 If your product needs auth, API endpoints, or a database, see [saas-upgrade.md](saas-upgrade.md) to activate the Express + Prisma + React stack.
 
-## 11. Deploy
+## 12. Deploy
 
 ```bash
 npm run build                    # static HTML in dist/
