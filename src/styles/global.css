@@ -306,3 +306,72 @@
   opacity: 1;
   transform: none;
 }
+
+/* --- Scroll-driven animations (progressive enhancement) ---
+   Uses CSS animation-timeline where supported (Chrome 115+).
+   Falls back gracefully to the IntersectionObserver trigger above. */
+
+@supports (animation-timeline: scroll()) {
+  [data-scroll-animate="fade-up"] {
+    animation: scroll-fade-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+  }
+  [data-scroll-animate="scale-in"] {
+    animation: scroll-scale-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+  }
+
+  @keyframes scroll-fade-up {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes scroll-scale-in {
+    from { opacity: 0; transform: scale(0.9); }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+/* --- Glassmorphism + gradient mesh utilities ---
+   Apply as CSS classes: .glass, .gradient-mesh, .aurora-bg */
+
+.glass {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.gradient-mesh {
+  background:
+    radial-gradient(at 20% 30%, var(--color-primary-200) 0%, transparent 50%),
+    radial-gradient(at 80% 70%, var(--color-accent-200) 0%, transparent 50%),
+    radial-gradient(at 50% 50%, var(--color-neutral-50) 0%, transparent 80%);
+  background-color: var(--color-neutral-0);
+}
+
+.aurora-bg {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-100) 0%,
+    var(--color-accent-100) 25%,
+    var(--color-primary-200) 50%,
+    var(--color-accent-50) 75%,
+    var(--color-primary-100) 100%
+  );
+  background-size: 400% 400%;
+  animation: aurora-shift 12s ease-in-out infinite;
+}
+
+@keyframes aurora-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-bg {
+    animation: none;
+    background-size: 100% 100%;
+  }
+}

@@ -34,6 +34,12 @@ const currentPath = Astro.url.pathname;
     </ul>
 
     <div class="navbar__actions">
+      <a href="/search" class="navbar__search" aria-label="Search the site">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      </a>
       <ThemeToggle />
       <a href={SITE_CONFIG.ctaButton.href} class="navbar__cta" aria-label={`${SITE_CONFIG.ctaButton.label} with ${SITE_CONFIG.name}`}>
         {SITE_CONFIG.ctaButton.label}
@@ -133,6 +139,21 @@ const currentPath = Astro.url.pathname;
     display: flex;
     align-items: center;
     gap: 1rem;
+  }
+
+  .navbar__search {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    color: var(--color-neutral-600);
+    border-radius: var(--radius-md);
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .navbar__search:hover {
+    color: var(--color-neutral-900);
+    background: var(--color-neutral-100);
   }
 
   .navbar__cta {

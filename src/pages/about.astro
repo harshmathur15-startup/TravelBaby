@@ -67,8 +67,9 @@ const team = [
           </p>
         </div>
         <div class="about-mission__visual">
+          <!-- Replace with your own image: run /stock-photos or add to public/images/ -->
           <div class="about-mission__placeholder" aria-hidden="true">
-            <span>Our Mission</span>
+            <span>Your Image</span>
           </div>
         </div>
       </div>
@@ -163,6 +164,14 @@ const team = [
   .about-mission__visual {
     display: flex;
     justify-content: center;
+  }
+  .about-mission__visual img {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+    box-shadow: var(--shadow-md);
   }
   .about-mission__placeholder {
     width: 100%;

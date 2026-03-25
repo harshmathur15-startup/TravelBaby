@@ -20,52 +20,74 @@ import { CTA_CONTENT } from '@config';
 
 <style>
   .cta-section {
-    padding: 5rem 1.5rem;
-    background: linear-gradient(135deg, var(--color-primary, #2563eb), var(--color-primary-dark, #1d4ed8));
+    padding: var(--space-20) var(--space-6);
+    background: linear-gradient(
+      135deg,
+      var(--color-primary-700) 0%,
+      var(--color-primary-900) 40%,
+      var(--color-primary-950) 70%,
+      var(--color-accent-900) 100%
+    );
     text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
+    pointer-events: none;
   }
 
   .cta-section__inner {
-    max-width: 700px;
+    max-width: var(--container-md);
     margin: 0 auto;
+    position: relative;
   }
 
   .cta-section__heading {
-    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-    font-weight: 800;
-    color: #fff;
-    letter-spacing: -0.025em;
-    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-neutral-0);
+    letter-spacing: var(--tracking-tight);
+    margin: 0 0 var(--space-4);
   }
 
   .cta-section__subtext {
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     color: rgba(255, 255, 255, 0.85);
-    line-height: 1.6;
-    margin: 0 0 2rem;
+    line-height: var(--leading-relaxed);
+    margin: 0 0 var(--space-8);
   }
 
   .cta-section__btn {
     display: inline-flex;
     align-items: center;
-    padding: 0.875rem 2.5rem;
-    background: #fff;
-    color: var(--color-primary, #2563eb);
-    font-size: 1rem;
-    font-weight: 700;
-    border-radius: 0.5rem;
+    padding: var(--space-3) var(--space-10);
+    background: var(--color-neutral-0);
+    color: var(--color-primary-700);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-bold);
+    border-radius: var(--radius-lg);
     text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform var(--duration-fast), box-shadow var(--duration-fast);
   }
 
   .cta-section__btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-xl);
+  }
+
+  @media (min-width: 768px) {
+    .cta-section__heading { font-size: var(--text-4xl); }
   }
 
   @media (max-width: 640px) {
-    .cta-section {
-      padding: 3.5rem 1.5rem;
-    }
+    .cta-section { padding: var(--space-12) var(--space-6); }
   }
 </style>

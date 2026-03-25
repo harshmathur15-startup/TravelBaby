@@ -5,8 +5,8 @@ import { STATS_CONTENT } from '@config';
 <section class="stats" aria-label="Key performance metrics">
   <div class="stats__inner">
     <div class="stats__grid" role="list">
-      {STATS_CONTENT.map((stat) => (
-        <div class="stats__item" role="listitem">
+      {STATS_CONTENT.map((stat, index) => (
+        <div class="stats__item" role="listitem" data-animate="fade-up" style={`--delay: ${index * 100}ms`}>
           <span class="stats__value">{stat.value}</span>
           <span class="stats__label">{stat.label}</span>
         </div>
@@ -17,59 +17,65 @@ import { STATS_CONTENT } from '@config';
 
 <style>
   .stats {
-    padding: 4rem 1.5rem;
-    background: var(--color-bg-alt, #f9fafb);
-    border-top: 1px solid var(--color-border, #e5e7eb);
-    border-bottom: 1px solid var(--color-border, #e5e7eb);
+    padding: var(--space-12) var(--space-6);
+    background:
+      radial-gradient(at 20% 30%, var(--color-primary-100) 0%, transparent 50%),
+      radial-gradient(at 80% 70%, var(--color-accent-100) 0%, transparent 50%),
+      var(--color-neutral-50);
+    border-top: 1px solid var(--color-neutral-200);
+    border-bottom: 1px solid var(--color-neutral-200);
   }
 
   .stats__inner {
-    max-width: 1200px;
+    max-width: var(--container-xl);
     margin: 0 auto;
   }
 
   .stats__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    gap: var(--space-8);
     text-align: center;
   }
 
   .stats__item {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px) saturate(1.5);
+    -webkit-backdrop-filter: blur(12px) saturate(1.5);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: var(--radius-xl);
+    transition: transform var(--duration-fast) var(--ease-default);
+  }
+
+  .stats__item:hover {
+    transform: translateY(-2px);
   }
 
   .stats__value {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800;
-    color: var(--color-primary, #2563eb);
-    letter-spacing: -0.03em;
+    font-family: var(--font-heading);
+    font-size: var(--text-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-500);
+    letter-spacing: var(--tracking-tight);
     line-height: 1;
   }
 
   .stats__label {
-    font-size: 0.9375rem;
-    color: var(--color-text-secondary, #6b7280);
-    font-weight: 500;
+    font-size: var(--text-base);
+    color: var(--color-neutral-600);
+    font-weight: var(--font-weight-medium);
   }
 
   @media (max-width: 768px) {
-    .stats__grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2.5rem;
-    }
+    .stats__grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 480px) {
-    .stats {
-      padding: 3rem 1.5rem;
-    }
-
-    .stats__grid {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
+    .stats { padding: var(--space-8) var(--space-6); }
+    .stats__grid { grid-template-columns: 1fr; gap: var(--space-6); }
   }
 </style>

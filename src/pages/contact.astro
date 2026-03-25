@@ -46,7 +46,18 @@ import Button from '@components/ui/Button.astro';
             <Button variant="primary" size="lg" type="submit">
               Send Message
             </Button>
+            <div id="form-status" class="form-status" aria-live="polite" role="status"></div>
           </form>
+          <script>
+            const form = document.querySelector('.contact-form') as HTMLFormElement | null;
+            const status = document.getElementById('form-status');
+            form?.addEventListener('submit', (e) => {
+              if (status) {
+                status.textContent = 'Sending message...';
+                status.className = 'form-status form-status--sending';
+              }
+            });
+          </script>
         </div>
 
         <!-- Sidebar -->
@@ -175,6 +186,15 @@ import Button from '@components/ui/Button.astro';
   }
   .contact-form__textarea::placeholder {
     color: var(--color-neutral-400);
+  }
+
+  .form-status {
+    font-size: var(--text-sm);
+    padding: var(--space-2) 0;
+    min-height: 1.5em;
+  }
+  .form-status--sending {
+    color: var(--color-primary-600);
   }
 
   /* Sidebar */

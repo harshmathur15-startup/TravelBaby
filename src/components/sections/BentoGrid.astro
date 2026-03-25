@@ -1,0 +1,88 @@
+---
+/**
+ * BentoGrid — asymmetric grid layout for feature showcases.
+ *
+ * Usage:
+ *   <BentoGrid items={BENTO_CONTENT} />
+ *
+ * Items with `span: 2` take two columns on desktop.
+ */
+
+export interface BentoItem {
+  title: string;
+  description: string;
+  icon?: string;
+  span?: 1 | 2;
+}
+
+interface Props {
+  items: BentoItem[];
+  id?: string;
+}
+
+const { items, id } = Astro.props;
+---
+
+<section class="bento" aria-labelledby={id}>
+  <div class="bento__grid">
+    {items.map((item) => (
+      <div class:list={['bento__card', { 'bento__card--wide': item.span === 2 }]} data-animate="fade-up">
+        {item.icon && <span class="bento__icon" aria-hidden="true">{item.icon}</span>}
+        <h3 class="bento__title">{item.title}</h3>
+        <p class="bento__desc">{item.description}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .bento__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .bento__card {
+    padding: var(--space-6);
+    background: var(--color-neutral-0);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .bento__card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .bento__icon {
+    font-size: var(--text-2xl);
+    line-height: 1;
+  }
+  .bento__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-neutral-900);
+  }
+  .bento__desc {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-600);
+    line-height: 1.6;
+  }
+
+  @media (min-width: 768px) {
+    .bento__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .bento__card--wide {
+      grid-column: span 2;
+    }
+  }
+  @media (min-width: 1024px) {
+    .bento__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

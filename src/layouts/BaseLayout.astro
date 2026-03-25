@@ -15,7 +15,7 @@ interface Props {
 const {
   title,
   description = SITE_CONFIG.description,
-  ogImage = SITE_CONFIG.ogImage,
+  ogImage,
   canonicalUrl = Astro.url.href,
 } = Astro.props;
 
@@ -23,18 +23,19 @@ const siteName = SITE_CONFIG.name;
 const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 const siteUrl = Astro.site?.toString() ?? SITE_CONFIG.url;
 
+// Dynamic OG image: use provided ogImage, or generate path from current URL
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/index';
+const ogImageUrl = ogImage ?? `${siteUrl}og${pathname}.png`;
+
 const themeVars = [
   ...Object.entries(THEME_CONFIG.colors.primary).map(([k, v]) => `--color-primary-${k}: ${v};`),
   ...Object.entries(THEME_CONFIG.colors.secondary).map(([k, v]) => `--color-secondary-${k}: ${v};`),
   ...Object.entries(THEME_CONFIG.colors.accent).map(([k, v]) => `--color-accent-${k}: ${v};`),
-  `--font-heading: ${THEME_CONFIG.fonts.heading};`,
-  `--font-body: ${THEME_CONFIG.fonts.body};`,
-  `--font-mono: ${THEME_CONFIG.fonts.mono};`,
 ].join('\n    ');
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={Astro.currentLocale ?? 'en'} dir={['ar', 'he', 'fa', 'ur'].includes(Astro.currentLocale ?? '') ? 'rtl' : 'ltr'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -48,7 +49,7 @@ const themeVars = [
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={ogImageUrl} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content={siteName} />
 
@@ -56,23 +57,12 @@ const themeVars = [
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <!-- Theme overrides from config -->
     <style is:inline set:html={`:root {\n    ${themeVars}\n  }`} />
 
-    <!-- Fonts (preconnect + preload, non-blocking) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload"
-      href={THEME_CONFIG.fontUrl}
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link rel="stylesheet" href={THEME_CONFIG.fontUrl} />
-    </noscript>
+    <!-- Fonts: self-hosted via Astro Fonts API (astro.config.mjs) -->
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

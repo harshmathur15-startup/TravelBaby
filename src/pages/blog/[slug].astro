@@ -85,13 +85,13 @@ const jsonLd = {
     </section>
 
     <!-- Image -->
-    <section class="blog-post__image-section" aria-hidden="true">
-      <Container size="md">
-        <div class="blog-post__image-placeholder">
-          <span>{post.category}</span>
-        </div>
-      </Container>
-    </section>
+    {post.image && (
+      <section class="blog-post__image-section">
+        <Container size="md">
+          <img src={post.image} alt={post.title} width="640" height="360" class="blog-post__cover" loading="eager" />
+        </Container>
+      </section>
+    )}
 
     <!-- Content -->
     <section class="blog-post__content-section">
@@ -156,17 +156,11 @@ const jsonLd = {
   .blog-post__image-section {
     padding: 0 0 var(--space-8);
   }
-  .blog-post__image-placeholder {
+  .blog-post__cover {
     width: 100%;
-    aspect-ratio: 16 / 9;
-    background: var(--color-neutral-100);
+    height: auto;
     border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-neutral-400);
-    font-size: var(--text-lg);
-    font-weight: 500;
+    box-shadow: var(--shadow-md);
   }
 
   /* Content */

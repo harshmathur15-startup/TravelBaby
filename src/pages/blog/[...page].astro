@@ -1,12 +1,20 @@
 ---
+import type { GetStaticPaths } from 'astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Container from '@components/ui/Container.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
 import Badge from '@components/ui/Badge.astro';
+import Pagination from '@components/ui/Pagination.astro';
 import CtaSection from '@components/sections/CtaSection.astro';
-import { getAllPosts } from '@lib/blog-data';
+import { getAllPosts, getAllCategories } from '@lib/blog-data';
 
-const posts = await getAllPosts();
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getAllPosts();
+  return paginate(posts, { pageSize: 6 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const categories = await getAllCategories();
 
 function formatDate(dateStr: string): string {
   const date = new Date(dateStr);
@@ -38,6 +46,12 @@ function badgeVariant(category: string): 'primary' | 'accent' | 'success' | 'def
           as="h1"
           id="blog-hero-heading"
         />
+        <nav class="blog-categories" aria-label="Filter by category">
+          <a href="/blog" class="blog-categories__link blog-categories__link--active">All</a>
+          {categories.map((cat) => (
+            <a href={`/blog/category/${cat.toLowerCase()}`} class="blog-categories__link">{cat}</a>
+          ))}
+        </nav>
       </div>
     </Container>
   </section>
@@ -45,12 +59,13 @@ function badgeVariant(category: string): 'primary' | 'accent' | 'success' | 'def
   <section class="blog-listing" aria-label="Blog posts">
     <Container>
       <div class="blog-grid">
-        {posts.map((post) => (
+        {page.data.map((post) => (
           <a href={`/blog/${post.slug}`} class="blog-card">
             <div class="blog-card__image">
-              <div class="blog-card__placeholder" aria-hidden="true">
-                <span>{post.category}</span>
-              </div>
+              {post.image
+                ? <img src={post.image} alt={post.title} width="640" height="360" loading="lazy" />
+                : <div class="blog-card__placeholder" aria-hidden="true"><span>{post.category}</span></div>
+              }
             </div>
             <div class="blog-card__content">
               <div class="blog-card__meta">
@@ -67,6 +82,7 @@ function badgeVariant(category: string): 'primary' | 'accent' | 'success' | 'def
           </a>
         ))}
       </div>
+      <Pagination currentPage={page.currentPage} lastPage={page.lastPage} basePath="/blog" />
     </Container>
   </section>
 
@@ -83,6 +99,36 @@ function badgeVariant(category: string): 'primary' | 'accent' | 'success' | 'def
     flex-direction: column;
     align-items: center;
     gap: var(--space-6);
+  }
+
+  .blog-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: center;
+  }
+  .blog-categories__link {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-neutral-600);
+    text-decoration: none;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-full);
+    transition: all 0.15s ease;
+  }
+  .blog-categories__link:hover:not(.blog-categories__link--active) {
+    border-color: var(--color-primary-300);
+    color: var(--color-primary-700);
+    background: var(--color-primary-50);
+  }
+  .blog-categories__link--active {
+    background: var(--color-primary-600);
+    color: #fff;
+    border-color: var(--color-primary-600);
+    pointer-events: none;
   }
 
   .blog-listing {
@@ -114,6 +160,15 @@ function badgeVariant(category: string): 'primary' | 'accent' | 'success' | 'def
     width: 100%;
     aspect-ratio: 16 / 9;
     overflow: hidden;
+  }
+  .blog-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .blog-card:hover .blog-card__image img {
+    transform: scale(1.03);
   }
   .blog-card__placeholder {
     width: 100%;

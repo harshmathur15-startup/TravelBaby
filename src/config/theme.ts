@@ -75,7 +75,4 @@ export const THEME_CONFIG = {
     body: '"Inter", system-ui, sans-serif',
     mono: '"JetBrains Mono", ui-monospace, monospace',
   },
-
-  /** Google Fonts URL — update if you change font families */
-  fontUrl: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap',
 } as const;

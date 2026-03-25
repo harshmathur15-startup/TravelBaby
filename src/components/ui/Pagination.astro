@@ -1,0 +1,98 @@
+---
+interface Props {
+  currentPage: number;
+  lastPage: number;
+  basePath: string;
+}
+
+const { currentPage, lastPage, basePath } = Astro.props;
+
+const prevUrl = currentPage > 1
+  ? currentPage === 2 ? basePath : `${basePath}/${currentPage - 1}`
+  : null;
+const nextUrl = currentPage < lastPage ? `${basePath}/${currentPage + 1}` : null;
+
+const pages = Array.from({ length: lastPage }, (_, i) => i + 1);
+---
+
+{lastPage > 1 && (
+  <nav class="pagination" aria-label="Blog pagination">
+    <a
+      href={prevUrl ?? undefined}
+      class:list={['pagination__link', { 'pagination__link--disabled': !prevUrl }]}
+      aria-disabled={!prevUrl}
+      aria-label="Previous page"
+    >
+      &larr; Prev
+    </a>
+
+    <ol class="pagination__pages" role="list">
+      {pages.map((page) => (
+        <li>
+          <a
+            href={page === 1 ? basePath : `${basePath}/${page}`}
+            class:list={['pagination__page', { 'pagination__page--active': page === currentPage }]}
+            aria-current={page === currentPage ? 'page' : undefined}
+            aria-label={`Page ${page}`}
+          >
+            {page}
+          </a>
+        </li>
+      ))}
+    </ol>
+
+    <a
+      href={nextUrl ?? undefined}
+      class:list={['pagination__link', { 'pagination__link--disabled': !nextUrl }]}
+      aria-disabled={!nextUrl}
+      aria-label="Next page"
+    >
+      Next &rarr;
+    </a>
+  </nav>
+)}
+
+<style>
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-8) 0;
+  }
+  .pagination__pages {
+    display: flex;
+    list-style: none;
+    gap: var(--space-1);
+    padding: 0;
+    margin: 0;
+  }
+  .pagination__link,
+  .pagination__page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-neutral-700);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: background 0.15s ease, color 0.15s ease;
+    min-width: 40px;
+  }
+  .pagination__link:hover:not(.pagination__link--disabled),
+  .pagination__page:hover:not(.pagination__page--active) {
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-900);
+  }
+  .pagination__link--disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .pagination__page--active {
+    background: var(--color-primary-600);
+    color: #fff;
+    pointer-events: none;
+  }
+</style>

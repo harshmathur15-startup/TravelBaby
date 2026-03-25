@@ -111,6 +111,17 @@ export async function getAllSlugs(): Promise<string[]> {
   return Object.keys(STATIC_POSTS);
 }
 
+export async function getAllCategories(): Promise<string[]> {
+  const posts = await getAllPosts();
+  const categories = new Set(posts.map((p) => p.category));
+  return [...categories].sort();
+}
+
+export async function getPostsByCategory(category: string): Promise<BlogPost[]> {
+  const posts = await getAllPosts();
+  return posts.filter((p) => p.category.toLowerCase() === category.toLowerCase());
+}
+
 // ---------------------------------------------------------------------------
 // Static placeholder data (used when Sanity is not configured)
 // ---------------------------------------------------------------------------

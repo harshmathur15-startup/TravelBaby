@@ -1,0 +1,47 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+---
+
+<BaseLayout title="Search" description="Search articles, tutorials, and pages.">
+  <section class="search-hero" aria-labelledby="search-heading">
+    <Container size="md">
+      <SectionHeading
+        title="Search"
+        subtitle="Find articles, tutorials, and pages across the site."
+        as="h1"
+        id="search-heading"
+      />
+    </Container>
+  </section>
+
+  <section class="search-content">
+    <Container size="md">
+      <div id="search"></div>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  .search-hero {
+    padding: var(--space-16) 0 var(--space-8);
+    background: linear-gradient(180deg, var(--color-primary-50) 0%, var(--color-neutral-0) 100%);
+    text-align: center;
+  }
+  .search-content {
+    padding: var(--space-4) 0 var(--space-16);
+  }
+</style>
+
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+<script is:inline>
+  window.addEventListener('DOMContentLoaded', () => {
+    new PagefindUI({
+      element: '#search',
+      showSubResults: true,
+      showImages: false,
+    });
+  });
+</script>
+<script src="/pagefind/pagefind-ui.js" is:inline></script>

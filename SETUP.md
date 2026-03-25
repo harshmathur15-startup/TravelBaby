@@ -34,8 +34,7 @@ Edit `src/config/theme.ts`:
 - `colors.primary` — main brand color (shade map 50-950)
 - `colors.secondary` — secondary color
 - `colors.accent` — accent/highlight color
-- `fonts` — heading, body, and mono font families
-- `fontUrl` — Google Fonts URL (update if changing fonts)
+- `fonts` — heading, body, and mono font families (self-hosted via Astro Fonts API in `astro.config.mjs`)
 
 Get Tailwind palettes from: https://tailwindcss.com/docs/customizing-colors
 

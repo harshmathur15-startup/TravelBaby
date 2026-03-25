@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest run",
@@ -20,15 +20,19 @@
     "@astrojs/mdx": "^5.0.2",
     "@astrojs/rss": "^4.0.17",
     "@astrojs/sitemap": "^3.7.1",
+    "@resvg/resvg-js": "^2.6.2",
     "@sanity/client": "^7.20.0",
     "@sanity/image-url": "^2.0.3",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.0.8",
     "sanity": "^5.17.1",
+    "satori": "^0.26.0",
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.1",
     "@playwright/test": "^1.52.0",
+    "pagefind": "^1.4.0",
     "vitest": "^4.1.0"
   }
 }
