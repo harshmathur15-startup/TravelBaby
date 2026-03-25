@@ -71,19 +71,36 @@ Open `CLAUDE.md`. Below the `<!-- PRODUCT -->` marker, replace:
 | **Debug a problem** | `/debug` |
 | **Save context** | `/save-context` |
 
-## 8. Clean Up Template Artifacts
+## 8. Set Up Agent Families (Optional)
+
+If your product follows the Product Launch Roadmap or will use AI agents:
+
+```bash
+mkdir -p agents/families
+cp -r agents/scaffolds/governance agents/families/governance
+cp -r agents/scaffolds/research agents/families/research
+cp -r agents/scaffolds/build agents/families/build
+```
+
+Then rename agents — pick warm, short, human names unique to your project. Replace `[RENAME]` and `[Product]` placeholders in each registry and profile. See [inheritance.md](inheritance.md) for details on each family.
+
+Skip this if building a simple static site without agents or a multi-phase roadmap.
+
+## 9. Clean Up Template Artifacts
 
 Before your first commit:
 
 ```bash
-rm -rf research/ thoughts/ agents/examples/
+rm -rf research/ thoughts/ agents/examples/ agents/scaffolds/
 ```
 
-## 9. Need a Backend?
+Safe to remove — these are scaffolds you've already copied. The originals live in the template repo.
+
+## 10. Need a Backend?
 
 If your product needs auth, API endpoints, or a database, see [saas-upgrade.md](saas-upgrade.md) to activate the Express + Prisma + React stack.
 
-## 10. Deploy
+## 11. Deploy
 
 ```bash
 npm run build                    # static HTML in dist/

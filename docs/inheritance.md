@@ -36,6 +36,44 @@ Clear mapping of what transfers from template to product and what doesn't.
 | Execution order | Petra -> Ivy -> Ada -> ... -> Lena | Your agents, your order |
 | Outcome Rule | "What changed because of my last run?" | Same rule, applied to your agents |
 | Agent profiles | `agents/family/petra/profile.md` | Same format: Why I Exist, Expertise, Learnings, Failure Modes, Last Run |
+| Governance scaffold | `agents/scaffolds/governance/` | Copy to `agents/families/governance/`, rename agents |
+| Research scaffold | `agents/scaffolds/research/` | Copy to `agents/families/research/`, rename agents |
+| Build scaffold | `agents/scaffolds/build/` | Copy to `agents/families/build/`, rename agents |
+
+## Agent Family Scaffolds
+
+Three scaffold families in `agents/scaffolds/` that products copy, rename, and customize. The architecture is inherited. The identity is not.
+
+### When Each Family Is Needed
+
+| Family | When | Skip If |
+|--------|------|---------|
+| Governance | Recommended — health monitoring for any non-trivial product | Simple static sites without agents or multi-phase roadmap |
+| Research | Always for products following the Product Launch Roadmap | Product has no specs phase |
+| Build | Products with multi-phase builds (5+ steps) | Simple projects with no roadmap |
+
+### How to Use
+
+1. Copy the scaffold directory to your project:
+   ```bash
+   mkdir -p agents/families
+   cp -r agents/scaffolds/governance/ agents/families/governance/
+   cp -r agents/scaffolds/research/ agents/families/research/
+   cp -r agents/scaffolds/build/ agents/families/build/
+   ```
+2. Rename generic role directories to your agent names (warm, short, human, mostly female, unique per project)
+3. Replace `[RENAME]` and `[Product]` placeholders in registry.md and profiles
+4. Fill in agent personalities in each profile.md
+5. Wire governance agents into your `/kickoff` and `/wrap` skills (see governance registry for wiring instructions)
+6. For Build: copy `_agent-template/profile.md` once per agent, then delete the template directory
+
+### What Each Scaffold Provides
+
+**Governance** — 4 roles predefined (Benchmark, Debt, Drift, Accountability). Execution order wired: Benchmark at kickoff, Debt+Drift parallel at wrap, Accountability after both. Ready to run once renamed.
+
+**Research** — 4 roles mapped to the Product Launch Roadmap (Problem, Market, BRD, PRD). Includes activation rules, spec ownership, review triggers, and the numbers bible pattern. Sequential for writing, parallel for reviewing.
+
+**Build** — Structure only, no predefined agents. Shows how to define graduated/active/queued agents, map phases to agents, and manage handoffs. Products define their own agents based on their roadmap.
 
 ## Product Setup Checklist
 
@@ -45,7 +83,9 @@ After cloning:
 - [ ] Copy `.env.example` to `.env`, fill values
 - [ ] Delete `research/` (or keep empty)
 - [ ] Delete `thoughts/` (or keep empty)
-- [ ] Decide: keep all 57 skills or trim to Core tier
-- [ ] Decide: build agent family or skip (see slim-mode.md)
+- [ ] Decide: keep all skills or trim to Core tier
+- [ ] Copy agent scaffolds: `agents/scaffolds/` → `agents/families/`
+- [ ] Rename agents in each family registry and profile
+- [ ] Wire governance into `/kickoff` and `/wrap`
 - [ ] Initialize git: `rm -rf .git && git init`
 - [ ] First commit: `git add -A && git commit -m "feat: initial project from template"`

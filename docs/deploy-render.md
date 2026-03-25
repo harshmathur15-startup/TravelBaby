@@ -39,6 +39,25 @@ Render supports a `_headers` file for static sites. The template's `public/_head
 3. Update DNS: CNAME → `your-site.onrender.com`
 4. SSL is automatic
 
+## Prisma Migration Baseline (SaaS only)
+
+If your product started with `prisma db push` during development and later switched to `prisma migrate`, the first production deploy will fail with **P3005** ("database schema is not empty").
+
+Fix: add a baseline step to your API build command in `render.yaml`:
+
+```yaml
+buildCommand: >
+  npm ci &&
+  npm run db:generate &&
+  npx prisma migrate resolve --applied <your_init_migration_name> &&
+  npm run db:migrate:deploy &&
+  npm run build:server
+```
+
+This tells Prisma the init migration is already applied. After the first successful deploy, the resolve step becomes a no-op. Safe to leave in permanently.
+
+> The `db:generate` and `db:migrate:deploy` scripts are defined during the SaaS upgrade setup. See [saas-upgrade.md](saas-upgrade.md).
+
 ## Deploy Hooks
 
 Create a deploy hook in Dashboard > Settings > Deploy Hook. Use the URL in Sanity webhooks to trigger rebuilds.

@@ -58,6 +58,8 @@ npx prisma migrate dev         # run migrations
 npx prisma db seed             # seed data
 ```
 
+> **Note:** If you used `prisma db push` during early development and later switch to migrations, your first production deploy needs a baseline step. See [deploy-render.md](deploy-render.md#prisma-migration-baseline-saas-only).
+
 ### 3. Configure Environment
 
 Add these to your `.env`:
