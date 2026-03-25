@@ -11,5 +11,13 @@ export {
   CTA_CONTENT,
 } from './content';
 
+export {
+  ABOUT_PAGE,
+  CONTACT_PAGE,
+  FEATURES_PAGE,
+  PRICING_PAGE,
+  COMPARE_PAGE,
+} from './pages';
+
 export { THEME_CONFIG } from './theme';
 export type { ColorScale } from './theme';

@@ -1,7 +1,7 @@
 ---
 /**
  * Compare page — feature comparison against competitors.
- * Replace placeholder data with your product's competitive analysis.
+ * Content is config-driven via pages.ts. Comparison table accepts props.
  */
 
 import BaseLayout from '@layouts/BaseLayout.astro';
@@ -9,30 +9,14 @@ import Container from '@components/ui/Container.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
 import ComparisonTable from '@components/sections/ComparisonTable.astro';
 import CtaSection from '@components/sections/CtaSection.astro';
+import { COMPARE_PAGE } from '@config';
 
-const differentiators = [
-  {
-    title: 'Built for Speed',
-    description: 'Get up and running in minutes, not months. Our guided setup adapts to your team size and workflow.',
-  },
-  {
-    title: 'Transparent Pricing',
-    description: 'No hidden fees, no custom quotes. What you see is what you pay. Start free, upgrade when ready.',
-  },
-  {
-    title: 'Automation First',
-    description: 'Automate repetitive tasks out of the box. Focus on strategy while the platform handles operations.',
-  },
-  {
-    title: 'Purpose-Built',
-    description: 'Not a stripped-down enterprise tool. Designed from the ground up for teams that need power without complexity.',
-  },
-];
+const { hero, primaryCta, secondaryCta, whyUs } = COMPARE_PAGE;
 ---
 
 <BaseLayout
   title="Compare"
-  description="See how our platform compares to alternatives on features, pricing, and support."
+  description={hero.subtext}
 >
   <!-- Hero -->
   <section class="hero" aria-labelledby="hero-heading">
@@ -40,14 +24,14 @@ const differentiators = [
       <div class="hero__inner">
         <SectionHeading
           id="hero-heading"
-          eyebrow="Comparison"
-          heading="How We Compare"
-          subtext="See how our platform stacks up against the competition."
+          eyebrow={hero.eyebrow}
+          heading={hero.heading}
+          subtext={hero.subtext}
           headingTag="h1"
         />
         <div class="hero__ctas">
-          <a href="/get-started" class="hero__btn hero__btn--primary">Start Free Trial</a>
-          <a href="/pricing" class="hero__btn hero__btn--ghost">View Pricing</a>
+          <a href={primaryCta.href} class="hero__btn hero__btn--primary">{primaryCta.label}</a>
+          <a href={secondaryCta.href} class="hero__btn hero__btn--ghost">{secondaryCta.label}</a>
         </div>
       </div>
     </Container>
@@ -61,14 +45,14 @@ const differentiators = [
     <Container>
       <SectionHeading
         id="why-heading"
-        eyebrow="Why Us"
-        heading="What Sets Us Apart"
-        subtext="Four reasons teams make the switch."
+        eyebrow={whyUs.eyebrow}
+        heading={whyUs.heading}
+        subtext={whyUs.subtext}
         headingTag="h2"
       />
 
       <div class="why__grid">
-        {differentiators.map((d) => (
+        {whyUs.items.map((d) => (
           <div class="why__card">
             <h3 class="why__title">{d.title}</h3>
             <p class="why__desc">{d.description}</p>

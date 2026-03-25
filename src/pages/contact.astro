@@ -4,15 +4,19 @@ import Container from '@components/ui/Container.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
 import Input from '@components/ui/Input.astro';
 import Button from '@components/ui/Button.astro';
+import { CONTACT_PAGE, SITE_CONFIG } from '@config';
+
+const { hero, sidebar, form } = CONTACT_PAGE;
+const { legal, socialLinks } = SITE_CONFIG;
 ---
 
-<BaseLayout title="Contact Us" description="Get in touch with our team. We would love to hear from you.">
+<BaseLayout title="Contact Us" description={hero.subtitle}>
   <section class="contact-hero" aria-labelledby="contact-hero-heading">
     <Container>
       <div class="contact-hero__inner">
         <SectionHeading
-          title="Contact Us"
-          subtitle="Have a question, feedback, or just want to say hello? We would love to hear from you."
+          title={hero.title}
+          subtitle={hero.subtitle}
           as="h1"
         />
       </div>
@@ -24,8 +28,7 @@ import Button from '@components/ui/Button.astro';
       <div class="contact-grid">
         <!-- Form -->
         <div class="contact-form-wrapper">
-          <!-- TODO: Connect to your form handler (e.g., Formspree, Netlify Forms, or your API) -->
-          <form class="contact-form" method="post" action="https://formspree.io/f/your-form-id" novalidate>
+          <form class="contact-form" method="post" action={form.actionUrl} novalidate>
             <div class="contact-form__row">
               <Input label="First Name" name="firstName" placeholder="Jane" required />
               <Input label="Last Name" name="lastName" placeholder="Smith" required />
@@ -44,7 +47,7 @@ import Button from '@components/ui/Button.astro';
               ></textarea>
             </div>
             <Button variant="primary" size="lg" type="submit">
-              Send Message
+              {form.submitLabel}
             </Button>
             <div id="form-status" class="form-status" aria-live="polite" role="status"></div>
           </form>
@@ -63,10 +66,8 @@ import Button from '@components/ui/Button.astro';
         <!-- Sidebar -->
         <aside class="contact-sidebar">
           <div class="contact-info">
-            <h2 class="contact-info__title">Get in Touch</h2>
-            <p class="contact-info__text">
-              Whether you have a question about features, pricing, or anything else, our team is ready to answer.
-            </p>
+            <h2 class="contact-info__title">{sidebar.title}</h2>
+            <p class="contact-info__text">{sidebar.text}</p>
 
             <div class="contact-info__items">
               <div class="contact-info__item">
@@ -75,7 +76,7 @@ import Button from '@components/ui/Button.astro';
                 </div>
                 <div>
                   <p class="contact-info__label">Email</p>
-                  <a href="mailto:hello@example.com" class="contact-info__link">hello@example.com</a>
+                  <a href={`mailto:${legal.email}`} class="contact-info__link">{legal.email}</a>
                 </div>
               </div>
 
@@ -85,7 +86,7 @@ import Button from '@components/ui/Button.astro';
                 </div>
                 <div>
                   <p class="contact-info__label">Phone</p>
-                  <a href="tel:+15550000000" class="contact-info__link">(555) 000-0000</a>
+                  <a href={`tel:${legal.phone}`} class="contact-info__link">{legal.phone}</a>
                 </div>
               </div>
 
@@ -95,22 +96,21 @@ import Button from '@components/ui/Button.astro';
                 </div>
                 <div>
                   <p class="contact-info__label">Address</p>
-                  <p class="contact-info__address">123 Main Street, Suite 100<br />Your City, ST 00000</p>
+                  <p class="contact-info__address">{legal.address}</p>
                 </div>
               </div>
             </div>
 
             <div class="contact-info__social">
-              <a href="#" class="contact-info__social-link" aria-label="LinkedIn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-              </a>
-              <a href="#" class="contact-info__social-link" aria-label="X">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-              </a>
+              {socialLinks.map((link) => (
+                <a href={link.href} class="contact-info__social-link" aria-label={link.label}>
+                  <Fragment set:html={link.icon} />
+                </a>
+              ))}
             </div>
 
             <div class="contact-info__location">
-              <p>Based in Your City — serving customers everywhere.</p>
+              <p>{sidebar.locationLine}</p>
             </div>
           </div>
         </aside>

@@ -119,11 +119,12 @@ export const SITE_CONFIG = {
     description: 'Articles, tutorials, and insights on web development, design, and building great products.',
   },
 
-  /** Legal information — used in Privacy Policy and Terms of Service pages */
+  /** Legal & contact information — used in Privacy, Terms, and Contact pages */
   legal: {
     companyName: 'Your Company Inc.',
     email: 'hello@example.com',
     privacyEmail: 'privacy@example.com',
+    phone: '(555) 000-0000',
     address: '123 Main St, City, State 12345',
   },
 

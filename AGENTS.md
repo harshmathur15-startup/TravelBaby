@@ -28,7 +28,7 @@ e2e/                 — Playwright E2E tests
 - **Max file length:** 300 lines — split if longer
 - **Design tokens** via CSS custom properties in `src/styles/global.css`
 - **Fonts** self-hosted via Astro Fonts API (`astro.config.mjs`)
-- **Config-driven:** site identity in `src/config/site.ts`, content in `content.ts`, colors in `theme.ts`
+- **Config-driven:** site identity in `site.ts`, homepage in `content.ts`, pages in `pages.ts`, colors in `theme.ts` (all in `src/config/`)
 
 ## Do
 

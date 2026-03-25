@@ -6,24 +6,27 @@ import Button from '@components/ui/Button.astro';
 import PricingCards from '@components/sections/PricingCards.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import CtaSection from '@components/sections/CtaSection.astro';
+import { PRICING_PAGE } from '@config';
+
+const { hero, primaryCta, secondaryCta } = PRICING_PAGE;
 ---
 
-<BaseLayout title="Pricing" description="Simple, transparent pricing for every stage of growth.">
+<BaseLayout title="Pricing" description={hero.subtitle}>
   <section class="pricing-hero" aria-labelledby="pricing-hero-heading">
     <Container>
       <div class="pricing-hero__inner">
         <SectionHeading
-          title="Simple, Transparent Pricing"
-          subtitle="No hidden fees. No surprises. Pick the plan that fits your needs."
+          title={hero.title}
+          subtitle={hero.subtitle}
           as="h1"
           id="pricing-hero-heading"
         />
         <div class="pricing-hero__actions">
-          <Button variant="primary" size="lg" href="#plans" ariaLabel="View plans">
-            View Plans
+          <Button variant="primary" size="lg" href={primaryCta.href} ariaLabel={primaryCta.label}>
+            {primaryCta.label}
           </Button>
-          <Button variant="ghost" size="lg" href="/contact" ariaLabel="Contact sales">
-            Contact Sales
+          <Button variant="ghost" size="lg" href={secondaryCta.href} ariaLabel={secondaryCta.label}>
+            {secondaryCta.label}
           </Button>
         </div>
       </div>

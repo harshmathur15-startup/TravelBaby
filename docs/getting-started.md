@@ -39,11 +39,16 @@ Visit `http://localhost:4321` — you should see the home page with Hero, Featur
 
 ## 5. Customize Your Brand
 
-1. **Colors:** Edit `src/styles/global.css` — replace the indigo/slate/amber palette with your brand colors
-2. **Fonts:** Change `--font-heading` and `--font-body` in `global.css` and update the Google Fonts import
-3. **Logo:** Replace the text "Brand" in `Navbar.astro` and `Footer.astro` with your logo
-4. **Content:** Update text in section components or connect Sanity CMS
-5. **Site URL:** Update `site` in `astro.config.mjs` and `robots.txt`
+Edit these 4 config files — every page updates automatically:
+
+1. **`src/config/site.ts`** — Brand name, nav links, footer, social media, legal/contact info
+2. **`src/config/content.ts`** — Homepage sections (hero, features, stats, pricing, testimonials, FAQ, CTA)
+3. **`src/config/pages.ts`** — Individual page content (about, contact, features, pricing, compare)
+4. **`src/config/theme.ts`** — Color palette (primary, secondary, accent) and fonts
+
+Then update:
+5. **Site URL:** Update `site` in `astro.config.mjs`
+6. **Get Started page:** Edit `src/pages/get-started.astro` directly (product-specific)
 
 ## 6. Fill In CLAUDE.md
 

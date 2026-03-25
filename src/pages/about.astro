@@ -4,48 +4,19 @@ import Container from '@components/ui/Container.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
 import Card from '@components/ui/Card.astro';
 import CtaSection from '@components/sections/CtaSection.astro';
+import { ABOUT_PAGE } from '@config';
 
-const values = [
-  {
-    icon: '&#9733;',
-    title: 'Quality First',
-    description: 'We ship when it is ready, not when it is due. Every detail matters.',
-  },
-  {
-    icon: '&#9788;',
-    title: 'Open & Transparent',
-    description: 'Honest communication with our team, our customers, and ourselves.',
-  },
-  {
-    icon: '&#9829;',
-    title: 'Customer Focused',
-    description: 'Every decision starts with the question: does this help our users?',
-  },
-  {
-    icon: '&#9878;',
-    title: 'Built to Scale',
-    description: 'We architect for growth from day one, so our tools grow with you.',
-  },
-];
-
-const team = [
-  { name: 'Jane Smith', role: 'CEO & Co-Founder', image: '/team/placeholder.svg' },
-  { name: 'Alex Johnson', role: 'CTO & Co-Founder', image: '/team/placeholder.svg' },
-  { name: 'Maria Garcia', role: 'Head of Design', image: '/team/placeholder.svg' },
-  { name: 'David Lee', role: 'Lead Engineer', image: '/team/placeholder.svg' },
-  { name: 'Sarah Chen', role: 'Head of Marketing', image: '/team/placeholder.svg' },
-  { name: 'James Wilson', role: 'Head of Sales', image: '/team/placeholder.svg' },
-];
+const { hero, mission, values, team } = ABOUT_PAGE;
 ---
 
-<BaseLayout title="About" description="Learn about our mission, values, and the team behind the product.">
+<BaseLayout title="About" description={hero.subtitle}>
   <!-- Hero -->
   <section class="about-hero" aria-labelledby="about-hero-heading">
     <Container>
       <div class="about-hero__inner">
         <SectionHeading
-          title="Building Tools That Matter"
-          subtitle="We are a team of builders, designers, and problem-solvers on a mission to help businesses launch faster and scale smarter."
+          title={hero.title}
+          subtitle={hero.subtitle}
           as="h1"
           id="about-hero-heading"
         />
@@ -58,13 +29,10 @@ const team = [
     <Container>
       <div class="about-mission__grid">
         <div class="about-mission__content">
-          <h2 id="mission-heading" class="about-mission__title">Our Mission</h2>
-          <p class="about-mission__text">
-            Great software should be accessible to every business, not just the ones with unlimited budgets and large engineering teams. We build tools that give startups and growing companies the same foundation that enterprise teams take for granted.
-          </p>
-          <p class="about-mission__text">
-            Our platform combines modern design, solid architecture, and developer experience into a single starting point. Whether you are launching your first product or scaling your tenth, we provide the groundwork so you can focus on what makes your business unique.
-          </p>
+          <h2 id="mission-heading" class="about-mission__title">{mission.title}</h2>
+          {mission.paragraphs.map((p) => (
+            <p class="about-mission__text">{p}</p>
+          ))}
         </div>
         <div class="about-mission__visual">
           <!-- Replace with your own image: run /stock-photos or add to public/images/ -->
@@ -80,12 +48,12 @@ const team = [
   <section class="about-values" aria-labelledby="values-heading">
     <Container>
       <SectionHeading
-        title="What We Stand For"
-        subtitle="The principles that guide every decision we make."
+        title={values.title}
+        subtitle={values.subtitle}
         id="values-heading"
       />
       <div class="about-values__grid">
-        {values.map((value) => (
+        {values.items.map((value) => (
           <Card variant="outlined" padding="lg">
             <div class="about-values__icon" aria-hidden="true">
               <Fragment set:html={value.icon} />
@@ -102,12 +70,12 @@ const team = [
   <section class="about-team" aria-labelledby="team-heading">
     <Container>
       <SectionHeading
-        title="Meet the Team"
-        subtitle="The people making it happen."
+        title={team.title}
+        subtitle={team.subtitle}
         id="team-heading"
       />
       <div class="about-team__grid">
-        {team.map((member) => (
+        {team.members.map((member) => (
           <div class="about-team__member">
             <div class="about-team__avatar" aria-hidden="true">
               <span>{member.name.split(' ').map((n) => n[0]).join('')}</span>

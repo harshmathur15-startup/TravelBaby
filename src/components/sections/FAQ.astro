@@ -1,6 +1,16 @@
 ---
 import { FAQ_CONTENT } from '@config';
 
+interface Props {
+  heading?: string;
+  subtext?: string;
+}
+
+const {
+  heading = 'Frequently Asked Questions',
+  subtext = 'Common questions about getting started.',
+} = Astro.props;
+
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -18,8 +28,8 @@ const faqJsonLd = {
 <section class="faq" id="faq" aria-labelledby="faq-heading">
   <div class="faq__inner">
     <div class="faq__header">
-      <h2 id="faq-heading" class="faq__heading">Frequently Asked Questions</h2>
-      <p class="faq__subtext">Common questions about getting started.</p>
+      <h2 id="faq-heading" class="faq__heading">{heading}</h2>
+      <p class="faq__subtext">{subtext}</p>
     </div>
 
     <div class="faq__list">
