@@ -83,8 +83,16 @@ const themeVars = [
     <!-- View Transitions -->
     <ClientRouter />
 
-    <!-- Analytics (uncomment and configure your provider) -->
-    <!-- <script defer data-domain="example.com" src="https://plausible.io/js/script.js"></script> -->
+    <!-- Analytics — enabled when SITE_CONFIG.analytics.gaId is set -->
+    {SITE_CONFIG.analytics.gaId && (
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${SITE_CONFIG.analytics.gaId}`}></script>
+      <script is:inline define:vars={{ gaId: SITE_CONFIG.analytics.gaId }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gaId);
+      </script>
+    )}
 
     <!-- Ensure animated elements visible if JS disabled -->
     <noscript><style>[data-animate]{opacity:1!important}</style></noscript>

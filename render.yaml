@@ -1,0 +1,49 @@
+# Render Blueprint — Website Template
+# Static Astro site with cache headers and security
+
+services:
+  - type: web
+    name: my-website
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: SANITY_PROJECT_ID
+        sync: false
+      - key: SANITY_DATASET
+        value: production
+    headers:
+      # Cache hashed Astro assets aggressively (fingerprinted filenames)
+      - path: /_astro/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      # Cache images
+      - path: /*.webp
+        name: Cache-Control
+        value: public, max-age=2592000
+      - path: /*.png
+        name: Cache-Control
+        value: public, max-age=2592000
+      - path: /*.svg
+        name: Cache-Control
+        value: public, max-age=2592000
+      # HTML — revalidate on each request
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+      # Security headers
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Strict-Transport-Security
+        value: max-age=31536000; includeSubDomains; preload
+      - path: /*
+        name: Permissions-Policy
+        value: camera=(), microphone=(), geolocation=()

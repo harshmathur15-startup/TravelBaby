@@ -118,4 +118,17 @@ export const SITE_CONFIG = {
     title: 'Blog',
     description: 'Articles, tutorials, and insights on web development, design, and building great products.',
   },
+
+  /** Legal information — used in Privacy Policy and Terms of Service pages */
+  legal: {
+    companyName: 'Your Company Inc.',
+    email: 'hello@example.com',
+    privacyEmail: 'privacy@example.com',
+    address: '123 Main St, City, State 12345',
+  },
+
+  /** Analytics — leave gaId empty to disable */
+  analytics: {
+    gaId: '',
+  },
 } as const;

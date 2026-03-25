@@ -37,7 +37,7 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <div class="footer__bottom">
-      <p class="footer__copyright">&copy; {currentYear} {SITE_CONFIG.copyright}. All rights reserved.</p>
+      <p class="footer__copyright">&copy; {currentYear} {SITE_CONFIG.copyright}. All rights reserved. <a href="/privacy" class="footer__legal-link">Privacy</a> · <a href="/terms" class="footer__legal-link">Terms</a></p>
       <div class="footer__social" role="list" aria-label="Social media links">
         {SITE_CONFIG.socialLinks.map((social) => (
           <a href={social.href} class="footer__social-link" aria-label={social.label} role="listitem" set:html={social.icon} />
@@ -109,6 +109,8 @@ const currentYear = new Date().getFullYear();
   .footer__social { display: flex; gap: 1rem; }
   .footer__social-link { display: flex; align-items: center; justify-content: center; color: rgba(255, 255, 255, 0.5); transition: color 0.2s; }
   .footer__social-link:hover { color: #fff; }
+  .footer__legal-link { color: rgba(255, 255, 255, 0.4); text-decoration: none; transition: color 0.2s; }
+  .footer__legal-link:hover { color: rgba(255, 255, 255, 0.7); }
 
   @media (max-width: 1024px) {
     .footer__top { grid-template-columns: 1fr; gap: 3rem; }

@@ -2,7 +2,7 @@ import type { APIContext } from 'astro';
 import { SITE_CONFIG } from '@config';
 
 export function GET(context: APIContext) {
-  const siteUrl = context.site?.toString() ?? SITE_CONFIG.url;
+  const siteUrl = (context.site?.toString() ?? SITE_CONFIG.url).replace(/\/$/, '');
   const body = [
     'User-agent: *',
     'Allow: /',
