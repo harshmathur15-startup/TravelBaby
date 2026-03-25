@@ -1,18 +1,19 @@
 ---
+import { CTA_CONTENT } from '@config';
 ---
 
 <section class="cta-section" aria-labelledby="cta-heading">
   <div class="cta-section__inner">
-    <h2 id="cta-heading" class="cta-section__heading">Ready to Launch Your Website?</h2>
+    <h2 id="cta-heading" class="cta-section__heading">{CTA_CONTENT.heading}</h2>
     <p class="cta-section__subtext">
-      Clone the boilerplate and start building in minutes. Everything you need is already set up.
+      {CTA_CONTENT.subtext}
     </p>
     <a
-      href="/get-started"
+      href={CTA_CONTENT.buttonHref}
       class="cta-section__btn"
-      aria-label="Get started with the boilerplate"
+      aria-label={CTA_CONTENT.buttonLabel}
     >
-      Get Started
+      {CTA_CONTENT.buttonLabel}
     </a>
   </div>
 </section>

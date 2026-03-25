@@ -1,13 +1,9 @@
 ---
 import ThemeToggle from '../ui/ThemeToggle.astro';
+import NavMobile from './NavMobile.astro';
+import { SITE_CONFIG } from '@config';
 
-const NAV_LINKS = [
-  { label: 'Features', href: '/features' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
-];
+const currentPath = Astro.url.pathname;
 ---
 
 <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -16,49 +12,34 @@ const NAV_LINKS = [
 
 <nav class="navbar" aria-label="Main navigation">
   <div class="navbar__inner">
-    <a href="/" class="navbar__logo" aria-label="Brand — go to homepage">
-      <span class="navbar__logo-text">Brand</span>
+    <a href="/" class="navbar__logo" aria-label={`${SITE_CONFIG.name} — go to homepage`}>
+      <span class="navbar__logo-text">{SITE_CONFIG.name}</span>
     </a>
 
     <ul class="navbar__links" role="list">
-      {NAV_LINKS.map((link) => (
+      {SITE_CONFIG.navLinks.map((link) => (
         <li>
-          <a href={link.href} class="navbar__link">{link.label}</a>
+          <a
+            href={link.href}
+            class:list={[
+              'navbar__link',
+              { 'navbar__link--active': currentPath === link.href || currentPath.startsWith(link.href + '/') },
+            ]}
+            aria-current={currentPath === link.href ? 'page' : undefined}
+          >
+            {link.label}
+          </a>
         </li>
       ))}
     </ul>
 
     <div class="navbar__actions">
       <ThemeToggle />
-      <a href="/get-started" class="navbar__cta" aria-label="Get started with Brand">
-        Get Started
+      <a href={SITE_CONFIG.ctaButton.href} class="navbar__cta" aria-label={`${SITE_CONFIG.ctaButton.label} with ${SITE_CONFIG.name}`}>
+        {SITE_CONFIG.ctaButton.label}
       </a>
-
-      <button
-        class="navbar__hamburger"
-        aria-label="Open menu"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-        type="button"
-      >
-        <span class="navbar__hamburger-line" aria-hidden="true"></span>
-        <span class="navbar__hamburger-line" aria-hidden="true"></span>
-        <span class="navbar__hamburger-line" aria-hidden="true"></span>
-      </button>
+      <NavMobile links={SITE_CONFIG.navLinks} currentPath={currentPath} />
     </div>
-  </div>
-
-  <div id="mobile-menu" class="navbar__mobile" aria-label="Mobile navigation" hidden>
-    <ul class="navbar__mobile-links" role="list">
-      {NAV_LINKS.map((link) => (
-        <li>
-          <a href={link.href} class="navbar__mobile-link">{link.label}</a>
-        </li>
-      ))}
-    </ul>
-    <a href="/get-started" class="navbar__mobile-cta" aria-label="Get started with Brand">
-      Get Started
-    </a>
   </div>
 </nav>
 
@@ -69,7 +50,7 @@ const NAV_LINKS = [
     left: 1rem;
     z-index: 1000;
     padding: 0.5rem 1rem;
-    background: var(--color-primary, #2563eb);
+    background: var(--color-primary-500);
     color: #fff;
     border-radius: 0 0 0.5rem 0.5rem;
     font-weight: 600;
@@ -99,7 +80,7 @@ const NAV_LINKS = [
   }
 
   .navbar--scrolled {
-    border-bottom-color: var(--color-border, #e5e7eb);
+    border-bottom-color: var(--color-neutral-200);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   }
 
@@ -114,14 +95,14 @@ const NAV_LINKS = [
 
   .navbar__logo {
     text-decoration: none;
-    color: var(--color-text, #111827);
+    color: var(--color-neutral-900);
     font-size: 1.25rem;
     font-weight: 700;
     letter-spacing: -0.025em;
   }
 
   .navbar__logo-text {
-    background: linear-gradient(135deg, var(--color-primary, #2563eb), var(--color-primary-dark, #1d4ed8));
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-700));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -137,14 +118,15 @@ const NAV_LINKS = [
 
   .navbar__link {
     text-decoration: none;
-    color: var(--color-text-secondary, #6b7280);
+    color: var(--color-neutral-500);
     font-size: 0.9375rem;
     font-weight: 500;
     transition: color 0.2s;
   }
 
-  .navbar__link:hover {
-    color: var(--color-primary, #2563eb);
+  .navbar__link:hover,
+  .navbar__link--active {
+    color: var(--color-primary-500);
   }
 
   .navbar__actions {
@@ -157,7 +139,7 @@ const NAV_LINKS = [
     display: inline-flex;
     align-items: center;
     padding: 0.5rem 1.25rem;
-    background: var(--color-primary, #2563eb);
+    background: var(--color-primary-500);
     color: #fff;
     font-size: 0.875rem;
     font-weight: 600;
@@ -167,78 +149,9 @@ const NAV_LINKS = [
   }
 
   .navbar__cta:hover {
-    background: var(--color-primary-dark, #1d4ed8);
-    transform: translateY(-1px);
-  }
-
-  .navbar__hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    padding: 0.5rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-
-  .navbar__hamburger-line {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: var(--color-text, #111827);
-    border-radius: 2px;
-    transition: transform 0.3s, opacity 0.3s;
-  }
-
-  .navbar__hamburger[aria-expanded='true'] .navbar__hamburger-line:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-  }
-
-  .navbar__hamburger[aria-expanded='true'] .navbar__hamburger-line:nth-child(2) {
-    opacity: 0;
-  }
-
-  .navbar__hamburger[aria-expanded='true'] .navbar__hamburger-line:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-  }
-
-  .navbar__mobile {
-    display: none;
-    padding: 1rem 1.5rem 1.5rem;
-    border-top: 1px solid var(--color-border, #e5e7eb);
-    background: #fff;
-  }
-
-  .navbar__mobile[hidden] {
-    display: none !important;
-  }
-
-  .navbar__mobile-links {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .navbar__mobile-link {
-    display: block;
-    padding: 0.75rem 0;
-    text-decoration: none;
-    color: var(--color-text, #111827);
-    font-size: 1rem;
-    font-weight: 500;
-    border-bottom: 1px solid var(--color-border, #e5e7eb);
-  }
-
-  .navbar__mobile-cta {
-    display: block;
-    margin-top: 1rem;
-    padding: 0.75rem;
-    background: var(--color-primary, #2563eb);
+    background: var(--color-primary-600);
     color: #fff;
-    text-align: center;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    text-decoration: none;
+    transform: translateY(-1px);
   }
 
   @media (max-width: 768px) {
@@ -249,20 +162,12 @@ const NAV_LINKS = [
     .navbar__cta {
       display: none;
     }
-
-    .navbar__hamburger {
-      display: flex;
-    }
-
-    .navbar__mobile:not([hidden]) {
-      display: block;
-    }
   }
 </style>
 
 <script>
   const navbar = document.querySelector('.navbar');
-  const hamburger = document.querySelector('.navbar__hamburger');
+  const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
 
   // Scroll shadow
@@ -284,15 +189,15 @@ const NAV_LINKS = [
       const isOpen = hamburger.getAttribute('aria-expanded') === 'true';
       hamburger.setAttribute('aria-expanded', String(!isOpen));
       hamburger.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
-      mobileMenu.hidden = isOpen;
+      mobileMenu.setAttribute('aria-hidden', String(isOpen));
     });
 
     // Escape key handler
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !mobileMenu.hidden) {
+      if (e.key === 'Escape' && mobileMenu.getAttribute('aria-hidden') === 'false') {
         hamburger.setAttribute('aria-expanded', 'false');
         hamburger.setAttribute('aria-label', 'Open menu');
-        mobileMenu.hidden = true;
+        mobileMenu.setAttribute('aria-hidden', 'true');
         hamburger.focus();
       }
     });

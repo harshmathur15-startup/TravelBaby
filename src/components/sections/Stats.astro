@@ -1,16 +1,11 @@
 ---
-const STATS = [
-  { value: '<1s', label: 'First contentful paint' },
-  { value: '100', label: 'Lighthouse performance' },
-  { value: '0', label: 'JavaScript by default' },
-  { value: '10min', label: 'Clone to running site' },
-];
+import { STATS_CONTENT } from '@config';
 ---
 
 <section class="stats" aria-label="Key performance metrics">
   <div class="stats__inner">
     <div class="stats__grid" role="list">
-      {STATS.map((stat) => (
+      {STATS_CONTENT.map((stat) => (
         <div class="stats__item" role="listitem">
           <span class="stats__value">{stat.value}</span>
           <span class="stats__label">{stat.label}</span>

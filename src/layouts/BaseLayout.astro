@@ -3,6 +3,7 @@ import { ClientRouter } from 'astro:transitions';
 import '@styles/global.css';
 import Navbar from '@components/sections/Navbar.astro';
 import Footer from '@components/sections/Footer.astro';
+import { SITE_CONFIG, THEME_CONFIG } from '@config';
 
 interface Props {
   title: string;
@@ -13,14 +14,23 @@ interface Props {
 
 const {
   title,
-  description = 'Your website description goes here',
-  ogImage = '/og-default.png',
+  description = SITE_CONFIG.description,
+  ogImage = SITE_CONFIG.ogImage,
   canonicalUrl = Astro.url.href,
 } = Astro.props;
 
-const siteName = 'Website';
+const siteName = SITE_CONFIG.name;
 const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
-const siteUrl = Astro.site?.toString() ?? 'https://example.com';
+const siteUrl = Astro.site?.toString() ?? SITE_CONFIG.url;
+
+const themeVars = [
+  ...Object.entries(THEME_CONFIG.colors.primary).map(([k, v]) => `--color-primary-${k}: ${v};`),
+  ...Object.entries(THEME_CONFIG.colors.secondary).map(([k, v]) => `--color-secondary-${k}: ${v};`),
+  ...Object.entries(THEME_CONFIG.colors.accent).map(([k, v]) => `--color-accent-${k}: ${v};`),
+  `--font-heading: ${THEME_CONFIG.fonts.heading};`,
+  `--font-body: ${THEME_CONFIG.fonts.body};`,
+  `--font-mono: ${THEME_CONFIG.fonts.mono};`,
+].join('\n    ');
 ---
 
 <!doctype html>
@@ -48,30 +58,36 @@ const siteUrl = Astro.site?.toString() ?? 'https://example.com';
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
+    <!-- Theme overrides from config -->
+    <style is:inline set:html={`:root {\n    ${themeVars}\n  }`} />
+
     <!-- Fonts (preconnect + preload, non-blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href={THEME_CONFIG.fontUrl}
       as="style"
       onload="this.onload=null;this.rel='stylesheet'"
     />
     <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+      <link rel="stylesheet" href={THEME_CONFIG.fontUrl} />
     </noscript>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#4f46e5" />
+    <meta name="theme-color" content={SITE_CONFIG.themeColor} />
 
     <!-- View Transitions -->
     <ClientRouter />
 
     <!-- Analytics (uncomment and configure your provider) -->
     <!-- <script defer data-domain="example.com" src="https://plausible.io/js/script.js"></script> -->
+
+    <!-- Ensure animated elements visible if JS disabled -->
+    <noscript><style>[data-animate]{opacity:1!important}</style></noscript>
 
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -88,5 +104,24 @@ const siteUrl = Astro.site?.toString() ?? 'https://example.com';
       <slot />
     </main>
     <Footer />
+    <script>
+      const targets = document.querySelectorAll<HTMLElement>('[data-animate]');
+      if (targets.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: '0px 0px -40px 0px' },
+        );
+        targets.forEach((el) => observer.observe(el));
+      } else {
+        targets.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
   </body>
 </html>

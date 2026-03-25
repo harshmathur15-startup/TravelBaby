@@ -1,35 +1,10 @@
 ---
-const faqs = [
-  {
-    question: 'How do I get started with the boilerplate?',
-    answer: 'Clone the repository, run npm install, and start the dev server. The getting-started guide walks you through configuration, environment variables, and your first deployment in under 10 minutes.',
-  },
-  {
-    question: 'Can I customize the design tokens and styling?',
-    answer: 'Yes. All design decisions flow from CSS custom properties defined in the tokens file. Change colors, typography, spacing, and breakpoints in one place and the entire site updates automatically.',
-  },
-  {
-    question: 'How does the CMS integration work?',
-    answer: 'The boilerplate connects to Sanity CMS out of the box. Content schemas for pages, blog posts, and reusable blocks are pre-configured. Your content team can edit pages visually without touching code.',
-  },
-  {
-    question: 'How do I deploy to production?',
-    answer: 'The boilerplate includes CI/CD configuration for popular platforms including Vercel, Netlify, and AWS. Push to your main branch and the pipeline handles building, testing, and deploying automatically.',
-  },
-  {
-    question: 'How do I receive updates and new features?',
-    answer: 'The boilerplate uses a template inheritance model. When updates are released, you can pull them into your project selectively. Breaking changes are documented in the changelog with migration guides.',
-  },
-  {
-    question: 'What kind of support is available?',
-    answer: 'Free users get community support through GitHub discussions. Pro users receive priority email support with 24-hour response times. Enterprise customers get dedicated support with SLA guarantees.',
-  },
-];
+import { FAQ_CONTENT } from '@config';
 
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqs.map((faq) => ({
+  mainEntity: FAQ_CONTENT.map((faq) => ({
     '@type': 'Question',
     name: faq.question,
     acceptedAnswer: {
@@ -48,7 +23,7 @@ const faqJsonLd = {
     </div>
 
     <div class="faq__list">
-      {faqs.map((faq, i) => (
+      {FAQ_CONTENT.map((faq, i) => (
         <details class="faq__item" name="faq">
           <summary class="faq__question">
             <span>{faq.question}</span>

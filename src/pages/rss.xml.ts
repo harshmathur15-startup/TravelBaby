@@ -1,6 +1,7 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { getAllPosts } from '@lib/blog-data';
+import { SITE_CONFIG } from '@config';
 
 export async function GET(context: APIContext) {
   const posts = (await getAllPosts()).sort(
@@ -8,9 +9,9 @@ export async function GET(context: APIContext) {
   );
 
   return rss({
-    title: 'Website Blog',
-    description: 'Articles, tutorials, and insights on web development, design, and building great products.',
-    site: context.site?.toString() ?? 'https://example.com',
+    title: `${SITE_CONFIG.name} ${SITE_CONFIG.rss.title}`,
+    description: SITE_CONFIG.rss.description,
+    site: context.site?.toString() ?? SITE_CONFIG.url,
     items: posts.map((post) => ({
       title: post.title,
       description: post.description,
@@ -18,6 +19,6 @@ export async function GET(context: APIContext) {
       link: `/blog/${post.slug}/`,
       categories: [post.category],
     })),
-    customData: '<language>en-us</language>',
+    customData: `<language>${SITE_CONFIG.language}</language>`,
   });
 }

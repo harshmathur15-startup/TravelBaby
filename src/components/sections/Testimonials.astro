@@ -1,35 +1,19 @@
 ---
-const TESTIMONIALS = [
-  {
-    quote: 'We went from zero to a fully deployed marketing site in under a day. The design tokens and component library saved us weeks of setup work.',
-    name: 'Sarah Chen',
-    role: 'CTO, Launchpad Labs',
-  },
-  {
-    quote: 'The CMS integration was the deciding factor. Our content team can update pages without filing engineering tickets. The SEO setup is excellent too.',
-    name: 'Marcus Rivera',
-    role: 'Lead Developer, Clearview',
-  },
-  {
-    quote: 'Clean code, great documentation, and it actually works out of the box. No mystery configurations or broken dependencies. Just clone and build.',
-    name: 'Priya Sharma',
-    role: 'Founder, Nimbus Studio',
-  },
-];
+import { TESTIMONIALS_CONTENT } from '@config';
 ---
 
 <section class="testimonials" aria-labelledby="testimonials-heading">
   <div class="testimonials__inner">
     <div class="testimonials__header">
-      <span class="testimonials__eyebrow">Testimonials</span>
-      <h2 id="testimonials-heading" class="testimonials__heading">What People Are Saying</h2>
+      <span class="testimonials__eyebrow">{TESTIMONIALS_CONTENT.eyebrow}</span>
+      <h2 id="testimonials-heading" class="testimonials__heading">{TESTIMONIALS_CONTENT.heading}</h2>
       <p class="testimonials__subtext">
-        Hear from developers who shipped faster with this boilerplate.
+        {TESTIMONIALS_CONTENT.subtext}
       </p>
     </div>
 
     <div class="testimonials__grid" role="list">
-      {TESTIMONIALS.map((t) => (
+      {TESTIMONIALS_CONTENT.items.map((t) => (
         <blockquote class="testimonials__card" role="listitem">
           <p class="testimonials__quote">{t.quote}</p>
           <footer class="testimonials__author">

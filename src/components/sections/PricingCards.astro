@@ -1,32 +1,13 @@
 ---
-const TIERS = [
-  {
-    name: 'Free', monthlyPrice: 0, annualPrice: 0, popular: false,
-    description: 'Perfect for personal projects and experimentation.',
-    cta: 'Get Started', ctaHref: '/get-started',
-    features: ['Up to 5 pages', '10 components', 'Community support', 'Basic SEO setup', 'GitHub repository access'],
-  },
-  {
-    name: 'Pro', monthlyPrice: 29, annualPrice: 24, popular: true,
-    description: 'For teams building production websites and apps.',
-    cta: 'Start Free Trial', ctaHref: '/get-started?plan=pro',
-    features: ['Unlimited pages', 'All components', 'CMS integration', 'Priority email support', 'Custom design tokens', 'Analytics dashboard', 'Multiple environments'],
-  },
-  {
-    name: 'Enterprise', monthlyPrice: null, annualPrice: null, popular: false,
-    description: 'For organizations with custom requirements.',
-    cta: 'Contact Us', ctaHref: '/contact',
-    features: ['Everything in Pro', 'Dedicated support', 'Custom integrations', 'SLA guarantees', 'On-premise deployment', 'Security audit', 'Team onboarding'],
-  },
-];
+import { PRICING_CONTENT } from '@config';
 ---
 
 <section class="pricing" id="pricing" aria-labelledby="pricing-heading">
   <div class="pricing__inner">
     <div class="pricing__header">
-      <span class="pricing__eyebrow">Pricing</span>
-      <h2 id="pricing-heading" class="pricing__heading">Simple, Transparent Pricing</h2>
-      <p class="pricing__subtext">Choose the plan that fits your needs. Scale as you grow.</p>
+      <span class="pricing__eyebrow">{PRICING_CONTENT.eyebrow}</span>
+      <h2 id="pricing-heading" class="pricing__heading">{PRICING_CONTENT.heading}</h2>
+      <p class="pricing__subtext">{PRICING_CONTENT.subtext}</p>
     </div>
 
     <div class="pricing__toggle" role="radiogroup" aria-label="Billing frequency">
@@ -35,7 +16,7 @@ const TIERS = [
     </div>
 
     <div class="pricing__grid" role="list">
-      {TIERS.map((tier) => (
+      {PRICING_CONTENT.tiers.map((tier) => (
         <div class={`pricing__card ${tier.popular ? 'pricing__card--popular' : ''}`} role="listitem">
           {tier.popular && <span class="pricing__popular-badge">Most Popular</span>}
           <h3 class="pricing__tier-name">{tier.name}</h3>
@@ -64,7 +45,7 @@ const TIERS = [
       ))}
     </div>
 
-    <p class="pricing__trial">All plans include a 14-day free trial. No credit card required.</p>
+    <p class="pricing__trial">{PRICING_CONTENT.trialNote}</p>
   </div>
 </section>
 
