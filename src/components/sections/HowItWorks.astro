@@ -1,0 +1,146 @@
+---
+/**
+ * HowItWorks — 3-step horizontal timeline.
+ * Responsive: horizontal on desktop, vertical on mobile.
+ * Replace STEPS data with your product's onboarding flow.
+ */
+
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+
+interface Step {
+  number: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  subtext?: string;
+  steps?: Step[];
+}
+
+const {
+  eyebrow = 'Simple Setup',
+  heading = 'How It Works',
+  subtext = 'Get started in three simple steps.',
+  steps = [
+    {
+      number: '1',
+      title: 'Sign Up',
+      description: 'Create your account in minutes. No credit card required for the free trial.',
+    },
+    {
+      number: '2',
+      title: 'Configure',
+      description: 'Set up your workspace with guided onboarding that adapts to your needs.',
+    },
+    {
+      number: '3',
+      title: 'Launch',
+      description: 'Go live with confidence. Your dashboard is ready and your team is connected.',
+    },
+  ],
+} = Astro.props;
+---
+
+<section class="hiw" aria-labelledby="hiw-heading">
+  <Container>
+    <SectionHeading
+      id="hiw-heading"
+      eyebrow={eyebrow}
+      heading={heading}
+      subtext={subtext}
+      headingTag="h2"
+    />
+
+    <ol class="hiw__timeline" role="list">
+      {steps.map((step, index) => (
+        <li class="hiw__step" data-animate="fade-up" style={`--delay: ${index * 150}ms`}>
+          <div class="hiw__number" aria-hidden="true">{step.number}</div>
+          {index < steps.length - 1 && <div class="hiw__connector" aria-hidden="true"></div>}
+          <h3 class="hiw__title">{step.title}</h3>
+          <p class="hiw__desc">{step.description}</p>
+        </li>
+      ))}
+    </ol>
+  </Container>
+</section>
+
+<style>
+  .hiw {
+    padding: var(--space-16) 0;
+    background-color: var(--color-neutral-0);
+  }
+
+  .hiw__timeline {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+    margin-top: var(--space-12);
+    list-style: none;
+    padding: 0;
+    counter-reset: step;
+  }
+
+  .hiw__step {
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hiw__number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-primary-500);
+    color: var(--color-neutral-0);
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-4);
+    flex-shrink: 0;
+  }
+
+  .hiw__connector {
+    display: none;
+  }
+
+  .hiw__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-950);
+    margin-bottom: var(--space-2);
+  }
+
+  .hiw__desc {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-neutral-600);
+    max-width: 300px;
+  }
+
+  @media (min-width: 768px) {
+    .hiw__timeline {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+
+    .hiw__connector {
+      display: block;
+      position: absolute;
+      top: 1.5rem;
+      left: calc(50% + 1.75rem);
+      width: calc(100% - 3.5rem);
+      height: 2px;
+      background-color: var(--color-primary-200);
+    }
+  }
+</style>

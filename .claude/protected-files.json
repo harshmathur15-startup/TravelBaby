@@ -1,0 +1,15 @@
+{
+  "description": "Files protected by drift detection. Changes to these require explicit approval. Add project-specific rule files here after cloning.",
+  "files": [
+    { "key": "CLAUDE.md", "path": "./CLAUDE.md" },
+    { "key": "rules:general", "path": "./.claude/rules/general.md" },
+    { "key": "rules:security", "path": "./.claude/rules/security.md" },
+    { "key": "rules:agents", "path": "./.claude/rules/agents.md" },
+    { "key": "rules:backend", "path": "./.claude/rules/backend.md" },
+    { "key": "rules:frontend", "path": "./.claude/rules/frontend.md" },
+    { "key": "rules:database", "path": "./.claude/rules/database.md" },
+    { "key": "rules:testing", "path": "./.claude/rules/testing.md" },
+    { "key": "rules:performance", "path": "./.claude/rules/performance.md" },
+    { "key": "family:registry", "path": "./agents/family/registry.md" }
+  ]
+}

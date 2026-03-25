@@ -1,0 +1,192 @@
+---
+/**
+ * Compare page — feature comparison against competitors.
+ * Replace placeholder data with your product's competitive analysis.
+ */
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import ComparisonTable from '@components/sections/ComparisonTable.astro';
+import CtaSection from '@components/sections/CtaSection.astro';
+
+const differentiators = [
+  {
+    title: 'Built for Speed',
+    description: 'Get up and running in minutes, not months. Our guided setup adapts to your team size and workflow.',
+  },
+  {
+    title: 'Transparent Pricing',
+    description: 'No hidden fees, no custom quotes. What you see is what you pay. Start free, upgrade when ready.',
+  },
+  {
+    title: 'Automation First',
+    description: 'Automate repetitive tasks out of the box. Focus on strategy while the platform handles operations.',
+  },
+  {
+    title: 'Purpose-Built',
+    description: 'Not a stripped-down enterprise tool. Designed from the ground up for teams that need power without complexity.',
+  },
+];
+---
+
+<BaseLayout
+  title="Compare"
+  description="See how our platform compares to alternatives on features, pricing, and support."
+>
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <Container>
+      <div class="hero__inner">
+        <SectionHeading
+          id="hero-heading"
+          eyebrow="Comparison"
+          heading="How We Compare"
+          subtext="See how our platform stacks up against the competition."
+          headingTag="h1"
+        />
+        <div class="hero__ctas">
+          <a href="/get-started" class="hero__btn hero__btn--primary">Start Free Trial</a>
+          <a href="/pricing" class="hero__btn hero__btn--ghost">View Pricing</a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Feature Comparison Table -->
+  <ComparisonTable />
+
+  <!-- Why Choose Us -->
+  <section class="why" aria-labelledby="why-heading">
+    <Container>
+      <SectionHeading
+        id="why-heading"
+        eyebrow="Why Us"
+        heading="What Sets Us Apart"
+        subtext="Four reasons teams make the switch."
+        headingTag="h2"
+      />
+
+      <div class="why__grid">
+        {differentiators.map((d) => (
+          <div class="why__card">
+            <h3 class="why__title">{d.title}</h3>
+            <p class="why__desc">{d.description}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- CTA -->
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: var(--space-16) 0 var(--space-12);
+    background: linear-gradient(180deg, var(--color-primary-50) 0%, var(--color-neutral-0) 100%);
+  }
+
+  .hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-6);
+  }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+
+  .hero__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background var(--duration-fast) var(--ease-in-out),
+                color var(--duration-fast) var(--ease-in-out);
+  }
+
+  .hero__btn--primary {
+    background: var(--color-primary-500);
+    color: #fff;
+  }
+
+  .hero__btn--primary:hover {
+    background: var(--color-primary-600);
+    color: #fff;
+  }
+
+  .hero__btn--ghost {
+    background: transparent;
+    color: var(--color-primary-600);
+    border: 1px solid var(--color-primary-200);
+  }
+
+  .hero__btn--ghost:hover {
+    background: var(--color-primary-50);
+  }
+
+  .why {
+    padding: var(--space-16) 0;
+    background-color: var(--color-neutral-0);
+  }
+
+  .why__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    margin-top: var(--space-10);
+  }
+
+  .why__card {
+    padding: var(--space-6);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-neutral-0);
+    transition: box-shadow var(--duration-normal) var(--ease-in-out);
+  }
+
+  .why__card:hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .why__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-950);
+    margin: 0 0 var(--space-2);
+  }
+
+  .why__desc {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-600);
+    line-height: var(--leading-relaxed);
+    margin: 0;
+  }
+
+  @media (min-width: 640px) {
+    .why__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      padding: var(--space-20) 0 var(--space-16);
+    }
+
+    .why {
+      padding: var(--space-20) 0;
+    }
+  }
+</style>

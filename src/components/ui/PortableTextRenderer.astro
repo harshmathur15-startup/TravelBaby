@@ -1,0 +1,38 @@
+---
+/**
+ * Thin wrapper for rendering Sanity Portable Text blocks.
+ * Falls back to basic HTML rendering when astro-portabletext is not installed.
+ */
+
+interface PortableTextChild {
+  _type: string;
+  text?: string;
+}
+
+interface PortableTextBlock {
+  _type: string;
+  style?: string;
+  children?: PortableTextChild[];
+}
+
+interface Props {
+  value: PortableTextBlock[];
+}
+
+const { value } = Astro.props;
+
+function renderBlocks(blocks: PortableTextBlock[]): string {
+  return blocks
+    .filter((b) => b._type === 'block' && b.children)
+    .map((b) => {
+      const text = b.children!.map((c) => c.text ?? '').join('');
+      if (b.style === 'h2') return `<h2>${text}</h2>`;
+      if (b.style === 'h3') return `<h3>${text}</h3>`;
+      if (b.style === 'h4') return `<h4>${text}</h4>`;
+      return `<p>${text}</p>`;
+    })
+    .join('\n');
+}
+---
+
+<div class="prose" set:html={renderBlocks(value)} />

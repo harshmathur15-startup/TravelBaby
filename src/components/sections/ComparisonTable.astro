@@ -1,0 +1,190 @@
+---
+/**
+ * ComparisonTable — feature comparison grid.
+ * Responsive: horizontal scroll on mobile.
+ * Replace competitors and features with your product's data.
+ */
+
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+
+interface Feature {
+  name: string;
+  values: boolean[];
+}
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  subtext?: string;
+  competitors?: string[];
+  features?: Feature[];
+}
+
+const {
+  eyebrow = 'Comparison',
+  heading = 'How We Compare',
+  subtext = 'See how our platform stacks up against the competition.',
+  competitors = ['Us', 'Competitor A', 'Competitor B', 'Competitor C'],
+  features = [
+    { name: 'Core feature',         values: [true, true, true, false] },
+    { name: 'Advanced automation',   values: [true, true, false, false] },
+    { name: 'Custom workflows',      values: [true, false, true, false] },
+    { name: 'Priority support',      values: [true, false, false, false] },
+    { name: 'API access',            values: [true, true, true, true] },
+    { name: 'Self-service setup',    values: [true, false, false, false] },
+  ],
+} = Astro.props;
+
+function getStatus(val: boolean): { label: string; cls: string } {
+  return val
+    ? { label: 'Yes', cls: 'status--yes' }
+    : { label: 'No', cls: 'status--no' };
+}
+---
+
+<section class="comparison" aria-labelledby="comparison-heading">
+  <Container>
+    <SectionHeading
+      id="comparison-heading"
+      eyebrow={eyebrow}
+      heading={heading}
+      subtext={subtext}
+      headingTag="h2"
+    />
+
+    <div class="comparison__wrapper" tabindex="0" role="region" aria-label="Comparison table, scrollable">
+      <table class="comparison__table">
+        <thead>
+          <tr>
+            <th scope="col" class="comparison__th comparison__th--feature">Feature</th>
+            {competitors.map((name, i) => (
+              <th scope="col" class={`comparison__th ${i === 0 ? 'comparison__th--highlight' : ''}`}>
+                {name}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {features.map((feat) => (
+            <tr>
+              <td class="comparison__td comparison__td--feature">{feat.name}</td>
+              {feat.values.map((val, i) => {
+                const status = getStatus(val);
+                return (
+                  <td class={`comparison__td ${i === 0 ? 'comparison__td--highlight' : ''}`}>
+                    <span class={`status ${status.cls}`} aria-label={status.label}>
+                      {val ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                      ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                      )}
+                    </span>
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .comparison {
+    padding: var(--space-16) 0;
+    background-color: var(--color-neutral-50);
+  }
+
+  .comparison__wrapper {
+    margin-top: var(--space-10);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-neutral-200);
+    background-color: var(--color-neutral-0);
+  }
+
+  .comparison__table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    text-align: center;
+  }
+
+  .comparison__th {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-600);
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 2px solid var(--color-neutral-200);
+    white-space: nowrap;
+  }
+
+  .comparison__th--feature {
+    text-align: left;
+    color: var(--color-neutral-800);
+  }
+
+  .comparison__th--highlight {
+    color: var(--color-primary-600);
+    background-color: var(--color-primary-50);
+  }
+
+  .comparison__td {
+    padding: var(--space-3) var(--space-5);
+    border-bottom: 1px solid var(--color-neutral-100);
+    vertical-align: middle;
+  }
+
+  .comparison__td--feature {
+    text-align: left;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-neutral-800);
+    white-space: nowrap;
+  }
+
+  .comparison__td--highlight {
+    background-color: var(--color-primary-50);
+  }
+
+  tbody tr:last-child .comparison__td {
+    border-bottom: none;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .status--yes {
+    color: var(--color-success);
+  }
+
+  .status--no {
+    color: var(--color-neutral-300);
+  }
+
+  @media (min-width: 768px) {
+    .comparison {
+      padding: var(--space-20) 0;
+    }
+
+    .comparison__th,
+    .comparison__td {
+      padding: var(--space-4) var(--space-6);
+    }
+
+    .comparison__td--feature {
+      font-size: var(--text-base);
+    }
+  }
+</style>

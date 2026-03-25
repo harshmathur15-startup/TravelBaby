@@ -29,3 +29,7 @@ coverage/
 # Temp
 tmp/
 temp/
+.astro/
+thoughts/
+.claude/sessions/
+.claude/drift-baseline.json

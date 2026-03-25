@@ -277,3 +277,32 @@
     display: block;
   }
 }
+
+/* --- Scroll-triggered animations ---
+   Add data-animate="fade-up|fade-in|scale-in" to any element.
+   Optional: style="--delay: 150ms" for staggered reveals.
+   Respects prefers-reduced-motion via JS in BaseLayout. */
+
+[data-animate] {
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-default),
+              transform var(--duration-slow) var(--ease-default);
+  transition-delay: var(--delay, 0ms);
+}
+
+[data-animate="fade-up"] {
+  transform: translateY(24px);
+}
+
+[data-animate="fade-in"] {
+  transform: none;
+}
+
+[data-animate="scale-in"] {
+  transform: scale(0.95);
+}
+
+[data-animate].is-visible {
+  opacity: 1;
+  transform: none;
+}

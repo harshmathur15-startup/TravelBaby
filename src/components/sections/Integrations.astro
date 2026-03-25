@@ -1,0 +1,122 @@
+---
+/**
+ * Integrations — logo cloud of integration partners.
+ * Displays partner names in a responsive grid.
+ * Replace the default list with your actual integrations.
+ */
+
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  subtext?: string;
+  integrations?: string[];
+}
+
+const {
+  eyebrow = 'Integrations',
+  heading = 'Works With Your Favorite Tools',
+  subtext = 'Connect to the tools your team already uses. Data flows automatically.',
+  integrations = [
+    'Slack',
+    'Google Workspace',
+    'Microsoft 365',
+    'Zapier',
+    'Stripe',
+    'GitHub',
+    'Notion',
+    'Figma',
+  ],
+} = Astro.props;
+---
+
+<section class="integrations" aria-labelledby="integrations-heading">
+  <Container>
+    <SectionHeading
+      id="integrations-heading"
+      eyebrow={eyebrow}
+      heading={heading}
+      subtext={subtext}
+      headingTag="h2"
+    />
+
+    <ul class="integrations__grid" role="list">
+      {integrations.map((name) => (
+        <li class="integrations__item">
+          <div class="integrations__logo" aria-label={name}>
+            <span class="integrations__name">{name}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </Container>
+</section>
+
+<style>
+  .integrations {
+    padding: var(--space-16) 0;
+  }
+
+  .integrations__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+    margin-top: var(--space-10);
+    list-style: none;
+    padding: 0;
+  }
+
+  .integrations__item {
+    display: flex;
+  }
+
+  .integrations__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: var(--space-5) var(--space-4);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-neutral-0);
+    transition: border-color var(--duration-normal) var(--ease-default),
+                box-shadow var(--duration-normal) var(--ease-default);
+  }
+
+  .integrations__logo:hover {
+    border-color: var(--color-neutral-300);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .integrations__name {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-400);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    user-select: none;
+  }
+
+  @media (min-width: 640px) {
+    .integrations__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .integrations {
+      padding: var(--space-20) 0;
+    }
+
+    .integrations__logo {
+      padding: var(--space-6) var(--space-5);
+    }
+
+    .integrations__name {
+      font-size: var(--text-base);
+    }
+  }
+</style>
