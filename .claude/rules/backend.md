@@ -5,11 +5,10 @@ paths:
   - "prisma/**/*"
 ---
 
-# Backend Standards
+# Product-specific rules (globals inherited from ~/.claude/rules/)
+<!-- Last reviewed: 2026-03-26 (S29) -->
 
 ## Architecture
-- Zod-validated `env.ts` — server must refuse to start on misconfiguration
-- Controllers are thin — business logic lives in services
 - One responsibility per service — no cross-service direct imports (communicate via events)
 - Async/await everywhere — no `.then()` chains
 
@@ -26,6 +25,5 @@ paths:
 - Add DB indexes for every foreign key and frequently filtered column
 
 ## Background Jobs
-- Background jobs go through BullMQ — never block the request thread
 - All job failures logged with full context for retry/debug
 - Jobs must be idempotent — safe to retry without side effects

@@ -6,7 +6,8 @@ paths:
   - "client/**/*.tsx"
 ---
 
-# Frontend Standards
+# Product-specific rules (globals inherited from ~/.claude/rules/)
+<!-- Last reviewed: 2026-03-26 (S29) -->
 
 ## Astro Components
 - One component per file — PascalCase naming
@@ -23,11 +24,9 @@ paths:
 - Dark mode prepared via `.dark` class on `<html>`
 
 ## Accessibility
-- All interactive elements need `aria-label` or `aria-labelledby`
 - All images need `alt` text (use `aria-hidden="true"` for decorative images)
 - Use semantic HTML: `<section>`, `<article>`, `<nav>`, `<footer>`
 - Focus-visible rings on all interactive elements
-- Keyboard navigable: skip-link, escape-to-close, tab order
 
 ## Responsive Design
 - Mobile-first: base styles for mobile, `@media (min-width:)` for larger screens
@@ -45,4 +44,3 @@ paths:
 ## Bundle & Performance
 - No large library imports without checking tree-shaking
 - Lazy-load routes and heavy components
-- No `console.log` left in committed code

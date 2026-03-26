@@ -1,4 +1,5 @@
-# Testing Standards
+# Product-specific rules (globals inherited from ~/.claude/rules/)
+<!-- Last reviewed: 2026-03-26 (S29) -->
 
 ## What to Test
 - Every service function — happy path + edge cases + error cases
@@ -27,7 +28,6 @@ describe('<Unit under test>', () => {
 ## Rules
 - One assertion concept per test — multiple `expect()` calls are fine if testing one thing
 - Test file lives next to the source file: `billing.service.test.ts` beside `billing.service.ts`
-- Mock external dependencies (DB, Claude API, Redis) — never call real services in unit tests
 - Use `vi.spyOn` for mocking, `vi.fn()` for stubs — clean up with `afterEach`
 - Coverage thresholds: 80% statements, 75% branches, 80% functions
 

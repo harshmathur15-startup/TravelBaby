@@ -4,7 +4,8 @@ paths:
   - "server/**/*.ts"
 ---
 
-# Database Standards
+# Product-specific rules (globals inherited from ~/.claude/rules/)
+<!-- Last reviewed: 2026-03-26 (S29) -->
 
 ## Schema Rules
 - Every table has `id`, `createdAt`, `updatedAt` — no exceptions
@@ -21,11 +22,8 @@ paths:
 - Every migration reviewed before applying to production
 
 ## Query Rules
-- Prisma is the only DB access layer — no raw SQL except approved migrations
 - Never `findMany` without a `where` clause on large tables — always paginate
 - Use `select` to fetch only needed fields — never `findMany` with full models on list endpoints
-- Wrap multi-step writes in `prisma.$transaction` — never partial-write across tables
-- Add DB indexes for columns used in frequent filters or sorts
 
 ## Seeding
 - Seed data lives in `prisma/seed.ts`

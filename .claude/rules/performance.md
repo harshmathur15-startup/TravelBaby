@@ -1,4 +1,5 @@
-# Performance Standards
+# Product-specific rules (globals inherited from ~/.claude/rules/)
+<!-- Last reviewed: 2026-03-26 (S29) -->
 
 ## API Response Time Budgets
 | Endpoint Type | Target | Max |
