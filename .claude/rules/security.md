@@ -11,15 +11,7 @@
 ## Authentication & Authorization
 - Require CSRF tokens on all state-changing requests
 
-## Data Classification
-| Class | Examples | Rule |
-|---|---|---|
-| PII | Name, email, government IDs | Encrypt at rest, mask in logs |
-| Financial | Payment amounts, bank details | Never log raw values, access restricted to authorized roles |
-| Internal | Department, job title | Access restricted to authenticated users |
-| Public | Company name, office location | No restrictions |
-
 ## Audit Logging
-- All user actions logged: `{ userId, action, resourceType, resourceId, timestamp, ip }`
+- All user actions logged (see `schemas/audit-log.md`)
 - All agent actions logged separately with full reasoning chain
 - Audit log is immutable — never delete, only append

@@ -30,7 +30,7 @@ paths:
 - Stay under 4,000 output tokens per agent call unless explicitly justified
 
 ## Observability
-- Every agent run logged as: `{ agentId, action, input, output, durationMs, modelUsed, cost, timestamp, triggeredBy }`
+- Every agent run logged (see `schemas/agent-log.md`)
 - Every tool call gets a `traceId` linking it to the parent agent run
 - Failed runs must include the full reasoning chain for debugging
 - Agent costs tracked per run and surfaced in the admin dashboard

@@ -13,7 +13,6 @@ paths:
 - Async/await everywhere — no `.then()` chains
 
 ## API Design
-- Every API response follows the shape: `{ success, data, error, meta }`
 - Pagination required on all list endpoints — never return unbounded arrays
 - HTTP status codes: 200 OK, 201 Created, 204 No Content, 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 422 Validation Error, 500 Server Error
 - Never mutate request or response objects directly

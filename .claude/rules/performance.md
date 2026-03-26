@@ -1,15 +1,6 @@
 # Product-specific rules (globals inherited from ~/.claude/rules/)
 <!-- Last reviewed: 2026-03-26 (S29) -->
 
-## API Response Time Budgets
-| Endpoint Type | Target | Max |
-|---|---|---|
-| Simple CRUD | < 100ms | 300ms |
-| List with filters | < 200ms | 500ms |
-| Complex calculation | < 2s | 5s |
-| AI agent (streaming) | First token < 1s | — |
-| Report generation | < 5s | 15s |
-
 ## Database
 - No query should scan more than 10,000 rows without pagination
 - N+1 queries are forbidden — use Prisma `include` or batch queries
