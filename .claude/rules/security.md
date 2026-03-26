@@ -9,9 +9,12 @@
 - Sanitize all user-generated content before rendering — prevent XSS
 
 ## Authentication & Authorization
+- Never trust the client's claimed role — always verify server-side on every request
 - Require CSRF tokens on all state-changing requests
+- Rate limit all public API endpoints
 
 ## Audit Logging
 - All user actions logged (see `schemas/audit-log.md`)
 - All agent actions logged separately with full reasoning chain
 - Audit log is immutable — never delete, only append
+- Sensitive data (financial records, PII, credentials) must never appear in any log

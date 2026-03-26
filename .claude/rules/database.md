@@ -24,6 +24,8 @@ paths:
 ## Query Rules
 - Never `findMany` without a `where` clause on large tables — always paginate
 - Use `select` to fetch only needed fields — never `findMany` with full models on list endpoints
+- Wrap multi-step writes in `Prisma.$transaction()`
+- No N+1 queries — use Prisma `include` or batch queries
 
 ## Seeding
 - Seed data lives in `prisma/seed.ts`

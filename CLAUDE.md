@@ -101,9 +101,3 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when y
 ### Agents
 [Your product's agent family — built from the template pattern]
 
-### Conventions
-- TypeScript strict mode everywhere
-- Astro components: PascalCase, utilities: camelCase
-- Design tokens via CSS custom properties in `src/styles/global.css`
-- All AI agent actions logged for auditability
-- Environment variables in `.env` (never committed)

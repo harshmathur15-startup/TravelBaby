@@ -17,6 +17,7 @@ paths:
 - Only call tools when necessary — check context first before fetching
 
 ## Failure & Retry
+- 3 retries per tool call, backing off at 1s, 2s, 4s
 - On unrecoverable failure: log full reasoning chain, mark job as `failed`, notify
 - Graceful degradation — always return a partial result rather than throwing
 
@@ -34,7 +35,7 @@ paths:
 - Every tool call gets a `traceId` linking it to the parent agent run
 - Failed runs must include the full reasoning chain for debugging
 - Agent costs tracked per run and surfaced in the admin dashboard
-- **Progress logging (mandatory in BaseAgent):** Write to `agent.log` at each iteration: `{ agentId, iteration, currentTask, status, timestamp }` — enables mid-run visibility without waiting for completion or timeout
+- **Progress logging (mandatory in BaseAgent):** Log at each iteration: `{ agentId, iteration, currentTask, status, timestamp }` — enables mid-run visibility
 
 ## File-Based Output (mandatory for agents producing reports)
 - Agents write full output to `research/<agent-name>-<output-type>.md`
@@ -42,3 +43,4 @@ paths:
 - The spawning skill reads the file after the agent returns
 - This saves ~20K tokens per agent run from the main conversation context
 - If the agent cannot write the file (permission, path error), it falls back to returning content directly
+- Agent contract write scope must include the output file path
