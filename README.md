@@ -39,9 +39,9 @@ npm run dev                    # localhost:4321
 
 ## What's Included
 
-- **7 UI primitives** — Badge, Button, Card, Container, Input, SectionHeading, ThemeToggle
-- **9 section components** — Navbar, Hero, Features, Stats, Testimonials, PricingCards, FAQ, CTA, Footer
-- **11 pages** — Home, Features, Pricing, About, Contact, Get Started, Blog listing, Blog posts, Components, 404, 500
+- **10 UI primitives** — Badge, Button, Card, Container, Input, Pagination, PortableTextRenderer, SectionHeading, Skeleton, ThemeToggle
+- **14 section components** — Navbar, NavMobile, Hero, Features, Stats, Testimonials, PricingCards, FAQ, CtaSection, Footer, BentoGrid, ComparisonTable, HowItWorks, Integrations
+- **18 pages + 4 route generators** — Home, Features, Pricing, About, Contact, Get Started, Blog (listing, posts, categories), Components, Compare, Preview, Search, Privacy, Terms, i18n, 404, 500
 - **14 CMS schemas** — page builder, blog, pricing, testimonials, FAQ, site settings
 - **Design token system** — colors, typography, spacing, shadows, radii, transitions
 - **SEO foundation** — BaseLayout with OG, Twitter, canonical, JSON-LD

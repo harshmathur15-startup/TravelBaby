@@ -44,21 +44,22 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when y
 ## What's Included
 
 ### Website Layer
-- **7 UI primitives:** Badge, Button, Card, Container, Input, SectionHeading, ThemeToggle
-- **9 section components:** Navbar, Hero, Features, Stats, Testimonials, PricingCards, FAQ, CtaSection, Footer
-- **11 pages:** Home, Features, Pricing, About, Contact, Get Started, Blog listing, Blog posts, Components, 404, 500
+- **10 UI primitives:** Badge, Button, Card, Container, Input, Pagination, PortableTextRenderer, SectionHeading, Skeleton, ThemeToggle
+- **14 section components:** Navbar, NavMobile, Hero, Features, Stats, Testimonials, PricingCards, FAQ, CtaSection, Footer, BentoGrid, ComparisonTable, HowItWorks, Integrations
+- **18 pages:** Home, Features, Pricing, About, Contact, Get Started, Blog (listing, posts, categories), Components, Compare, Preview, Search, Privacy, Terms, i18n (es), 404, 500
+- **4 route generators:** robots.txt, RSS feed, manifest.json, OG images
 - **Design tokens:** Full color, typography, spacing, shadow, radius, transition system (dark mode ready)
 - **CMS schemas:** 7 document types + 7 object types (page builder, blog, pricing, testimonials, FAQ)
-- **SEO:** BaseLayout with OG, Twitter, canonical, JSON-LD, RSS feed, sitemap
-- **Performance:** Non-blocking font loading, View Transitions, Lighthouse CI, path aliases
+- **SEO:** BaseLayout with OG, Twitter, canonical, JSON-LD, RSS feed, sitemap, dynamic OG images
+- **Performance:** Non-blocking font loading, View Transitions, Lighthouse CI, Pagefind search, path aliases
 
 ### AI Harness
 | Layer | Count | What It Does |
 |-------|-------|-------------|
-| **Core Skills** | 13 | Session lifecycle, commits, reviews, debugging, deployment, planning, context management |
+| **Core Skills** | 17 | Session lifecycle, commits, reviews, debugging, deployment, planning, context management |
 | **Extended Skills** | 53 | In `.claude/skills-extended/` — opt-in. Move any skill back to `.claude/skills/` to activate |
 | **Hooks** | 8 | Auto-format, file protection, quality gates, session tracking |
-| **Scripts** | 9 | Hook execution scripts |
+| **Scripts** | 10 | Hook execution scripts |
 | **Rules** | 8 | Standards for code, security, testing, performance, agents |
 
 ## Hooks (Run Automatically)

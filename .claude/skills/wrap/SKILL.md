@@ -65,13 +65,27 @@ Before wrapping, check what was changed this session against what skills ran:
 
 Report only genuine gaps — if the session was planning/research with no code, skip this section. Max 3 gaps — the most important ones only.
 
-## MEMORY.md Update
+## Post-Summary Steps
 
-After printing the summary, update `MEMORY.md`:
-- Update "Project Status" to reflect current state
-- Add any new architectural decisions to "Key Architectural Decisions"
-- Update "Critical Build Order" if items were completed
-- Remove stale entries
+After printing the summary, run these in order:
+
+1. **Update MEMORY.md:**
+   - Update project_status memory if the template's inventory or state changed
+   - Add new feedback or reference memories if earned this session
+   - Remove stale entries that no longer reflect reality
+
+2. **Create handoff:**
+   - Run `node scripts/handoff-generator.js` (skip if script missing)
+   - If script unavailable, write a brief handoff to `thoughts/handoffs/handoff-<timestamp>.md`
+   - Keep max 10 handoff files — delete oldest if over cap
+
+3. **Memory integrity check:**
+   - Run `node scripts/memory-integrity.js` (skip if script missing)
+   - If issues found, fix before finishing
+
+4. **Commit and push:**
+   - Stage all changed files, commit with `chore(session-N): <one-line summary>`
+   - Push to origin
 
 ## Instructions
 - Keep the summary under 20 lines — this is a snapshot, not a report
