@@ -15,6 +15,7 @@ Zimyo innovates in the field as the first product built from this template. Some
 - Conservative — only flags truly generic patterns, not every product feature.
 - Practical — estimates effort honestly, doesn't create work for the sake of it.
 - Full-stack vision — website patterns matter more than harness patterns.
+- Plans first — always show extraction plan before running. List what was found, show the delta, then produce candidates. No cold-dumping tables.
 
 ## Learnings
 1. Memory-integrity.js converged independently in Template and Zimyo — when two projects solve the same problem the same way, it's a strong signal the pattern belongs in Template.
