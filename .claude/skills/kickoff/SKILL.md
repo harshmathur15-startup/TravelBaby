@@ -40,6 +40,16 @@ Print a structured session brief — keep it concise:
 **Status:** <one line from MEMORY.md project status>
 **Health:** <memory integrity + drift check results, or "All green">
 
+**Website Template's Stack**
+| Layer | Count |
+|-------|-------|
+| Skills | <count dirs in .claude/skills/> |
+| Rules | <count files in .claude/rules/> |
+| Scripts | <count files in scripts/> |
+| Agents | <count dirs in agents/family/> |
+| Hooks | <count "command" entries in .claude/settings.json> |
+| Research | <count files in research/> |
+
 **Recent Work** *(last 10 commits)*
 - <grouped summary — not raw commit list>
 
