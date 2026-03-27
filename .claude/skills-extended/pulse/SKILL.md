@@ -42,7 +42,7 @@ SIGNAL 1 — MEMORY RETENTION (0-100)
 "Is memory being used and staying fresh?"
 
 Steps:
-1. Run: node scripts/memory-integrity.js (if exists) — capture issues
+1. Run: node scripts/memory-integrity.cjs (if exists) — capture issues
 2. Count memory files on disk. Check freshness (frontmatter dates if available)
 3. Read .claude/tool.log — count Read operations on MEMORY.md or memory files
    - High read count relative to session = memory is serving its purpose

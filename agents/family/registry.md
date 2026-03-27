@@ -6,27 +6,31 @@ Every website product built from this template inherits our code — components,
 
 ## Members
 
-| Name | Role | Skill | Runs When | Write Scope |
-|------|------|-------|-----------|-------------|
-| Thea | Blueprint architect — benchmarks against best website boilerplates worldwide | /blueprint | After major template changes | research/thea-report.md |
-| Nell | Debt scanner — finds TODOs, type escapes, missing tests, long files | /debt | Before refactoring or after adding code | research/debt-report.md |
-| Blair | Drift + integrity — verifies claims match reality, infrastructure is sound | /watch, /drift | After structural changes | research/blair-report.md, research/blair-history.csv |
-| Esme | Quality + accountability — audits, scores quality, tracks actions, recommends priorities | /mother, /quality-judge, /review-pipeline, /what-next | Periodic or after major builds | research/esme-audit.md, research/esme-ledger.md |
-| Priya | Upstream extractor — scans Zimyo for generic patterns to pull back into Template | /kickoff (embedded) | Every session (background at kickoff) | none (report only) |
+| Name | Role | Runs When | Write Scope |
+|------|------|-----------|-------------|
+| Thea | Blueprint architect — benchmarks against best website boilerplates | After major template changes | research/thea-report.md |
+| Nell | Debt scanner — finds TODOs, type escapes, missing tests, long files | Before refactoring or after adding code | research/debt-report.md |
+| Priya | Upstream extractor — scans products for generic patterns | Every session (background at kickoff) | none (report only) |
 
 ## Execution Order
 
 ```
-Thea (benchmark) → Nell (debt) → Blair (drift) → Esme (quality)
+Thea (benchmark) → Nell (debt)
 ```
 
-Thea identifies what's missing. Nell scans what's rotting. Blair catches what's drifted. Esme enforces, cleans, and tracks whether it all led to change.
+Thea identifies what's missing. Nell scans what's rotting. `/quality-judge` (extended skill) handles code scoring without needing a dedicated agent.
+
+## Notes
+
+- Blair (drift + integrity) removed S33 — replaced by SessionStart hooks: `drift-check.cjs`, `memory-integrity.cjs`, `component-validation.cjs`
+- Esme (quality + accountability) removed S33 — `/quality-judge` works standalone, `/mother` was redundant with hooks
+- `/review-pipeline` and `/what-next` removed — covered by `/review` (core) and `/report` (core)
 
 ## Rules
 
 - Sequential execution: each agent reads the previous agent's board entry
 - One agent never modifies another agent's file — flag on the board instead
-- Board hygiene: Esme prunes resolved entries, archives old notes
+- Board hygiene: first agent in a session prunes resolved entries
 - Profile cap: 20 learnings max — consolidate older learnings into principles
 
 ## Outcome Rule

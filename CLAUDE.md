@@ -56,36 +56,41 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when y
 ### AI Harness
 | Layer | Count | What It Does |
 |-------|-------|-------------|
-| **Core Skills** | 17 | Session lifecycle, commits, reviews, debugging, deployment, planning, context management |
-| **Extended Skills** | 53 | In `.claude/skills-extended/` — opt-in. Move any skill back to `.claude/skills/` to activate |
-| **Hooks** | 8 | Auto-format, file protection, quality gates, session tracking |
-| **Scripts** | 10 | Hook execution scripts |
-| **Rules** | 8 | Standards for code, security, testing, performance, agents |
+| **Core Skills** | 9 | Session lifecycle, reviews, retrospectives, search, reporting |
+| **Extended Skills** | 20 | In `.claude/skills-extended/` — opt-in. Move to `.claude/skills/` to activate |
+| **SaaS Skills** | 18 | In `.claude/skills-saas/` — activate when adding backend (auth, API, database) |
+| **Hooks** | 10 | Health checks, file protection, formatting, quality gates, session tracking |
+| **Scripts** | 12 | Hook execution + skill utility scripts |
+| **Rules** | 5 | Standards for code, security, frontend, performance, testing |
+| **Agents** | 3 | Thea (benchmark), Nell (debt), Priya (upstream extraction) |
 
 ## Hooks (Run Automatically)
 
 | When | What | Why |
 |------|------|-----|
-| Session starts | Load last handoff + git state | Context continuity |
+| Session starts | Verify memory integrity | Catch stale/broken memory files |
+| Session starts | Check protected file drift | Detect unauthorized changes |
+| Session starts | Validate skills/agents structure | Catch missing frontmatter |
 | Before bash | Block destructive commands | Safety |
 | Before file edit | Check protected file patterns | Prevent accidental config edits |
 | Before compaction | Generate session handoff | Preserve context |
-| After file edit | Run prettier + quality gate | Code quality |
+| After file edit | Run prettier | Auto-format code |
+| After file edit | Console.log detection | Code quality |
 | After any tool | Log to session tracker | Observability |
-| Session ends | Save memory + cost estimate | Continuity |
+| Session ends | Cost estimate | Token usage tracking |
 
-## Rules (8 Domains)
+## Rules (5 Active + 3 SaaS)
 
-| Rule | Covers |
-|------|--------|
-| general.md | Naming, file discipline, git, code quality |
-| security.md | Secrets, input validation, auth, audit logging |
-| backend.md | API design, error handling, logging |
-| frontend.md | Astro + React components, state, performance, a11y |
-| database.md | Schema, indexing, migrations, queries |
-| performance.md | Response budgets, frontend metrics, background jobs |
-| testing.md | Test structure, mocking, coverage thresholds |
-| agents.md | Agent contracts, HITL, retry, observability |
+| Rule | Covers | Stack |
+|------|--------|-------|
+| general.md | Naming, file discipline, git, code quality | All |
+| security.md | Secrets, input validation, audit logging | All |
+| frontend.md | Astro components, performance, a11y | Static site |
+| performance.md | Frontend metrics, bundle size, caching | All |
+| testing.md | Test structure, mocking, coverage thresholds | All |
+| backend.md | API design, error handling, logging | SaaS upgrade |
+| database.md | Schema, indexing, migrations, queries | SaaS upgrade |
+| agents.md | Agent contracts, HITL, retry, observability | SaaS upgrade |
 
 ---
 
@@ -101,4 +106,3 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when y
 
 ### Agents
 [Your product's agent family — built from the template pattern]
-

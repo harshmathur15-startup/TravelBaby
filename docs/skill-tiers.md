@@ -1,98 +1,89 @@
 # Skill Tiers
 
-66 skills organized by when you need them.
+47 skills organized by when you need them.
 
 **Core skills** live in `.claude/skills/` and work out of the box.
 **Extended skills** live in `.claude/skills-extended/`. To activate one, move its folder into `.claude/skills/`.
+**SaaS skills** live in `.claude/skills-saas/`. Activate when adding backend (auth, API, database).
 
-## Core (13) — Every product, from day 1
+## Core (9) — Every project, from day 1
 
 | Skill | What It Does |
 |-------|-------------|
 | `/kickoff` | Start-of-session — loads memory, commits, specs, primes context |
 | `/wrap` | End-of-session — summarizes work, updates memory, sets next context |
-| `/commit` | Generate well-structured git commit from staged changes |
-| `/pr` | Create a pull request — branch, push, open PR with description |
 | `/test` | Run tests, check coverage, fix failures |
 | `/review` | Review code for quality, bugs, security, conventions |
-| `/debug` | Structured debugging — reproduce, isolate, fix |
-| `/planning` | Analyze before coding — break tasks into steps, verify with tests |
-| `/deploy` | Production deployment — pre-checks, migrations, rollback plan |
-| `/save-context` | Check context usage, recommend best action to save tokens |
 | `/recall` | Search all past conversations across sessions |
 | `/report` | Project status report — what's built, what's left, progress |
-| `/standup` | Daily standup summary from git log and todos |
-
-## Extended (28) — Opt-in, based on project needs
-
-### Specification & Design
-| Skill | What It Does |
-|-------|-------------|
-| `/spec` | One-line feature -> full spec with acceptance criteria, edge cases |
-| `/data-model` | Product requirements -> Prisma schema |
-| `/scaffold` | Generate boilerplate — route, controller, service, test files |
-| `/ask` | Surface ambiguities and unknowns before building |
-| `/diagram` | Mermaid architecture diagrams from codebase |
-| `/api-doc` | Express routes -> OpenAPI 3.0 spec |
-
-### Quality & Security
-| Skill | What It Does |
-|-------|-------------|
-| `/health` | Scan for long files, console.logs, dead imports, coverage gaps |
-| `/security-scan` | Deep security audit of a file, route, or diff |
-| `/quality-judge` | 8-dimension code evaluation with auto-remediation tasks |
-| `/review-pipeline` | Multi-phase review — quality, architecture, security, performance |
-| `/readiness-gate` | Cross-document alignment check (BRD <-> PRD <-> architecture) |
-| `/ux-review` | React component accessibility and UX review |
-
-### Infrastructure & Data
-| Skill | What It Does |
-|-------|-------------|
-| `/incident` | Structured incident response — triage, root cause, postmortem |
-| `/load-test` | API route -> k6 load test script |
-| `/migrate` | Prisma migration workflow — create, review, deploy |
-| `/seed-database` | Generate realistic test data for PostgreSQL |
-| `/env-check` | Verify all required environment variables are set |
-
-### Workflow & Context
-| Skill | What It Does |
-|-------|-------------|
 | `/retro` | Weekly retrospective from git log and notes |
-| `/decisions` | Log an architectural decision (ADR) |
-| `/why` | Explain WHY a file/function was built the way it was |
-| `/what-next` | Recommend highest-priority next task |
-| `/save` | Save a table from conversation to a file |
-| `/onboard` | New developer setup checklist |
-| `/sessions` | See active sessions, set focus, clean stale ones |
-| `/signal` | Cross-session communication — messages, inbox, notes |
+| `/signal` | Cross-session communication — messages, inbox |
+| `/stock-photos` | Fetch stock photos from Pexels/Unsplash |
+
+## Extended (20) — Opt-in, based on project needs
+
+### Auditing & Quality
+| Skill | What It Does |
+|-------|-------------|
+| `/a11y-audit` | Deep WCAG AA accessibility audit |
+| `/lighthouse` | Lighthouse performance, SEO, and accessibility scores |
+| `/seo-audit` | Deep SEO audit — keywords, linking, structured data |
+| `/cleanup` | Scan for dead code, unused imports, orphaned files |
+| `/upgrade-deps` | Safely update outdated dependencies |
+| `/quality-judge` | 8-dimension code quality scoring with remediation tasks |
+
+### Planning & Research
+| Skill | What It Does |
+|-------|-------------|
+| `/ask` | Surface ambiguities before building |
+| `/assess` | Mid-session skill recommender |
+| `/decisions` | Log architectural decisions (ADR) |
+| `/why` | Explain why a file/function was built the way it was |
+| `/map` | Codebase exploration — architecture, patterns, dependencies |
+| `/public-ready` | Open-source readiness audit — secrets, PII, git history |
+
+### CMS & Content
+| Skill | What It Does |
+|-------|-------------|
+| `/cms-sync` | Verify Sanity schema ↔ frontend alignment |
 | `/changelog` | Generate CHANGELOG.md from git history |
-| `/level` | Full project setup assessment across 6 layers |
-| `/track-manager` | Track-based project management with parallel work streams |
-| `/pulse` | Measure 5 workflow health signals (memory, hooks, velocity, context, tests) |
-| `/sister` | Cross-agent synthesis — read all agent outputs, find patterns, measure family health |
 
-## Template-Only (4) — For maintaining the template, not for products
+### Agents & Observability
+| Skill | What It Does |
+|-------|-------------|
+| `/agent-activity` | All agent activity in think/act/observe format |
+| `/agent-catalog` | All agents configured in project |
+| `/agent-list` | Agents run in current session |
+| `/cost` | Analyze tool.log for token costs and efficiency |
+| `/pulse` | Workflow health — memory, hooks, velocity signals |
 
-| Skill | Agent | What It Does |
-|-------|-------|-------------|
-| `/blueprint` | Petra | Benchmark template against best Claude Code setups worldwide |
-| `/debt` | Ivy | Scan for technical debt, prioritize by severity |
-| `/watch` | Ada | Verify CLAUDE.md accuracy, file integrity, infrastructure health |
-| `/mother` | Lena | Audit file quality, execute cleanup, track accountability |
+### Template Governance
+| Skill | What It Does |
+|-------|-------------|
+| `/blueprint` | Benchmark template against best setups (via Thea) |
+| `/debt` | Technical debt scan and prioritization (via Nell) |
 
-## Utility (12) — Specialized tools
+## SaaS Upgrade (18) — Activate when adding backend
+
+Skills for Express, Prisma, PostgreSQL, Redis, BullMQ, JWT auth. See [saas-upgrade.md](saas-upgrade.md).
 
 | Skill | What It Does |
 |-------|-------------|
-| `/cost` | Analyze tool.log for token costs and efficiency |
-| `/dashboard` | Session metrics from structured JSONL logs |
-| `/assemble` | Detect project stack, recommend skills and agents |
-| `/wave-execute` | Dependency-aware parallel task execution |
-| `/map` | Codebase exploration — architecture, patterns, dependencies |
-| `/drift` | Compare codebase against CLAUDE.md architecture plan |
-| `/hooks` | Hooks reference documentation |
-| `/level-shipping` | Shipping readiness assessment |
-| `/agent-activity` | All agent activity in think/act/observe format |
-| `/agent-list` | Agents run in current session |
-| `/agent-catalog` | All agents configured in project |
+| `/api-doc` | Express routes → OpenAPI 3.0 spec |
+| `/data-model` | Requirements → Prisma schema |
+| `/debug` | Structured debugging (Prisma, BullMQ, auth) |
+| `/deploy` | Production deployment with migrations |
+| `/diagram` | Mermaid architecture diagrams |
+| `/drift` | Codebase vs architecture plan comparison |
+| `/edge-case-check` | Boundary, null, concurrency checks |
+| `/env-check` | Verify required environment variables |
+| `/incident` | Structured incident response |
+| `/load-test` | API route → k6 load test script |
+| `/migrate` | Prisma migration workflow |
 | `/observe-agent` | Real-time agent observability |
+| `/onboard` | New developer setup checklist |
+| `/prod-ready` | Pre-deployment checklist |
+| `/scaffold` | Generate route + controller + service + test |
+| `/security-scan` | Deep security audit (auth, SQL, XSS) |
+| `/seed-database` | Generate test data for PostgreSQL |
+| `/ux-review` | React component accessibility review |

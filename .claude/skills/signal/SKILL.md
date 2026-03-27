@@ -16,7 +16,6 @@ Read and act on pending messages in `~/.claude/signals/inbox.jsonl`.
 2. For each message:
    - `kill` — find the target PID, force-kill it, report result
    - `note` — display the note to the user
-   - `status` — display what another session reported
    - `abort` — if targeted at this session's PID, stop current task
 3. Move processed messages to `processed.jsonl`
 4. If inbox is empty, say so
@@ -38,22 +37,10 @@ Immediately force-kill a stuck session.
 2. Log the kill to `inbox.jsonl` as a `kill` type message
 3. Report result
 
-### `/signal status`
-Report what this session is doing, so other sessions can see it.
+## Scope
 
-1. Get current PID
-2. Append status message to `inbox.jsonl`
-3. Confirm
-
-### `/signal sessions`
-List all running Claude Code sessions.
-
-1. Run `tasklist | grep -i claude` (Windows) or `ps aux | grep claude` (Unix)
-2. Display PID, start time, and memory usage
-3. Flag which PID is likely this session (newest or matching `$PPID`)
-
-## Integration with /kickoff
-When `/kickoff` runs, it should also run `/signal check` to pick up any messages left by a previous session.
+- **Messaging** lives here: check, send, kill
+- To discover PIDs, run `tasklist | grep claude` (Windows) or `ps aux | grep claude` (Unix)
 
 ## File Paths
 - Inbox: `~/.claude/signals/inbox.jsonl`

@@ -15,7 +15,7 @@ const path = require('path');
 function detectProject() {
   const parts = process.cwd().replace(/\\/g, '/').split('/').filter(Boolean);
   const drive = parts[0].replace(':', '').toLowerCase();
-  const rest = parts.slice(1).join('-');
+  const rest = parts.slice(1).join('-').replace(/_/g, '-');
   return drive + '--' + rest;
 }
 

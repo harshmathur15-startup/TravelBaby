@@ -63,13 +63,11 @@ Open `CLAUDE.md`. Below the `<!-- PRODUCT -->` marker, replace:
 | Start a session | `/kickoff` |
 |---|---|
 | **End a session** | `/wrap` |
-| **Plan before building** | `/planning` |
-| **Commit changes** | `/commit` |
-| **Create a PR** | `/pr` |
 | **Run tests** | `/test` |
 | **Review code** | `/review` |
-| **Debug a problem** | `/debug` |
-| **Save context** | `/save-context` |
+| **Search past work** | `/recall` |
+| **Project status** | `/report` |
+| **Weekly reflection** | `/retro` |
 
 ## 8. Set Up Agent Families (Optional)
 
@@ -95,7 +93,7 @@ Before your first commit:
 rm -rf research/ thoughts/ agents/examples/ agents/scaffolds/
 
 # Remove template's own agent family (you'll build your own)
-rm -rf agents/family/Blair agents/family/Esme agents/family/Nell agents/family/Priya agents/family/Thea
+rm -rf agents/family/Thea agents/family/Nell agents/family/Priya
 rm -f agents/family/board.md agents/family/board-archive.md
 ```
 

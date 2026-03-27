@@ -74,18 +74,11 @@ After printing the summary, run these in order:
    - Add new feedback or reference memories if earned this session
    - Remove stale entries that no longer reflect reality
 
-2. **Create handoff:**
-   - Run `node scripts/handoff-generator.js` (skip if script missing)
-   - If script unavailable, write a brief handoff to `thoughts/handoffs/handoff-<timestamp>.md`
-   - Keep max 10 handoff files — delete oldest if over cap
-
-3. **Memory integrity check:**
-   - Run `node scripts/memory-integrity.js` (skip if script missing)
-   - If issues found, fix before finishing
-
-4. **Commit and push:**
+2. **Commit and push:**
    - Stage all changed files, commit with `chore(session-N): <one-line summary>`
    - Push to origin
+
+Note: Handoff generation (PreCompact hook) and memory integrity (SessionStart hook) are handled automatically.
 
 ## Instructions
 - Keep the summary under 20 lines — this is a snapshot, not a report

@@ -24,9 +24,7 @@ Read all of the following in parallel:
 
 ## Health Checks (run in parallel with reads)
 
-- `node scripts/memory-integrity.js` — verify memory file consistency (skip if script missing)
 - If `.claude/tool.log` exceeds 5000 lines, trim to last 3000 lines
-- `node scripts/drift-check.js` — verify protected files haven't drifted (skip if script missing)
 
 ## Output Format
 

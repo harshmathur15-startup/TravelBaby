@@ -12,13 +12,12 @@ Perform a thorough code review of the provided code or recent changes.
 | Category | What to Check |
 |---|---|
 | Correctness | Logic errors, edge cases, off-by-one errors |
-| Security | SQL injection, XSS, exposed secrets, input validation |
+| Security | XSS, exposed secrets, input validation, CSP compliance |
 | TypeScript | Strict mode compliance, proper types, no `any` |
-| Performance | N+1 queries, unnecessary re-renders, missing indexes |
-| Conventions | PascalCase components, camelCase utilities, REST routes |
-| Error Handling | Proper try/catch, meaningful error messages |
-| Agent Logging | All AI agent actions logged for auditability |
-| Tests | Adequate test coverage for new logic |
+| Performance | Unnecessary re-renders, missing lazy loading, bundle size |
+| Conventions | PascalCase components, camelCase utilities, file length limits |
+| Accessibility | Alt text, aria labels, keyboard navigation |
+| SEO | Meta tags, structured data, semantic HTML |
 
 ## Output Format
 
@@ -41,4 +40,3 @@ For each issue found:
 - Review all files changed in the current task or provided by user
 - Group issues by severity
 - End with a summary: total issues found, overall quality rating (1-10)
-- Suggest improvements but respect existing patterns

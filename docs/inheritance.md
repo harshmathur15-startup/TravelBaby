@@ -83,7 +83,7 @@ After cloning:
 - [ ] Copy `.env.example` to `.env`, fill values
 - [ ] Delete `research/` (or keep empty)
 - [ ] Delete `thoughts/` (or keep empty)
-- [ ] Delete template agents from `agents/family/` (Blair, Esme, Nell, Priya, Thea)
+- [ ] Delete template agents from `agents/family/` (Thea, Nell, Priya)
 - [ ] Reset `agents/family/registry.md` with your own agents
 - [ ] Decide: keep all skills or trim to Core tier
 - [ ] Copy agent scaffolds: `agents/scaffolds/` → `agents/families/`

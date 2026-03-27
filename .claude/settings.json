@@ -10,7 +10,15 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node scripts/session-start.js"
+            "command": "node scripts/memory-integrity.cjs"
+          },
+          {
+            "type": "command",
+            "command": "node scripts/drift-check.cjs verify || true"
+          },
+          {
+            "type": "command",
+            "command": "node scripts/component-validation.cjs"
           }
         ]
       }
@@ -21,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node -e \"let b='';process.stdin.on('data',c=>b+=c);process.stdin.on('end',()=>{const d=JSON.parse(b);const cmd=(d.tool_input&&d.tool_input.command||'').toLowerCase();const patterns=[/rm\\s+(-[a-z]*f[a-z]*\\s+|.*--force)/,/drop\\s+table/,/git\\s+push\\s+.*(-f|--force)/,/format\\s+c/,/find\\s+.*-delete/,/truncate\\s/,/mkfs\\./,/git\\s+add\\s+.*\\.env(?!\\.)/,/git\\s+commit.*\\.env(?!\\.)/,/while\\s+(true|1|:)/,/\\brm\\s+-i/,/\\bcp\\s+-i/,/\\bmv\\s+-i/,/gh\\s+run\\s+watch/,/find\\s+\\/\\s/];const hit=patterns.find(p=>p.test(cmd));if(hit){process.stderr.write('BLOCKED: Dangerous command detected\\n');process.exit(2);}process.exit(0);});\""
+            "command": "node scripts/bash-blocker.cjs"
           }
         ]
       },
@@ -41,7 +49,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node scripts/handoff-generator.js"
+            "command": "node scripts/handoff-generator.cjs"
           }
         ]
       }
@@ -52,11 +60,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node -e \"let b='';process.stdin.on('data',c=>b+=c);process.stdin.on('end',()=>{const d=JSON.parse(b);const f=d.tool_input&&d.tool_input.file_path||'';if(f.match(/\\.(ts|tsx|js|jsx)$/)){const {execSync}=require('child_process');try{execSync('npx prettier --write \\\"'+f+'\\\" 2>/dev/null',{stdio:'ignore'});}catch(e){}}});\""
+            "command": "node scripts/prettier-format.cjs"
           },
           {
             "type": "command",
-            "command": "node scripts/quality-gate.js"
+            "command": "node scripts/quality-gate.cjs"
           }
         ]
       },
@@ -65,7 +73,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node scripts/session-tracker.js"
+            "command": "node scripts/session-tracker.cjs"
           }
         ]
       }
@@ -76,7 +84,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node scripts/session-stop.js"
+            "command": "node scripts/session-stop.cjs"
           }
         ]
       }
