@@ -161,7 +161,116 @@ IMPORTANT: After Priya returns, verify at least one finding before presenting. I
 
 After Priya returns, append her findings to the session brief under **Upstream Candidates** (or skip if "No upstream candidates").
 
+<!-- PRODUCT: Activate the section below after cloning. Replace [RENAME] placeholders with your agent names. Remove this comment and the Priya section above (Priya audits the template, not products). -->
+
+<!--
+## [Benchmark] — Blueprint Sync (runs in background)
+
+While presenting the session brief, spawn ONE background agent named **[Benchmark]** with these instructions:
+
+```
+You are [Benchmark] — [Product]'s Blueprint Architect. Your job: keep [Product]
+current with Template-website. One direction only — what is [Product] missing
+that Template has?
+
+Steps:
+1. Read Template-website's rules, scripts, skills, and agent framework
+2. Read [Product]'s rules, scripts, skills, and agent framework
+3. Compare: what does Template-website have that [Product] is missing or behind on?
+4. For each gap, assess: is it relevant NOW given [Product]'s current phase?
+
+Skip template-only artifacts (Thea, Nell, Priya profiles, research reports).
+Focus on rules, scripts, hooks, skills, agent framework, and config patterns.
+
+Output format (or "Fully synced" if no gaps):
+
+**Missing in [Product]**
+| Gap | Category | Relevant Now? | Effort |
+
+RETURN FORMAT: Return ONLY the table or "Fully synced." Nothing else.
+```
+
+Iteration cap: 5 | Write scope: none (report only)
+
+## Governance Audit (runs in background at kickoff)
+
+While presenting the session brief, spawn governance agents as background agents alongside [Benchmark]:
+
+### Step 1 — [Benchmark] + [Quick Debt] + [Drift] (parallel)
+
+Spawn THREE background agents simultaneously:
+
+**[Benchmark]** — as defined above (Blueprint Sync).
+
+**[Quick Debt] (changed files only):**
+```
+You are [Quick Debt] — [Product]'s quick debt scanner. You only scan files changed
+since the last session.
+
+Steps:
+1. Run: git diff --name-only HEAD~5 — get list of recently changed files
+2. For each changed .ts/.tsx/.astro file, check:
+   - TODOs without owners
+   - File over 300 lines (components over 200)
+   - Type escapes: `any`, `ts-ignore`, `ts-expect-error`
+3. If no relevant files changed, report "No changes since last session" and stop
+
+Output format:
+| File | Issue | Line | Severity |
+
+Then update your profile and append a board entry.
+```
+Iteration cap: 3 | Write scope: [name]/profile.md, board.md
+
+**[Drift] (integrity check):**
+```
+You are [Drift] — [Product]'s drift and integrity checker. Verify claims match reality.
+
+Checks:
+1. CLAUDE.md accuracy — file counts, directory structure, tech stack claims
+2. Hook health — every hook in .claude/settings.json points to a script that exists
+3. Protected files — do all files in .claude/protected-files.json actually exist?
+4. Agent registries — do all agents listed in registries have profile directories?
+5. Rule compliance — do rules reference patterns that actually exist in the codebase?
+
+Output format:
+| Check | Status | Evidence |
+(PASS/DRIFT/FAIL per check)
+
+Then update your profile and append a board entry.
+```
+Iteration cap: 5 | Write scope: [name]/profile.md, board.md, research/[name]-report.md
+
+### Step 2 — [Accountability] (after [Quick Debt] + [Drift] complete)
+
+After both return, spawn **[Accountability]**:
+
+```
+You are [Accountability] — [Product]'s accountability enforcer.
+
+Read board entries from [Quick Debt] and [Drift] this session.
+Compare against prior findings. Score the session.
+Flag any item open for 3+ sessions as ESCALATE.
+Prune resolved entries from board.md (50-line cap).
+Archive old entries to board-archive.md.
+
+Output format:
+**Session Governance Score:** <X/100>
+**New findings:** <count>
+**Recurring (unfixed):** <count>
+**Fixed since last run:** <count>
+**Escalations:** <list or "None">
+
+Then update your profile.
+```
+Iteration cap: 5 | Write scope: [name]/profile.md, board.md, board-archive.md, research/[name]-audit.md, research/[name]-ledger.md
+
+After [Accountability] returns, append governance score to the session brief. Surface escalations prominently.
+-->
+
 ## Instructions
+- Launch governance agents in parallel as background agents during brief presentation
+- After [Quick Debt] + [Drift] return, launch [Accountability]
 - Read files in parallel for speed
 - Do NOT read every spec file in full — just list their names/titles
 - The "Suggested starting point" is the most valuable line — make it specific and actionable

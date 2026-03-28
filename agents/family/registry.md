@@ -1,5 +1,7 @@
 # Website Template Agent Family
 
+**These agents audit the template itself.** Products should use the governance scaffold at `agents/scaffolds/governance/` instead — it provides 6 roles (4 core + 2 on-demand) with `[RENAME]` placeholders.
+
 ## Why We Exist
 
 Every website product built from this template inherits our code — components, schemas, scripts, hooks. If our foundation drifts, every product inherits the drift. We keep the boilerplate honest: competitive, clean, accurate, and accountable.

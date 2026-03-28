@@ -5,6 +5,7 @@
 - Lock file (`package-lock.json`) must be committed and reviewed on changes
 
 ## Input & Output
+- Sanitize data before storing in the database
 - Use parameterized Prisma queries — never raw string SQL with user input
 - Sanitize all user-generated content before rendering — prevent XSS
 

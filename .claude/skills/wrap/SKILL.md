@@ -65,6 +65,18 @@ Before wrapping, check what was changed this session against what skills ran:
 
 Report only genuine gaps — if the session was planning/research with no code, skip this section. Max 3 gaps — the most important ones only.
 
+<!-- PRODUCT: Activate the section below after cloning. Replace [Accountability Agent] with your agent name. -->
+<!--
+## Governance Trend (part of wrap output)
+
+Read `research/[accountability-agent]-audit.md` if it exists. Include:
+- Current governance score and trend (improving/stable/degrading)
+- Any escalations from the most recent accountability run
+- If no audit file exists, note "No governance data — run /kickoff to generate"
+
+Governance runs at kickoff, not wrap. Wrap just reads and reports the latest score.
+-->
+
 ## Post-Summary Steps
 
 After printing the summary, run these in order:

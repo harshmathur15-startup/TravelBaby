@@ -10,6 +10,10 @@
         "hooks": [
           {
             "type": "command",
+            "command": "node scripts/session-start.cjs"
+          },
+          {
+            "type": "command",
             "command": "node scripts/memory-integrity.cjs"
           },
           {
@@ -85,6 +89,10 @@
           {
             "type": "command",
             "command": "node scripts/session-stop.cjs"
+          },
+          {
+            "type": "command",
+            "command": "node scripts/drift-check.cjs capture"
           }
         ]
       }

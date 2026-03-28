@@ -12,6 +12,9 @@ const patterns = [
   /git\s+add\s+.*\.env(?!\.)/,
   /git\s+commit.*\.env(?!\.)/,
   /while\s+(true|1|:)/,
+  /\brm\s+-i/,
+  /\bcp\s+-i/,
+  /\bmv\s+-i/,
   /gh\s+run\s+watch/,
   /find\s+\/\s/,
 ];

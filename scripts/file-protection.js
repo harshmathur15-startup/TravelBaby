@@ -37,7 +37,7 @@ process.stdin.on('end', () => {
     const entryPath = path.resolve(__dirname, '..', entry.path).replace(/\\/g, '/')
     const normalizedFile = path.resolve(filePath).replace(/\\/g, '/')
 
-    if (normalizedFile === entryPath) {
+    if (normalizedFile.toLowerCase() === entryPath.toLowerCase()) {
       if (entry.protection === 'block') {
         process.stderr.write('BLOCKED: ' + filePath + ' is protected. Edit manually if needed.\n')
         process.exit(2)

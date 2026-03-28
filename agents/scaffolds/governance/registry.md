@@ -1,50 +1,80 @@
 # Governance Family
 
-Four dedicated agents that watch the project's health. Never carry domain work. Run automatically via /kickoff and /wrap.
+Six dedicated agents that watch the project's health. Never carry domain work. Run automatically via /kickoff (not /wrap — kickoff gives you project health before you start building).
+
+**Note:** Template's live agents (Thea, Nell, Priya in `agents/family/`) audit the template itself. Products should use this scaffold instead.
 
 ## Why We Exist
 
 Governance layered on domain agents gets skipped under deadline pressure. We exist as a separate family so benchmarking, debt scanning, drift detection, and accountability happen every session — not when someone remembers.
 
-## The Family
+## Core Four (run every session)
 
-| Name | Role | Skills Owned | Trigger | Write Scope |
-|------|------|-------------|---------|-------------|
-| **[RENAME]** | Benchmark — keeps [Product] current with Template-website | /blueprint | Kickoff (background) | research/[name]-report.md |
-| **[RENAME]** | Debt Scanner — finds rot, cleans dead code | /debt, /health, /cleanup, /upgrade-deps | Wrap (background) | research/[name]-report.md |
-| **[RENAME]** | Drift + Integrity — verifies claims match reality | /watch, /drift, /pulse, /env-check | Wrap (background) | research/[name]-report.md, research/[name]-history.csv |
-| **[RENAME]** | Accountability — tracks findings, enforces quality, recommends next | /mother, /quality-judge, /review-pipeline, /what-next, /cost | Wrap (after debt+drift) | research/[name]-audit.md, research/[name]-ledger.md |
+| Name | Role | Trigger | Write Scope |
+|------|------|---------|-------------|
+| **[RENAME]** | Benchmark — keeps [Product] current with Template-website | Kickoff (parallel, background) | none (report only) |
+| **[RENAME]** | Quick Debt — scans recently changed files only | Kickoff (parallel, background) | [name]/profile.md, board.md |
+| **[RENAME]** | Drift + Integrity — verifies claims match reality | Kickoff (parallel, background) | [name]/profile.md, board.md, research/[name]-report.md |
+| **[RENAME]** | Accountability — tracks findings, enforces quality | Kickoff (after debt+drift) | [name]/profile.md, board.md, board-archive.md, research/[name]-audit.md, research/[name]-ledger.md |
+
+## On-Demand (run via skill invocation)
+
+| Name | Role | Trigger | Write Scope |
+|------|------|---------|-------------|
+| **[RENAME]** | Deep Debt — full codebase scan with trend tracking | `/debt` skill | research/debt-report.md |
+| **[RENAME]** | Deep Drift — 4-phase scored audit | `/watch` skill | research/[name]-report.md, research/[name]-history.csv |
 
 ## Execution Order
 
 ```
-Kickoff: [Benchmark] (background)
-Wrap:    [Debt] + [Drift] (parallel, background) → [Accountability] (after both)
+Kickoff:
+  Step 1: [Benchmark] + [Quick Debt] + [Drift] — parallel, background
+  Step 2: [Accountability] — after Step 1 completes
+
+On-demand:
+  /debt  → [Deep Debt]
+  /watch → [Deep Drift]
 ```
 
 ## Wiring Instructions
 
 ### In your /kickoff SKILL.md
 
-Add a background agent section for your Benchmark agent. Pattern:
+Add governance cascade. Pattern:
 
 ```
-## [Name] — Blueprint Sync (runs in background)
-Spawn ONE background agent named **[Name]** that compares Template-website
-against [Product] and flags what [Product] is missing.
+## Governance Audit (runs in background at kickoff)
+
+### Step 1 — [Benchmark] + [Quick Debt] + [Drift] (parallel)
+
+Spawn THREE background agents simultaneously:
+
+**[Benchmark]:** Compare Template-website against [Product], flag gaps.
 Iteration cap: 5 | Write scope: none (report only)
+
+**[Quick Debt]:** Scan files from `git diff --name-only HEAD~5`.
+Iteration cap: 3 | Write scope: [name]/profile.md, board.md
+
+**[Drift]:** Verify CLAUDE.md accuracy, hook health, agent registries.
+Iteration cap: 5 | Write scope: [name]/profile.md, board.md, research/[name]-report.md
+
+### Step 2 — [Accountability] (after Step 1)
+
+Read board entries from Step 1. Compare against prior findings.
+Score the session. Flag items open 3+ sessions as ESCALATE.
+Iteration cap: 5 | Write scope: [name]/profile.md, board.md, board-archive.md
 ```
 
 ### In your /wrap SKILL.md
 
-Add governance audit section. Spawn Debt + Drift in parallel as background agents. After both return, spawn Accountability. Each agent updates their profile and appends to the board.
+Add governance trend section that reads the latest accountability audit score.
 
 ## Rules
 
-- Sequential: each agent reads the previous agent's board entry
+- Sequential: Accountability reads Debt and Drift board entries before running
 - One agent never modifies another agent's file — flag on the board instead
 - Governance agents NEVER do domain work — no page building, no spec writing, no CMS work
-- Board hygiene: Accountability prunes resolved entries, archives old notes
+- Board hygiene: Accountability prunes resolved entries, archives old notes (50-line cap)
 - Profile cap: 20 learnings max
 - Agents with unfilled personality fields will be flagged by the Accountability agent
 
@@ -59,11 +89,13 @@ Add governance audit section. Spawn Debt + Drift in parallel as background agent
 | Agent Role | Skills Owned | Rationale |
 |------------|-------------|-----------|
 | Benchmark | /blueprint | Compares product against Template |
-| Debt | /debt, /health, /cleanup, /upgrade-deps | Finding rot, removing it, keeping deps current |
-| Drift | /watch, /drift, /pulse, /env-check | Verifying reality matches claims |
+| Quick Debt | (none — runs inline at kickoff) | Fast scan, no standalone skill |
+| Drift | (none — runs inline at kickoff) | Fast check, no standalone skill |
 | Accountability | /mother, /quality-judge, /review-pipeline, /what-next, /cost | Enforcing quality, tracking progress |
+| Deep Debt | /debt, /cleanup, /upgrade-deps | Full scan, dependency health |
+| Deep Drift | /watch, /drift, /pulse, /env-check | Full audit, scored dimensions |
 
-**14 domain skills.** Full cross-family map: see `agents/scaffolds/SKILL-OWNERSHIP.md`.
+**16 domain skills.** Full cross-family map: see `agents/scaffolds/SKILL-OWNERSHIP.md`.
 
 ## Outcome Rule
 

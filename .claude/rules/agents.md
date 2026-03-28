@@ -14,6 +14,7 @@ paths:
 ## Idempotency & Safety
 - Agents must be idempotent — running twice must not cause double processing
 - Max 10 iterations per agent run — abort and surface to human if exceeded
+- Prefer read-only tools before write — never write speculatively
 - Only call tools when necessary — check context first before fetching
 
 ## Failure & Retry
@@ -27,6 +28,8 @@ paths:
 - Anomaly detection agents must include confidence score and human-readable reason
 
 ## Token & Model Discipline
+- Use claude-haiku-4-5 for classification, scoring, simple extraction
+- Use claude-sonnet-4-6 for reasoning, anomaly detection, complex analysis
 - Never use Opus for automated background jobs — reserve for interactive sessions
 - Stay under 4,000 output tokens per agent call unless explicitly justified
 
