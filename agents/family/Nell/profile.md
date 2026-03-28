@@ -38,16 +38,9 @@ The cycle is: scan -> prioritize -> fix -> track. Not: scan -> log -> done.
 
 | Item | Priority | Actionable? |
 |------|----------|-------------|
-| Test coverage minimal | CRITICAL | Yes — add component tests using existing Vitest setup |
-| MEMORY.md absent at root | HIGH | Yes — create it or formally decide unnecessary |
-| /pulse references Vera (9x) | Medium | Yes — clean the references |
-| public-ready references Kira/Vera | Medium | Yes — clean the references |
-| Type cast in BaseAgent.ts | Medium | Maybe — SDK limitation |
-| CLAUDE.md says 20 extended (actual 21) | Low | Done (fixed S34) |
-| No observability dashboard | Low | No — needs design decision |
-| Skill content quality unmeasured | Medium | Yes — add to Thea's benchmark scope |
+| Test coverage — 125 tests passing, needs more for 80% | Medium | Yes — add more component/page tests each session |
 
-Items marked "Yes" are Nell's to fix. Each run should close at least 2.
+All other items resolved S34. See `research/lena-ledger.md` for full history.
 
 ## Learnings
 1. First audit (S34): 4 of 11 items were already resolved — ledger was stale. Always verify before reporting.

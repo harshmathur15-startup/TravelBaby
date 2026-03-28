@@ -1,8 +1,9 @@
 # Template Roadmap — Path to #1
 
-**Goal:** Be the best SaaS boilerplate out there.
-**Current score:** 45/100 (Petra Run 5, 2026-03-21)
-**Target:** 90+ / #1
+**Goal:** Be the best website boilerplate out there — then upgrade to SaaS.
+**Current website score:** 88/100 (Thea S34, 2026-03-28)
+**SaaS score:** 45/100 (Petra Run 5, 2026-03-21 — SaaS features not yet built)
+**Target:** 95+ website / 90+ SaaS
 
 All tools are free or pay-as-you-earn. $0/month until you have paying customers.
 
@@ -72,7 +73,7 @@ All tools are free or pay-as-you-earn. $0/month until you have paying customers.
 
 ---
 
-## Competitive Context (Petra Run 5)
+## Competitive Context (SaaS — Petra Run 5, pre-SaaS-upgrade)
 
 | Rank | Template | Score | Price |
 |------|----------|-------|-------|

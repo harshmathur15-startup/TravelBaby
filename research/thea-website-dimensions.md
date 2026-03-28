@@ -315,7 +315,7 @@ This rubric is designed for that buyer. Not for Kira's ego.
 
 ---
 
-*Research by Sage | Sources referenced below*
+*Research by Thea (originally Sage) | Sources referenced below*
 
 Sources:
 - [Astro Themes Directory](https://astro.build/themes/)

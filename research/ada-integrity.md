@@ -32,11 +32,11 @@ All checks pass. MEMORY.md created at project root with template guidance for pr
 
 | Scan Target | Pattern Searched | Violations |
 |-------------|-----------------|-----------|
-| .claude/skills/ (9 dirs) | Sir, Kira, journal.md, Vera | 0 |
-| .claude/rules/ (8 files) | Sir, Kira, journal.md, Vera | 0 |
-| scripts/ (19 files) | Sir, Kira, journal.md, Vera | 0 |
-| CLAUDE.md | Sir, Kira, journal.md, Vera | 0 |
-| .claude/skills-extended/ (21 dirs) | Sir, Kira, journal.md, Vera | 0 |
+| .claude/skills/ (9 dirs) | Sir, Kira, journal.md, Thea, Nell, Priya | 0 |
+| .claude/rules/ (8 files) | Sir, Kira, journal.md, Thea, Nell, Priya | 0 |
+| scripts/ (19 files) | Sir, Kira, journal.md, Thea, Nell, Priya | 0 |
+| CLAUDE.md | Sir, Kira, journal.md, Thea, Nell, Priya | 0 |
+| .claude/skills-extended/ (21 dirs) | Sir, Kira, journal.md, Thea, Nell, Priya | 0 |
 
 All violations resolved S34. Cleaned `/pulse` (13 Vera references removed) and `/public-ready` (Kira and Vera removed from default agent name list).
 

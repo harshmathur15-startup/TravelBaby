@@ -1,12 +1,12 @@
 ---
 name: observe-agent
-description: Real-time observability for all agents — shows what each agent is doing, has done, and how long it took. Inspired by disler/claude-code-hooks-multi-agent-observability.
-user_invocable: true
+description: Real-time observability for App agents (BaseAgent) — heartbeats, durations, status. SaaS-only. For Claude Code agent activity, use /agent-activity instead.
+user-invocable: true
 ---
 
 # Observe Agent Skill
 
-Real-time observability dashboard for all agents in this session and any App agents running via BaseAgent.
+Real-time observability dashboard for App agents running via BaseAgent (SaaS layer). For Claude Code agent activity in the current session, use `/agent-activity` instead — it covers skill-spawned agents without requiring BaseAgent infrastructure.
 
 Inspired by [disler/claude-code-hooks-multi-agent-observability](https://github.com/disler/claude-code-hooks-multi-agent-observability) (900+ stars). Adapted to work without a separate server — reads local files and session context instead.
 

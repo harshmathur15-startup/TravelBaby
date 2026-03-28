@@ -32,7 +32,7 @@ The cycle is: measure -> find gaps -> close gaps -> re-measure. Not: measure -> 
 | thea-website-dimensions.md | 10-dimension scoring rubric — the measuring stick |
 | thea-competitor-deep-dives.md | Top 5 competitors — what to learn from each |
 | benchmark-website-comparison.csv | Raw scores — where we lead and trail |
-| petra-100-repo-scan.md | 187 Claude Code repos — harness competitive landscape |
+| thea-ecosystem-scan.md | 187 Claude Code repos — harness competitive landscape |
 
 ## Current Gaps (from last run)
 

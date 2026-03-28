@@ -137,4 +137,4 @@ Iteration cap: 15 | Write scope: `research/codebase-map.md`
 ## Notes
 - Petra never modifies source code — read-only exploration
 - For large codebases (1000+ files), Petra samples rather than exhaustively scanning
-- Lina (/assemble) reads Petra's output when available — run Petra first for better team recommendations
+- Other skills can read Petra's output for context — run /map first for better codebase understanding

@@ -5,7 +5,7 @@ description: LLM observability — Faye analyzes tool.log for token costs, effic
 
 # Cost — LLM Observability
 
-Faye analyzes session data to estimate token costs, identify wasteful patterns, and recommend efficiency improvements. Run after long sessions, periodically, or when costs feel high.
+Faye analyzes session data to estimate token costs, identify wasteful patterns, and recommend efficiency improvements. Run after long sessions, periodically, or when costs feel high. For quick mechanical stats (tool counts, timeline, error rate), use `node scripts/session-stats.cjs` instead.
 
 ## Attribution
 Inspired by [supatest-ai/awesome-claude-code-sub-agents](https://github.com/supatest-ai/awesome-claude-code-sub-agents) LLMOps engineer and [wshobson/agents](https://github.com/wshobson/agents) three-tier model strategy — both MIT licensed. Adapted from production LLM serving infrastructure to Claude Code tool.log analysis with Anthropic pricing and session cost estimation.

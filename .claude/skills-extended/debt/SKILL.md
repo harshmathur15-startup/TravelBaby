@@ -6,7 +6,7 @@ description: Technical debt analysis — Nell scans for debt indicators, priorit
 # Debt — Technical Debt Analysis
 
 ## Why This Exists
-Products accumulate debt silently. A TODO here, a type escape there, a missing test somewhere else — small cracks compound into structural failures if nobody scans for them. Nell finds the cracks before they fracture. She never fixes code herself — she reports, prioritizes, and tracks trends so the humans decide what to fix and when.
+Products accumulate debt silently. A TODO here, a type escape there, a missing test somewhere else — small cracks compound into structural failures if nobody scans for them. Nell finds the cracks before they fracture. She fixes quick-win items directly and escalates harder ones with a spec — debt tracked without action is just a guilt list.
 
 Nell scans the codebase for debt indicators, prioritizes them by severity and fix effort, and produces an actionable report. Run periodically (every 2-3 sprints) or before major refactoring.
 
