@@ -1,0 +1,258 @@
+---
+/**
+ * DetailedComparison — full feature comparison table with sticky first column.
+ * Groups features by category. Supports boolean and string cell values.
+ * Responsive: horizontal scroll on mobile with sticky feature column.
+ */
+
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+
+type CellValue = true | false | string;
+
+interface Row {
+  feature: string;
+  values: CellValue[];
+}
+
+interface Category {
+  name: string;
+  rows: Row[];
+}
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  subtext?: string;
+  columns?: string[];
+  categories?: Category[];
+  highlightFirst?: boolean;
+}
+
+const {
+  eyebrow = 'Feature by Feature',
+  heading = 'The Full Comparison',
+  subtext = 'Every feature, side by side. See exactly where each plan differs.',
+  columns = ['Plan 1', 'Plan 2', 'Plan 3'],
+  categories = [
+    {
+      name: 'Core',
+      rows: [
+        { feature: 'Feature A', values: [true, true, true] },
+        { feature: 'Feature B', values: [true, true, false] },
+        { feature: 'Feature C', values: [true, false, false] },
+        { feature: 'Feature D', values: ['Basic', 'Advanced', 'Advanced'] },
+      ],
+    },
+    {
+      name: 'Automation',
+      rows: [
+        { feature: 'Feature E', values: [true, true, false] },
+        { feature: 'Feature F', values: [true, 'Add-on', false] },
+        { feature: 'Feature G', values: [true, false, false] },
+      ],
+    },
+    {
+      name: 'Support',
+      rows: [
+        { feature: 'Email support', values: [true, true, true] },
+        { feature: 'Chat support', values: [true, true, false] },
+        { feature: 'Dedicated manager', values: [true, 'Add-on', false] },
+      ],
+    },
+  ],
+  highlightFirst = true,
+} = Astro.props;
+
+const totalColumns = columns.length + 1;
+
+// SECURITY: set:html used below is safe — all values are hardcoded SVG/strings from this file, no CMS or user input.
+function renderCell(val: CellValue): { html: string; cssClass: string } {
+  if (val === true) {
+    return {
+      html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>',
+      cssClass: 'cell--yes',
+    };
+  }
+  if (val === false) {
+    return {
+      html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20" aria-hidden="true"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>',
+      cssClass: 'cell--no',
+    };
+  }
+  return { html: val, cssClass: 'cell--text' };
+}
+---
+
+<section class="detailed" aria-labelledby="detailed-heading">
+  <Container>
+    <SectionHeading
+      id="detailed-heading"
+      eyebrow={eyebrow}
+      heading={heading}
+      subtext={subtext}
+      headingTag="h2"
+    />
+
+    <div class="detailed__wrapper" tabindex="0" role="region" aria-label="Detailed comparison table, scrollable">
+      <table class="detailed__table">
+        <thead>
+          <tr>
+            <th scope="col" class="detailed__th detailed__th--feature">Feature</th>
+            {columns.map((col, i) => (
+              <th scope="col" class:list={['detailed__th', { 'detailed__th--highlight': highlightFirst && i === 0 }]}>
+                {col}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {categories.map((cat) => (
+            <>
+              <tr>
+                <td class="detailed__category" colspan={totalColumns}>{cat.name}</td>
+              </tr>
+              {cat.rows.map((row) => (
+                <tr>
+                  <td class="detailed__td detailed__td--feature">{row.feature}</td>
+                  {row.values.map((val, i) => {
+                    const cell = renderCell(val);
+                    const label = val === true ? 'Yes' : val === false ? 'No' : val;
+                    return (
+                      <td class:list={['detailed__td', { 'detailed__td--highlight': highlightFirst && i === 0 }]}>
+                        <span class={`cell ${cell.cssClass}`} aria-label={label} set:html={cell.html} />
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .detailed {
+    padding: var(--space-16) 0;
+    background-color: var(--color-neutral-50);
+  }
+
+  .detailed__wrapper {
+    margin-top: var(--space-10);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-neutral-200);
+    background-color: var(--color-neutral-0);
+  }
+
+  .detailed__table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+    text-align: center;
+  }
+
+  .detailed__th {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-600);
+    padding: var(--space-4);
+    border-bottom: 2px solid var(--color-neutral-200);
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    background-color: var(--color-neutral-0);
+    z-index: 1;
+  }
+
+  .detailed__th--feature {
+    text-align: left;
+    color: var(--color-neutral-800);
+    position: sticky;
+    left: 0;
+    z-index: 3;
+    background-color: var(--color-neutral-0);
+    min-width: 180px;
+  }
+
+  .detailed__th--highlight {
+    color: var(--color-primary-600);
+    background-color: var(--color-primary-50);
+  }
+
+  .detailed__category {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-950);
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--color-neutral-100);
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .detailed__td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-neutral-100);
+    vertical-align: middle;
+  }
+
+  .detailed__td--feature {
+    text-align: left;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-neutral-700);
+    white-space: nowrap;
+    position: sticky;
+    left: 0;
+    background-color: var(--color-neutral-0);
+    z-index: 2;
+  }
+
+  .detailed__td--highlight {
+    background-color: var(--color-primary-50);
+  }
+
+  tbody tr:last-child .detailed__td {
+    border-bottom: none;
+  }
+
+  .cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cell--yes { color: var(--color-success); }
+  .cell--no { color: var(--color-neutral-300); }
+
+  .cell--text {
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-warning-dark);
+    background-color: var(--color-warning-light);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-full);
+  }
+
+  @media (min-width: 768px) {
+    .detailed {
+      padding: var(--space-20) 0;
+    }
+
+    .detailed__th,
+    .detailed__td {
+      padding: var(--space-4) var(--space-5);
+    }
+
+    .detailed__td--feature {
+      font-size: var(--text-base);
+    }
+  }
+</style>

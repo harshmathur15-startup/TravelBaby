@@ -11,6 +11,9 @@ const envSchema = z.object({
   JWT_REFRESH_EXPIRY_DAYS: z.coerce.number().int().positive().default(30),
   ANTHROPIC_API_KEY: z.string().startsWith('sk-ant-'),
   CORS_ORIGIN: z.string(),
+  ALERT_WEBHOOK_URL: z.string().url().optional(),
+  SANITY_WEBHOOK_SECRET: z.string().optional(),
+  DEPLOY_HOOK_URL: z.string().url().optional(),
 })
 
 export type Env = z.infer<typeof envSchema>

@@ -1,0 +1,69 @@
+# Render Blueprint — Staging Environment
+# Mirrors production (render.yaml) with staging service names and dataset.
+# Deploy: connect this blueprint to the `staging` branch in Render dashboard.
+#
+# TODO: Replace all [your-app] placeholders with your project name.
+
+services:
+  # Marketing website (Astro static output)
+  - type: web
+    name: "[your-app]-web-staging"    # TODO: replace [your-app]
+    runtime: static
+    branch: staging
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: SITE_URL
+        sync: false                   # TODO: set your staging site URL in Render dashboard
+      - key: SANITY_PROJECT_ID
+        sync: false                   # TODO: set in Render dashboard
+      - key: SANITY_DATASET
+        value: staging
+      - key: PUBLIC_API_URL
+        sync: false                   # TODO: set your staging API URL
+      - key: PUBLIC_GA_MEASUREMENT_ID
+        sync: false                   # TODO: optional — set if tracking staging analytics
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+
+  # Express API backend
+  - type: web
+    name: "[your-app]-api-staging"    # TODO: replace [your-app]
+    runtime: node
+    branch: staging
+    buildCommand: NODE_ENV=development npm ci && npm run db:generate && npm run build:server
+    startCommand: node server/dist/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: "[your-app]-db-staging"   # TODO: replace [your-app]
+          property: connectionString
+      - key: REDIS_URL
+        sync: false                   # TODO: set in Render dashboard
+      - key: CORS_ORIGIN
+        sync: false                   # TODO: set allowed origins for staging
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: SANITY_WEBHOOK_SECRET
+        sync: false                   # TODO: set in Render dashboard
+      - key: DEPLOY_HOOK_URL
+        sync: false                   # TODO: set your staging deploy hook URL
+      - key: ALERT_WEBHOOK_URL
+        sync: false                   # TODO: optional — set if using alerting
+
+databases:
+  - name: "[your-app]-db-staging"     # TODO: replace [your-app]
+    plan: free
+    databaseName: "[your-app]_staging"  # TODO: replace [your-app] (underscores, no hyphens)

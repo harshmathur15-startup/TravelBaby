@@ -100,16 +100,20 @@ just the Claude Code harness.
 
 DISCOVERY (run before scanning):
 1. Template dir: current working directory (auto-detected)
-2. Product dirs: scan parent directory for sibling projects that have a CLAUDE.md
-   - Run: ls -d ../*/CLAUDE.md 2>/dev/null
-   - Exclude: directories starting with _ or . (these are templates, not products)
-3. If no products found: return "No upstream candidates — no product projects found."
-4. If multiple products found: scan all, report per product.
+2. Product dirs — read from docs/products.md (the template's product tracker):
+   - Parse the table for paths where Active = Yes
+   - ONLY scan products listed there — no dynamic discovery, no scanning siblings
+   - NEVER scan: Kira (partner tier — above template), any unlisted project
+   If a listed product dir doesn't exist or has no commits, skip it silently.
+3. If no allowed products are accessible: return "No upstream candidates."
 
 PHASE 1 — PLAN (always do this first):
 1. Discover products using the DISCOVERY steps above
 2. For each product found, verify access: run `ls <product-dir>` and `git log --oneline -5`
-3. Inventory BOTH repos across all layers:
+3. Check uncommitted work FIRST: run `git status` and `git diff --name-only` in each product dir
+   - Uncommitted files are the freshest innovations — scan these before anything else
+   - Flag any uncommitted delta items separately as "uncommitted — verify before pulling"
+4. Inventory BOTH repos across all layers:
 
    HARNESS LAYER:
    - Skills: ls .claude/skills/

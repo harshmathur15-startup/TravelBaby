@@ -98,6 +98,8 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when y
 
 ## Product: [Your Project Name]
 
+**Built from:** `_template-website`
+
 ### Overview
 [What this product does and who it's for]
 

@@ -20,6 +20,7 @@
     "ioredis": "^5.4.2",
     "jsonwebtoken": "^9.0.2",
     "pino": "^9.6.0",
+    "pino-http": "^10.3.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
