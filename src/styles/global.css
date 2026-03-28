@@ -375,3 +375,56 @@
     background-size: 100% 100%;
   }
 }
+
+/* --- RTL Layout Support --- */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .navbar__links,
+[dir="rtl"] .navbar__actions,
+[dir="rtl"] .footer__columns {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .hero-split__inner {
+  direction: rtl;
+}
+
+[dir="rtl"] .hero-split--image-left .hero-split__media {
+  order: 1;
+}
+
+[dir="rtl"] .features__grid,
+[dir="rtl"] .stats__grid,
+[dir="rtl"] .testimonials__grid,
+[dir="rtl"] .pricing__grid {
+  direction: rtl;
+}
+
+/* --- Preference: Reduced Motion (user toggle) --- */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* --- Preference: High Contrast --- */
+.high-contrast {
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #f5f5f5;
+  --color-neutral-100: #e5e5e5;
+  --color-neutral-200: #cccccc;
+  --color-neutral-300: #999999;
+  --color-neutral-400: #666666;
+  --color-neutral-500: #333333;
+  --color-neutral-600: #1a1a1a;
+  --color-neutral-700: #111111;
+  --color-neutral-800: #0a0a0a;
+  --color-neutral-900: #000000;
+  --color-neutral-950: #000000;
+}

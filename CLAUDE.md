@@ -44,8 +44,8 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when y
 ## What's Included
 
 ### Website Layer
-- **10 UI primitives:** Badge, Button, Card, Container, Input, Pagination, PortableTextRenderer, SectionHeading, Skeleton, ThemeToggle
-- **14 section components:** Navbar, NavMobile, Hero, Features, Stats, Testimonials, PricingCards, FAQ, CtaSection, Footer, BentoGrid, ComparisonTable, HowItWorks, Integrations
+- **13 UI primitives:** Badge, Button, Card, CommandLauncher, Container, Input, LanguagePicker, Pagination, PortableTextRenderer, PreferenceToggles, SectionHeading, Skeleton, ThemeToggle
+- **20 section components:** Navbar, NavbarMega, NavMobile, Hero, HeroSplit, HeroMinimal, Features, Stats, Testimonials, PricingCards, FAQ, CtaSection, Footer, FooterNewsletter, BentoGrid, ComparisonTable, ContactInfo, HowItWorks, Integrations, TeamGrid
 - **18 pages:** Home, Features, Pricing, About, Contact, Get Started, Blog (listing, posts, categories), Components, Compare, Preview, Search, Privacy, Terms, i18n (es), 404, 500
 - **4 route generators:** robots.txt, RSS feed, manifest.json, OG images
 - **Design tokens:** Full color, typography, spacing, shadow, radius, transition system (dark mode ready)
@@ -57,10 +57,10 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when y
 | Layer | Count | What It Does |
 |-------|-------|-------------|
 | **Core Skills** | 9 | Session lifecycle, reviews, retrospectives, search, reporting |
-| **Extended Skills** | 20 | In `.claude/skills-extended/` — opt-in. Move to `.claude/skills/` to activate |
+| **Extended Skills** | 21 | In `.claude/skills-extended/` — opt-in. Move to `.claude/skills/` to activate |
 | **SaaS Skills** | 18 | In `.claude/skills-saas/` — activate when adding backend (auth, API, database) |
 | **Hooks** | 10 | Health checks, file protection, formatting, quality gates, session tracking |
-| **Scripts** | 12 | Hook execution + skill utility scripts |
+| **Scripts** | 20 | Hook execution + skill utility scripts |
 | **Rules** | 5 | Standards for code, security, frontend, performance, testing |
 | **Agents** | 3 | Thea (benchmark), Nell (debt), Priya (upstream extraction) |
 

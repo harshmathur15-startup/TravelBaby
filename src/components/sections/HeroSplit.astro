@@ -1,0 +1,195 @@
+---
+/**
+ * HeroSplit — two-column hero with image on one side, text on the other.
+ * Use for product landing pages where a visual tells the story.
+ */
+
+import { HERO_CONTENT } from '@config';
+
+interface Props {
+  imagePosition?: 'left' | 'right';
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+const {
+  imagePosition = 'right',
+  imageSrc = '/blog/design-system.svg',
+  imageAlt = 'Product illustration',
+} = Astro.props;
+---
+
+<section class={`hero-split hero-split--image-${imagePosition}`} aria-labelledby="hero-split-heading">
+  <div class="hero-split__inner">
+    <div class="hero-split__content" data-animate="fade-up">
+      <div class="hero-split__badge" aria-label="Announcement badge">
+        <span class="hero-split__badge-dot" aria-hidden="true"></span>
+        {HERO_CONTENT.badge}
+      </div>
+
+      <h1 id="hero-split-heading" class="hero-split__heading" set:html={HERO_CONTENT.heading} />
+
+      <p class="hero-split__subtext">
+        {HERO_CONTENT.subtext}
+      </p>
+
+      <div class="hero-split__actions">
+        <a href={HERO_CONTENT.primaryCta.href} class="hero-split__cta hero-split__cta--primary" aria-label={HERO_CONTENT.primaryCta.label}>
+          {HERO_CONTENT.primaryCta.label}
+        </a>
+        <a href={HERO_CONTENT.secondaryCta.href} class="hero-split__cta hero-split__cta--ghost" aria-label={HERO_CONTENT.secondaryCta.label}>
+          {HERO_CONTENT.secondaryCta.label}
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-split__media" data-animate="fade-up" style="--delay: 200ms">
+      <img
+        src={imageSrc}
+        alt={imageAlt}
+        width="560"
+        height="400"
+        loading="eager"
+        class="hero-split__image"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-split {
+    padding: var(--space-20) var(--space-6) var(--space-16);
+    background: var(--color-neutral-0);
+  }
+
+  .hero-split__inner {
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+    align-items: center;
+  }
+
+  .hero-split__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-4);
+    margin-bottom: var(--space-6);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-600);
+    background: var(--color-primary-50);
+    border: 1px solid var(--color-primary-200);
+    border-radius: var(--radius-full);
+  }
+
+  .hero-split__badge-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--color-primary-500);
+    border-radius: 50%;
+  }
+
+  .hero-split__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-neutral-950);
+    margin: 0 0 var(--space-5);
+  }
+
+  .hero-split__subtext {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-neutral-600);
+    margin: 0 0 var(--space-8);
+    max-width: 500px;
+  }
+
+  .hero-split__actions {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .hero-split__cta {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-3) var(--space-8);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: background var(--duration-fast), transform var(--duration-fast), box-shadow var(--duration-fast);
+  }
+
+  .hero-split__cta--primary {
+    background: var(--color-primary-500);
+    color: var(--color-neutral-0);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .hero-split__cta--primary:hover {
+    background: var(--color-primary-600);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero-split__cta--ghost {
+    background: transparent;
+    color: var(--color-neutral-900);
+    border: 1px solid var(--color-neutral-200);
+  }
+
+  .hero-split__cta--ghost:hover {
+    background: var(--color-neutral-50);
+    border-color: var(--color-neutral-400);
+  }
+
+  .hero-split__media {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-split__image {
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+  }
+
+  @media (min-width: 768px) {
+    .hero-split__inner {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-split__heading {
+      font-size: var(--text-5xl);
+    }
+
+    .hero-split--image-left .hero-split__media {
+      order: -1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-split {
+      padding: var(--space-12) var(--space-6);
+    }
+
+    .hero-split__actions {
+      flex-direction: column;
+    }
+
+    .hero-split__cta {
+      width: 100%;
+      max-width: 300px;
+      justify-content: center;
+    }
+  }
+</style>

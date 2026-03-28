@@ -1,0 +1,272 @@
+---
+/**
+ * NavbarMega — navigation bar with dropdown mega menu panels.
+ * Use for sites with complex navigation (multiple product lines, deep docs).
+ * Drop-in replacement for Navbar.astro.
+ */
+
+import ThemeToggle from '../ui/ThemeToggle.astro';
+import PreferenceToggles from '../ui/PreferenceToggles.astro';
+import LanguagePicker from '../ui/LanguagePicker.astro';
+import NavMobile from './NavMobile.astro';
+import { SITE_CONFIG } from '@config';
+
+interface MegaColumn {
+  title: string;
+  links: Array<{ label: string; href: string; description?: string }>;
+}
+
+interface MegaPanel {
+  label: string;
+  href?: string;
+  columns?: MegaColumn[];
+}
+
+interface Props {
+  panels?: MegaPanel[];
+}
+
+const currentPath = Astro.url.pathname;
+
+const defaultPanels: MegaPanel[] = [
+  {
+    label: 'Product',
+    columns: [
+      {
+        title: 'Features',
+        links: [
+          { label: 'All Features', href: '/features', description: 'Everything included in the template' },
+          { label: 'Components', href: '/components', description: 'UI primitives and sections' },
+          { label: 'Compare', href: '/compare', description: 'See how we stack up' },
+        ],
+      },
+      {
+        title: 'Resources',
+        links: [
+          { label: 'Blog', href: '/blog', description: 'Articles and tutorials' },
+          { label: 'Get Started', href: '/get-started', description: 'Quick setup guide' },
+        ],
+      },
+    ],
+  },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
+
+const { panels = defaultPanels } = Astro.props;
+---
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<div class="nav-spacer" aria-hidden="true"></div>
+
+<nav class="navbar navbar--mega" aria-label="Main navigation">
+  <div class="navbar__inner">
+    <a href="/" class="navbar__logo" aria-label={`${SITE_CONFIG.name} — go to homepage`}>
+      <span class="navbar__logo-text">{SITE_CONFIG.name}</span>
+    </a>
+
+    <ul class="navbar__links" role="list">
+      {panels.map((panel) => (
+        <li class={panel.columns ? 'navbar__dropdown' : ''}>
+          {panel.columns ? (
+            <button
+              class="navbar__link navbar__link--dropdown"
+              aria-expanded="false"
+              aria-haspopup="true"
+              type="button"
+            >
+              {panel.label}
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" class="navbar__chevron">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+          ) : (
+            <a
+              href={panel.href}
+              class:list={[
+                'navbar__link',
+                { 'navbar__link--active': currentPath === panel.href },
+              ]}
+              aria-current={currentPath === panel.href ? 'page' : undefined}
+            >
+              {panel.label}
+            </a>
+          )}
+
+          {panel.columns && (
+            <div class="mega-panel" role="menu" aria-hidden="true">
+              <div class="mega-panel__inner">
+                {panel.columns.map((col) => (
+                  <div class="mega-panel__column">
+                    <p class="mega-panel__column-title">{col.title}</p>
+                    {col.links.map((link) => (
+                      <a href={link.href} class="mega-panel__link" role="menuitem">
+                        <span class="mega-panel__link-label">{link.label}</span>
+                        {link.description && (
+                          <span class="mega-panel__link-desc">{link.description}</span>
+                        )}
+                      </a>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
+
+    <div class="navbar__actions">
+      <ThemeToggle />
+      <PreferenceToggles />
+      <LanguagePicker />
+      <a href={SITE_CONFIG.ctaButton.href} class="navbar__cta" aria-label={`${SITE_CONFIG.ctaButton.label} with ${SITE_CONFIG.name}`}>
+        {SITE_CONFIG.ctaButton.label}
+      </a>
+      <NavMobile links={SITE_CONFIG.navLinks} currentPath={currentPath} />
+    </div>
+  </div>
+</nav>
+
+<style>
+  .navbar__dropdown {
+    position: relative;
+  }
+
+  .navbar__link--dropdown {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    padding: inherit;
+  }
+
+  .navbar__chevron {
+    transition: transform var(--duration-fast);
+  }
+
+  .navbar__link--dropdown[aria-expanded="true"] .navbar__chevron {
+    transform: rotate(180deg);
+  }
+
+  .mega-panel {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 480px;
+    padding-top: var(--space-2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--duration-fast), visibility var(--duration-fast);
+    z-index: 100;
+  }
+
+  .navbar__link--dropdown[aria-expanded="true"] + .mega-panel {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mega-panel__inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-6);
+    padding: var(--space-6);
+    background: var(--color-neutral-0);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .mega-panel__column-title {
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-400);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    margin: 0 0 var(--space-3);
+    padding: 0 var(--space-3);
+  }
+
+  .mega-panel__link {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background var(--duration-fast);
+  }
+
+  .mega-panel__link:hover {
+    background: var(--color-primary-50);
+  }
+
+  .mega-panel__link-label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-neutral-800);
+  }
+
+  .mega-panel__link-desc {
+    font-size: var(--text-xs);
+    color: var(--color-neutral-500);
+    line-height: var(--leading-relaxed);
+  }
+
+  @media (max-width: 768px) {
+    .navbar__dropdown,
+    .mega-panel {
+      display: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    var dropdowns = document.querySelectorAll('.navbar__link--dropdown');
+    dropdowns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        // Close all others
+        dropdowns.forEach(function(other) {
+          other.setAttribute('aria-expanded', 'false');
+          var panel = other.nextElementSibling;
+          if (panel) panel.setAttribute('aria-hidden', 'true');
+        });
+        // Toggle this one
+        btn.setAttribute('aria-expanded', String(!expanded));
+        var panel = btn.nextElementSibling;
+        if (panel) panel.setAttribute('aria-hidden', String(expanded));
+      });
+    });
+
+    // Close on click outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.navbar__dropdown')) {
+        dropdowns.forEach(function(btn) {
+          btn.setAttribute('aria-expanded', 'false');
+          var panel = btn.nextElementSibling;
+          if (panel) panel.setAttribute('aria-hidden', 'true');
+        });
+      }
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        dropdowns.forEach(function(btn) {
+          btn.setAttribute('aria-expanded', 'false');
+          var panel = btn.nextElementSibling;
+          if (panel) panel.setAttribute('aria-hidden', 'true');
+        });
+      }
+    });
+  })();
+</script>

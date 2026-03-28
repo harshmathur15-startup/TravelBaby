@@ -88,7 +88,7 @@ const jsonLd = {
     {post.image && (
       <section class="blog-post__image-section">
         <Container size="md">
-          <img src={post.image} alt={post.title} width="640" height="360" class="blog-post__cover" loading="eager" />
+          <img src={post.image} alt={post.title} width="640" height="360" class="blog-post__cover" loading="eager" decoding="async" />
         </Container>
       </section>
     )}

@@ -6,9 +6,9 @@ description: Workflow health check — measures 5 signals detecting silent degra
 # Pulse — Workflow Health Check
 
 ## Why This Exists
-Products degrade silently. Tests stop being written. Memory goes stale. Hooks break without anyone noticing. Context windows carry noise instead of signal. By the time someone notices, the rot has compounded. Vera catches the slow degradation by measuring 5 signals that detect it before it compounds — memory retention, hook health, session velocity, context efficiency, and test coverage. She measures, she doesn't guess. Every score traces to evidence.
+Products degrade silently. Tests stop being written. Memory goes stale. Hooks break without anyone noticing. Context windows carry noise instead of signal. By the time someone notices, the rot has compounded. This skill catches slow degradation by measuring 5 signals that detect it before it compounds — memory retention, hook health, session velocity, context efficiency, and test coverage. It measures, it doesn't guess. Every score traces to evidence.
 
-Vera measures five signals that tell you whether the project is healthy or silently degrading. Two modes: quick (post-session, 3 signals) and full (periodic, all 5).
+Pulse measures five signals that tell you whether the project is healthy or silently degrading. Two modes: quick (post-session, 3 signals) and full (periodic, all 5).
 
 ## Family Protocol
 - **Before work**: Read `agents/family/board.md` for flags from other agents (if agent family exists)
@@ -22,10 +22,10 @@ Vera measures five signals that tell you whether the project is healthy or silen
 
 ## Workflow
 
-Spawn ONE agent named **Vera** with these instructions:
+Spawn ONE agent with these instructions:
 
 ```
-You are Vera — a workflow health monitor. You measure, you don't guess.
+You are a workflow health monitor. You measure, you don't guess.
 Read real data. If data is sparse, say so and lower confidence. Never fake a score.
 
 You run standalone or as part of an agent family. If agents/family/board.md exists,
@@ -89,7 +89,7 @@ Steps:
 1. Count source files in src/ or server/ or client/ (*.ts, *.tsx)
 2. Count test files (*.test.ts, *.test.tsx, *.spec.ts)
 3. Coverage ratio = test files / source files
-4. If previous vera-report.md exists, compare ratio:
+4. If previous pulse-report.md exists, compare ratio:
    - Growing = 80-100
    - Stable = 50-70
    - Shrinking = 20-50
@@ -97,11 +97,11 @@ Steps:
 
 --- OUTPUT ---
 
-Write to research/vera-report.md.
+Write to research/pulse-report.md.
 
 Quick mode:
 
-## Vera — Quick Check (YYYY-MM-DD)
+## Pulse — Quick Check (YYYY-MM-DD)
 
 | Signal | Score | Trend | Confidence | Verdict |
 |--------|-------|-------|------------|---------|
@@ -114,7 +114,7 @@ Quick mode:
 
 Full mode:
 
-## Vera — Full Health Report (YYYY-MM-DD)
+## Pulse — Full Health Report (YYYY-MM-DD)
 
 | Signal | Score | Trend | Confidence | Verdict |
 |--------|-------|-------|------------|---------|
@@ -130,20 +130,20 @@ Full mode:
 ### Evidence
 <For each signal, list specific data points that drove the score.>
 
-Also append to research/vera-history.csv:
+Also append to research/pulse-history.csv:
 Quick: date,mode,memory,hooks,velocity,score,confidence
 Full: date,mode,memory,hooks,velocity,context,tests,score,confidence
 Create with headers if it doesn't exist.
 
 RETURN FORMAT: After writing the report, return ONLY this line:
-DONE|research/vera-report.md
+DONE|research/pulse-report.md
 Do NOT paste the report contents back into the conversation.
 ```
 
-Iteration cap: 12 | Write scope: `research/vera-report.md`, `research/vera-history.csv`
+Iteration cap: 12 | Write scope: `research/pulse-report.md`, `research/pulse-history.csv`
 
 ## After Agent Returns
-1. Parse the `DONE|<path>` response from Vera
+1. Parse the `DONE|<path>` response from the agent
 2. Read the file at the returned path
 3. Present a 5-line summary to the user with the path for full details
 
@@ -152,8 +152,8 @@ Iteration cap: 12 | Write scope: `research/vera-report.md`, `research/vera-histo
 - `/pulse full` — full scan (all 5 signals).
 
 ## Alert Protocol
-- **All signals >= 70:** "Vera: healthy (XX/100)" — note it, no action.
-- **Any signal < 70:** "Vera: WARNING — [signal] at XX. [reason]" — surface immediately.
+- **All signals >= 70:** "Pulse: healthy (XX/100)" — note it, no action.
+- **Any signal < 70:** "Pulse: WARNING — [signal] at XX. [reason]" — surface immediately.
 
 ## Rigor Standards
 - **Skepticism floor:** No signal above 80 without strong evidence.

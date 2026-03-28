@@ -1,0 +1,157 @@
+---
+/**
+ * HeroMinimal — text-only, centered hero with oversized heading.
+ * Use for high-conversion landing pages where the words do the work.
+ */
+
+import { HERO_CONTENT } from '@config';
+---
+
+<section class="hero-minimal" aria-labelledby="hero-minimal-heading">
+  <div class="hero-minimal__inner">
+    <h1 id="hero-minimal-heading" class="hero-minimal__heading" set:html={HERO_CONTENT.heading} />
+
+    <p class="hero-minimal__subtext">
+      {HERO_CONTENT.subtext}
+    </p>
+
+    <div class="hero-minimal__actions">
+      <a href={HERO_CONTENT.primaryCta.href} class="hero-minimal__cta hero-minimal__cta--primary" aria-label={HERO_CONTENT.primaryCta.label}>
+        {HERO_CONTENT.primaryCta.label}
+      </a>
+      <a href={HERO_CONTENT.secondaryCta.href} class="hero-minimal__cta hero-minimal__cta--ghost" aria-label={HERO_CONTENT.secondaryCta.label}>
+        {HERO_CONTENT.secondaryCta.label}
+      </a>
+    </div>
+
+    <p class="hero-minimal__trust" aria-label="Social proof">
+      {HERO_CONTENT.trustLine}
+    </p>
+  </div>
+</section>
+
+<style>
+  .hero-minimal {
+    padding: var(--space-24) var(--space-6) var(--space-20);
+    text-align: center;
+    background: var(--color-neutral-0);
+    position: relative;
+  }
+
+  .hero-minimal::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--color-neutral-200) 30%,
+      var(--color-neutral-200) 70%,
+      transparent 100%
+    );
+  }
+
+  .hero-minimal__inner {
+    max-width: var(--container-lg);
+    margin: 0 auto;
+  }
+
+  .hero-minimal__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-5xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-neutral-950);
+    margin: 0 0 var(--space-6);
+  }
+
+  .hero-minimal__subtext {
+    font-size: var(--text-xl);
+    line-height: var(--leading-relaxed);
+    color: var(--color-neutral-500);
+    margin: 0 auto var(--space-10);
+    max-width: 640px;
+  }
+
+  .hero-minimal__actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-10);
+  }
+
+  .hero-minimal__cta {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-3) var(--space-8);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: background var(--duration-fast), transform var(--duration-fast), box-shadow var(--duration-fast);
+  }
+
+  .hero-minimal__cta--primary {
+    background: var(--color-primary-500);
+    color: var(--color-neutral-0);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .hero-minimal__cta--primary:hover {
+    background: var(--color-primary-600);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero-minimal__cta--ghost {
+    background: transparent;
+    color: var(--color-neutral-900);
+    border: 1px solid var(--color-neutral-200);
+  }
+
+  .hero-minimal__cta--ghost:hover {
+    background: var(--color-neutral-50);
+    border-color: var(--color-neutral-400);
+  }
+
+  .hero-minimal__trust {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-neutral-400);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .hero-minimal__heading {
+      font-size: var(--text-6xl);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-minimal {
+      padding: var(--space-16) var(--space-6) var(--space-12);
+    }
+
+    .hero-minimal__heading {
+      font-size: var(--text-3xl);
+    }
+
+    .hero-minimal__actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-minimal__cta {
+      width: 100%;
+      max-width: 300px;
+      justify-content: center;
+    }
+  }
+</style>

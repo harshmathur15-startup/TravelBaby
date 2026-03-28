@@ -1,0 +1,209 @@
+---
+/**
+ * FooterNewsletter — newsletter signup section, designed for use inside a footer.
+ * All content and the form action URL are configurable via props.
+ */
+
+import Container from '@components/ui/Container.astro';
+import Button from '@components/ui/Button.astro';
+
+interface Props {
+  heading?: string;
+  description?: string;
+  placeholder?: string;
+  buttonText?: string;
+  action?: string;
+}
+
+const {
+  heading = 'Stay in the loop',
+  description = 'Get the latest updates delivered to your inbox.',
+  placeholder = 'Enter your email',
+  buttonText = 'Subscribe',
+  action = '/api/v1/newsletter',
+} = Astro.props;
+---
+
+<div class="footer-newsletter">
+  <Container class="footer-newsletter__inner">
+    <div class="footer-newsletter__text">
+      <h2 class="footer-newsletter__heading">{heading}</h2>
+      <p class="footer-newsletter__subtext">{description}</p>
+    </div>
+    <form class="footer-newsletter__form" data-action={action} method="post">
+      <label for="footer-newsletter-email" class="sr-only">Email address</label>
+      <input
+        id="footer-newsletter-email"
+        name="email"
+        type="email"
+        placeholder={placeholder}
+        required
+        class="footer-newsletter__input"
+        aria-label="Email address for newsletter"
+      />
+      <Button variant="primary" size="md" type="submit" ariaLabel={buttonText}>
+        {buttonText}
+      </Button>
+      <div id="newsletter-status" class="footer-newsletter__status" role="status" aria-live="polite" aria-atomic="true"></div>
+    </form>
+  </Container>
+</div>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .footer-newsletter {
+    padding: var(--space-16) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  :global(.footer-newsletter__inner) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .footer-newsletter__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-0);
+    margin: 0 0 var(--space-2) 0;
+    line-height: var(--leading-tight);
+  }
+
+  .footer-newsletter__subtext {
+    font-size: var(--text-base);
+    color: var(--color-neutral-300);
+    margin: 0;
+    max-width: 440px;
+    line-height: var(--leading-normal);
+  }
+
+  .footer-newsletter__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    width: 100%;
+    max-width: 460px;
+  }
+
+  .footer-newsletter__input {
+    width: 100%;
+    padding: var(--space-4) var(--space-5);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    color: var(--color-neutral-900);
+    background-color: var(--color-neutral-0);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-sm);
+    transition: border-color var(--duration-normal) var(--ease-in-out),
+                box-shadow var(--duration-normal) var(--ease-in-out);
+  }
+
+  .footer-newsletter__input::placeholder {
+    color: var(--color-neutral-400);
+  }
+
+  .footer-newsletter__input:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 1px;
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px var(--color-primary-50);
+  }
+
+  @media (min-width: 640px) {
+    .footer-newsletter__form {
+      flex-direction: row;
+    }
+
+    .footer-newsletter__input {
+      flex: 1;
+    }
+  }
+
+  @media (min-width: 768px) {
+    :global(.footer-newsletter__inner) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-newsletter__form {
+      flex-shrink: 0;
+    }
+  }
+
+  :global(.dark) .footer-newsletter__input {
+    background-color: var(--color-neutral-900);
+    color: var(--color-neutral-50);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .footer-newsletter__status {
+    font-size: var(--text-sm);
+    width: 100%;
+    min-height: 1.25em;
+  }
+
+  .footer-newsletter__status.success {
+    color: var(--color-success-300, #86efac);
+  }
+
+  .footer-newsletter__status.error {
+    color: var(--color-error-300, #fca5a5);
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('.footer-newsletter__form');
+  const status = document.getElementById('newsletter-status');
+  const action = form?.dataset.action || '/api/v1/newsletter';
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!status) return;
+
+    status.className = 'footer-newsletter__status';
+    status.textContent = '';
+
+    const data = Object.fromEntries(new FormData(form));
+    const submitBtn = form.querySelector<HTMLButtonElement>('[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+      const res = await fetch(action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const json = await res.json();
+
+      if (res.ok && json.success) {
+        status.className = 'footer-newsletter__status success';
+        status.textContent = json.data?.message || 'Subscribed successfully.';
+        form.reset();
+      } else {
+        status.className = 'footer-newsletter__status error';
+        status.textContent = 'Something went wrong. Please try again.';
+      }
+    } catch {
+      status.className = 'footer-newsletter__status error';
+      status.textContent = 'Unable to reach the server. Please try again later.';
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+</script>

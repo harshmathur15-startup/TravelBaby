@@ -1,14 +1,24 @@
 {
-  "description": "Files protected by drift detection. Changes to these require explicit approval. Add project-specific rule files here after cloning.",
+  "description": "Files protected by drift detection and edit-time protection. Single source of truth for both drift-check.cjs and file-protection.js. Add project-specific entries after cloning.",
   "files": [
-    { "key": "CLAUDE.md", "path": "./CLAUDE.md" },
-    { "key": "rules:general", "path": "./.claude/rules/general.md" },
-    { "key": "rules:security", "path": "./.claude/rules/security.md" },
-    { "key": "rules:agents", "path": "./.claude/rules/agents.md" },
-    { "key": "rules:backend", "path": "./.claude/rules/backend.md" },
-    { "key": "rules:frontend", "path": "./.claude/rules/frontend.md" },
-    { "key": "rules:database", "path": "./.claude/rules/database.md" },
-    { "key": "rules:testing", "path": "./.claude/rules/testing.md" },
-    { "key": "rules:performance", "path": "./.claude/rules/performance.md" }
+    { "key": "CLAUDE.md", "path": "./CLAUDE.md", "protection": "warn" },
+    { "key": "settings", "path": "./.claude/settings.json", "protection": "block" },
+    { "key": "rules:general", "path": "./.claude/rules/general.md", "protection": "warn" },
+    { "key": "rules:security", "path": "./.claude/rules/security.md", "protection": "warn" },
+    { "key": "rules:frontend", "path": "./.claude/rules/frontend.md", "protection": "warn" },
+    { "key": "rules:performance", "path": "./.claude/rules/performance.md", "protection": "warn" },
+    { "key": "rules:testing", "path": "./.claude/rules/testing.md", "protection": "warn" },
+    { "key": "rules:agents", "path": "./.claude/rules/agents.md", "protection": "warn" },
+    { "key": "rules:backend", "path": "./.claude/rules/backend.md", "protection": "warn" },
+    { "key": "rules:database", "path": "./.claude/rules/database.md", "protection": "warn" },
+    { "key": "package.json", "path": "./package.json", "protection": "block" },
+    { "key": "family:registry", "path": "./agents/family/registry.md", "protection": "warn" }
+  ],
+  "blocked_patterns": [
+    "\\.env$",
+    "\\.env\\.local$",
+    "node_modules/",
+    "package-lock\\.json$",
+    "prisma/migrations/"
   ]
 }

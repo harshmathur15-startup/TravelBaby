@@ -77,12 +77,12 @@ Check these triggers against project state and recommend matching skills:
 
 | Trigger | Skills to Recommend |
 |---|---|
-| New code since last session (git diff) | /test, /review, /edge-case-check |
+| New code since last session (git diff) | /test, /review, /edge-case-check (SaaS) |
 | New pages or components added | /lighthouse, /seo-audit, /a11y-audit |
 | Sanity schemas changed | /cms-sync |
 | Dependencies not checked in 7+ days | /upgrade-deps |
-| No /security-scan in last 5 sessions | /security-scan |
-| Approaching deployment (roadmap status) | /prod-ready, /env-check, /public-ready |
+| No /security-scan in last 5 sessions | /security-scan (SaaS) |
+| Approaching deployment (roadmap status) | /prod-ready (SaaS), /env-check (SaaS), /public-ready |
 | New or updated specs | /readiness-gate |
 | Entering a new roadmap phase | /readiness-gate |
 | No /cleanup in last 10 sessions | /cleanup |

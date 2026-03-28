@@ -1,0 +1,122 @@
+---
+/**
+ * PreferenceToggles — accessibility preference controls.
+ * Toggles: high contrast, reduced motion.
+ * Persists to localStorage, respects system preferences.
+ * Place alongside ThemeToggle in Navbar actions.
+ */
+---
+
+<div class="pref-toggles" role="group" aria-label="Accessibility preferences">
+  <button
+    id="contrast-toggle"
+    type="button"
+    class="pref-toggles__btn"
+    aria-label="Toggle high contrast mode"
+    aria-pressed="false"
+    title="High contrast"
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M12 2a10 10 0 0 1 0 20z"/>
+    </svg>
+  </button>
+
+  <button
+    id="motion-toggle"
+    type="button"
+    class="pref-toggles__btn"
+    aria-label="Toggle reduced motion"
+    aria-pressed="false"
+    title="Reduce motion"
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 3l14 9-14 9V3z" class="pref-toggles__motion-play"/>
+      <rect x="6" y="4" width="4" height="16" rx="1" class="pref-toggles__motion-pause"/>
+      <rect x="14" y="4" width="4" height="16" rx="1" class="pref-toggles__motion-pause"/>
+    </svg>
+  </button>
+</div>
+
+<style>
+  .pref-toggles {
+    display: flex;
+    gap: var(--space-1);
+  }
+
+  .pref-toggles__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-md);
+    color: var(--color-neutral-500);
+    cursor: pointer;
+    transition: color var(--duration-fast), background-color var(--duration-fast), border-color var(--duration-fast);
+  }
+
+  .pref-toggles__btn:hover {
+    background-color: var(--color-neutral-100);
+    color: var(--color-neutral-700);
+  }
+
+  .pref-toggles__btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-primary-400);
+  }
+
+  .pref-toggles__btn[aria-pressed="true"] {
+    background-color: var(--color-primary-50);
+    border-color: var(--color-primary-300);
+    color: var(--color-primary-600);
+  }
+
+  /* Motion icon: show play when reduced, pause when normal */
+  .pref-toggles__motion-play { display: none; }
+  .pref-toggles__motion-pause { display: block; }
+
+  :global(.reduce-motion) .pref-toggles__motion-play { display: block; }
+  :global(.reduce-motion) .pref-toggles__motion-pause { display: none; }
+</style>
+
+<script>
+  const html = document.documentElement;
+  const contrastBtn = document.getElementById('contrast-toggle');
+  const motionBtn = document.getElementById('motion-toggle');
+
+  function initContrast() {
+    const stored = localStorage.getItem('high-contrast');
+    if (stored === 'true') {
+      html.classList.add('high-contrast');
+      contrastBtn?.setAttribute('aria-pressed', 'true');
+    }
+  }
+
+  function initMotion() {
+    const stored = localStorage.getItem('reduce-motion');
+    const systemPref = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (stored === 'true' || (stored === null && systemPref)) {
+      html.classList.add('reduce-motion');
+      motionBtn?.setAttribute('aria-pressed', 'true');
+    }
+  }
+
+  initContrast();
+  initMotion();
+
+  contrastBtn?.addEventListener('click', () => {
+    const active = html.classList.toggle('high-contrast');
+    localStorage.setItem('high-contrast', String(active));
+    contrastBtn.setAttribute('aria-pressed', String(active));
+  });
+
+  motionBtn?.addEventListener('click', () => {
+    const active = html.classList.toggle('reduce-motion');
+    localStorage.setItem('reduce-motion', String(active));
+    motionBtn.setAttribute('aria-pressed', String(active));
+  });
+</script>

@@ -5,6 +5,10 @@ Shared notes between agents. Last 3 sessions only. Resolved entries move to boar
 
 ---
 
-### Family updated — S33
-Blair removed (hooks cover drift/integrity). Esme trimmed to 2 skills (/mother, /quality-judge). Thea, Nell, Esme, Priya remain. First run still pending for Thea, Nell, Esme.
-Status: open | for:all
+### S34 — Full research-to-action cycle
+All 3 agents ran for the first time. Research reorganized (13 files mapped, 3 archived). Thea validated benchmark (83/100), extracted 12 improvements across Tiers 1-3. Nell closed 10 of 11 debt items. Priya pulled 3 components + 2 config files from Zimyo.
+Status: resolved | for:all
+
+### Esme removed — S34
+Esme fully removed. /quality-judge lives as a standalone skill in skills-extended. /mother was redundant with hooks.
+Status: resolved | for:all

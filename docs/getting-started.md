@@ -111,11 +111,27 @@ node scripts/drift-check.cjs capture
 
 This updates `.claude/protected-files.json` with your file hashes. Without this step, drift detection will flag every change you made during setup.
 
-## 11. Need a Backend?
+## 11. Run Tests
+
+```bash
+npm test                         # vitest unit + component tests
+npm run test:scripts             # hook script tests (Node test runner)
+npm run test:e2e                 # Playwright e2e (requires browsers)
+```
+
+First time running e2e? Install Playwright browsers:
+
+```bash
+npx playwright install
+```
+
+E2e tests include accessibility audits (axe-core WCAG 2.1 AA) across 6 page types.
+
+## 12. Need a Backend?
 
 If your product needs auth, API endpoints, or a database, see [saas-upgrade.md](saas-upgrade.md) to activate the Express + Prisma + React stack.
 
-## 12. Deploy
+## 13. Deploy
 
 ```bash
 npm run build                    # static HTML in dist/

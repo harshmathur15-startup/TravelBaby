@@ -10,9 +10,10 @@ Show every agent that exists in this project — configured, planned, or built.
 ## Sources
 
 1. **Claude Code agents** — scan all `.claude/skills/*/SKILL.md` files for Agent tool usage (look for "Agent tool", "spawn", "agent name:" patterns). Extract agent name, trigger skill, and purpose.
-2. **App agents** — scan `agents/src/` for files that extend `BaseAgent`. Extract class name and purpose from the file.
-3. **`agent-status.json`** — heartbeat file written by BaseAgent every 5s. Keyed by agentId. Used for live status.
-4. **`agent.log`** — read last entry per agentId for last-run timestamp.
+2. **Agent family** — scan `agents/family/*/profile.md` for agent profiles. Extract name, role, and last run.
+3. **App agents (SaaS only)** — if `agents/src/` contains files extending `BaseAgent` beyond core/, extract class name and purpose. Skip if only core/ exists.
+4. **`agent-status.json`** — heartbeat file written by BaseAgent every 5s (SaaS only). Used for live status if present.
+5. **`agent.log`** — read last entry per agentId for last-run timestamp (SaaS only, if present).
 
 ## Output Format
 

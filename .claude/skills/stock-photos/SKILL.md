@@ -1,6 +1,9 @@
-# Stock Photos — Fetch & Place
+---
+name: stock-photos
+description: Fetch stock photos from Pexels or Unsplash and save them to the project.
+---
 
-Fetch stock photos from Pexels or Unsplash and save them to the project.
+# Stock Photos — Fetch & Place
 
 ## Trigger
 When the user asks for stock photos, images, or pictures for the site. Examples:

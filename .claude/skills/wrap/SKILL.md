@@ -58,10 +58,10 @@ Before wrapping, check what was changed this session against what skills ran:
 |---|---|---|
 | New code written | /test | Check git log for test runs |
 | New pages added | /lighthouse, /a11y-audit | Check if mentioned in session |
-| API endpoints changed | /security-scan | Check if mentioned |
+| API endpoints changed | /security-scan (SaaS) | Check if mentioned |
 | CMS schemas changed | /cms-sync | Check if mentioned |
 | Dependencies updated | /test (verify) | Check if tests ran after |
-| Approaching deployment | /prod-ready | Check if mentioned |
+| Approaching deployment | /prod-ready (SaaS) | Check if mentioned |
 
 Report only genuine gaps — if the session was planning/research with no code, skip this section. Max 3 gaps — the most important ones only.
 

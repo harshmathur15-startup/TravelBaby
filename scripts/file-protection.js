@@ -1,40 +1,57 @@
 // File-Pattern Protection Hook — PreToolUse on Edit/Write
-// Blocks edits to protected file patterns. Configurable per project.
-// Borrowed from Roo Code's file-regex permissions (#17+18+19+50)
+// Reads protection config from .claude/protected-files.json (single source of truth).
+// "block" entries are rejected. "warn" entries get a notice. blocked_patterns always reject.
 
-const PROTECTED_PATTERNS = [
-  /\.claude\/settings\.json$/,     // Never edit settings via AI
-  /\.claude\/settings\.local\.json$/,
-  /\.env$/,                         // Never write secrets
-  /\.env\.local$/,
-  /node_modules\//,                 // Never touch dependencies
-  /package-lock\.json$/,            // Never manually edit lockfile
-  /prisma\/migrations\//,           // Never manually edit migrations
-];
+const fs = require('fs')
+const path = require('path')
 
-// Patterns that require explicit confirmation (warn, don't block)
-const WARN_PATTERNS = [
-  /CLAUDE\.md$/,                    // Project config — changes should be deliberate
-  /\.claude\/rules\//,              // Rule changes should be deliberate
-  /\.claude\/skills\/.*SKILL\.md$/, // Skill definitions should be deliberate
-];
+const CONFIG_PATH = path.join(__dirname, '..', '.claude', 'protected-files.json')
 
-let buffer = '';
-process.stdin.on('data', chunk => buffer += chunk);
+function loadConfig() {
+  if (!fs.existsSync(CONFIG_PATH)) {
+    // No config = no protection. Fail open so the hook doesn't break new projects.
+    return { files: [], blocked_patterns: [] }
+  }
+  return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'))
+}
+
+let buffer = ''
+process.stdin.on('data', chunk => (buffer += chunk))
 process.stdin.on('end', () => {
-  const data = JSON.parse(buffer);
-  const filePath = (data.tool_input && (data.tool_input.file_path || '')).replace(/\\/g, '/');
+  const data = JSON.parse(buffer)
+  const filePath = (data.tool_input && (data.tool_input.file_path || '')).replace(/\\/g, '/')
 
-  const blocked = PROTECTED_PATTERNS.find(p => p.test(filePath));
-  if (blocked) {
-    process.stderr.write('BLOCKED: ' + filePath + ' is protected. Edit manually if needed.\n');
-    process.exit(2);
+  const config = loadConfig()
+
+  // Check blocked_patterns first (always block)
+  const blockedByPattern = (config.blocked_patterns || []).find(p => new RegExp(p).test(filePath))
+  if (blockedByPattern) {
+    process.stderr.write(
+      'BLOCKED: ' + filePath + ' matches protected pattern. Edit manually if needed.\n',
+    )
+    process.exit(2)
   }
 
-  const warned = WARN_PATTERNS.find(p => p.test(filePath));
-  if (warned) {
-    process.stderr.write('NOTICE: Editing structural file ' + filePath.split('/').pop() + ' — ensure this is intentional.\n');
+  // Check file-level protection
+  for (const entry of config.files) {
+    const entryPath = path.resolve(__dirname, '..', entry.path).replace(/\\/g, '/')
+    const normalizedFile = path.resolve(filePath).replace(/\\/g, '/')
+
+    if (normalizedFile === entryPath) {
+      if (entry.protection === 'block') {
+        process.stderr.write('BLOCKED: ' + filePath + ' is protected. Edit manually if needed.\n')
+        process.exit(2)
+      }
+      if (entry.protection === 'warn') {
+        process.stderr.write(
+          'NOTICE: Editing structural file ' +
+            path.basename(filePath) +
+            ' — ensure this is intentional.\n',
+        )
+      }
+      break
+    }
   }
 
-  process.exit(0);
-});
+  process.exit(0)
+})

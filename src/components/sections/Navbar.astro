@@ -1,5 +1,7 @@
 ---
 import ThemeToggle from '../ui/ThemeToggle.astro';
+import PreferenceToggles from '../ui/PreferenceToggles.astro';
+import LanguagePicker from '../ui/LanguagePicker.astro';
 import NavMobile from './NavMobile.astro';
 import { SITE_CONFIG } from '@config';
 
@@ -41,6 +43,8 @@ const currentPath = Astro.url.pathname;
         </svg>
       </a>
       <ThemeToggle />
+      <PreferenceToggles />
+      <LanguagePicker />
       <a href={SITE_CONFIG.ctaButton.href} class="navbar__cta" aria-label={`${SITE_CONFIG.ctaButton.label} with ${SITE_CONFIG.name}`}>
         {SITE_CONFIG.ctaButton.label}
       </a>

@@ -16,14 +16,14 @@ Weekly reflection. Compounds learning over time — what you learn this week mak
 
 1. Run `git log --oneline --since="7 days ago"` — what was shipped
 2. Run `git log --oneline --since="7 days ago" --diff-filter=R` — what was reverted or renamed (signals rework)
-3. Check `./docs/retros/` for last retro — note what was flagged to improve
+3. Check `./docs/retros/` for last retro (create dir if missing) — note what was flagged to improve
 4. Read `MEMORY.md` — compare project status to where it was
 5. Glob `./specs/*.md` — how many specs written vs implemented?
 6. Compose the retro
 
 ## Output Format
 
-Save to `./docs/retros/YYYY-MM-DD.md` and display:
+Save to `./docs/retros/YYYY-MM-DD.md` (create directory if it doesn't exist) and display:
 
 ```markdown
 # Retro: Week of YYYY-MM-DD

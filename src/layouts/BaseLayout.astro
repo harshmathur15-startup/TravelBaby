@@ -3,7 +3,9 @@ import { ClientRouter } from 'astro:transitions';
 import '@styles/global.css';
 import Navbar from '@components/sections/Navbar.astro';
 import Footer from '@components/sections/Footer.astro';
+import CommandLauncher from '@components/ui/CommandLauncher.astro';
 import { SITE_CONFIG, THEME_CONFIG } from '@config';
+import { getLocale, getAlternateLocales } from '@lib/i18n';
 
 interface Props {
   title: string;
@@ -26,6 +28,9 @@ const siteUrl = Astro.site?.toString() ?? SITE_CONFIG.url;
 // Dynamic OG image: use provided ogImage, or generate path from current URL
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/index';
 const ogImageUrl = ogImage ?? `${siteUrl}og${pathname}.png`;
+
+const currentLocale = getLocale(Astro.currentLocale);
+const alternateLocales = getAlternateLocales(currentLocale, Astro.url.pathname);
 
 const themeVars = [
   ...Object.entries(THEME_CONFIG.colors.primary).map(([k, v]) => `--color-primary-${k}: ${v};`),
@@ -58,6 +63,13 @@ const themeVars = [
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- hreflang for alternate locales -->
+    {alternateLocales.map(({ locale, href }) => (
+      <link rel="alternate" hreflang={locale} href={`${siteUrl.replace(/\/$/, '')}${href}`} />
+    ))}
+    <link rel="alternate" hreflang={currentLocale} href={canonicalUrl} />
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
 
     <!-- Theme overrides from config -->
     <style is:inline set:html={`:root {\n    ${themeVars}\n  }`} />
@@ -98,6 +110,7 @@ const themeVars = [
   </head>
   <body class="min-h-screen bg-[var(--color-neutral-0)] text-[var(--color-neutral-900)] antialiased font-[var(--font-body)]">
     <Navbar />
+    <CommandLauncher />
     <main id="main-content">
       <slot />
     </main>

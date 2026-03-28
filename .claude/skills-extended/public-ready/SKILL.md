@@ -60,7 +60,7 @@ Redact PII in output — initials or `[REDACTED]`.
 
 Check for AI partnership artifacts that should stay private.
 
-**Agent names to search:** Read `agents/family/registry.md` if it exists — extract registered names. Also search defaults: Kira, Mira, Scout, Sage, Nora, Vera, Cleo, Aria, Lena, Petra, Priya.
+**Agent names to search:** Read `agents/family/registry.md` if it exists — extract registered names. Also search defaults: Mira, Scout, Sage, Nora, Cleo, Aria, Lena, Petra, Priya.
 
 | Pattern | Catches |
 |---|---|
