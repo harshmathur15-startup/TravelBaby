@@ -1,8 +1,9 @@
 // Bash Blocker — PreToolUse hook on Bash
 // Blocks destructive commands before execution
 
+// NOTE: rm/unlink are NOT blocked here — recycle-guard.cjs backs up files
+// before deletion. That hook runs first and is the safety net for all deletions.
 const patterns = [
-  /rm\s+(-[a-z]*f[a-z]*\s+|.*--force)/,
   /drop\s+table/,
   /git\s+push\s+.*(-f|--force)/,
   /format\s+c/,
