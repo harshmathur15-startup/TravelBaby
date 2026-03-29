@@ -9,24 +9,27 @@ const { describe, it, before, after } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('fs');
 const path = require('path');
-const { spawnSync } = require('child_process');
+const { execSync } = require('child_process');
 
 const SCRIPT_PATH = path.join(__dirname, 'session-tracker.cjs');
 const TEST_DIR = path.join(__dirname, '__test_session_tracker_tmp');
 
 function runScript(cwd, stdinData) {
-  const result = spawnSync('node', [SCRIPT_PATH], {
-    encoding: 'utf8',
-    timeout: 15000,
-    cwd,
-    input: stdinData,
-    stdio: ['pipe', 'pipe', 'pipe'],
-  });
-  return {
-    exitCode: result.status,
-    stdout: result.stdout || '',
-    stderr: result.stderr || '',
-  };
+  try {
+    const stdout = execSync(`node "${SCRIPT_PATH}"`, {
+      encoding: 'utf8',
+      timeout: 15000,
+      cwd,
+      input: stdinData,
+    });
+    return { exitCode: 0, stdout, stderr: '' };
+  } catch (err) {
+    return {
+      exitCode: err.status,
+      stdout: err.stdout || '',
+      stderr: err.stderr || '',
+    };
+  }
 }
 
 function setupTestDir() {

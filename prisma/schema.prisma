@@ -8,40 +8,48 @@ datasource db {
 }
 
 model Organization {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   name      String
-  slug      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  slug      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   members Membership[]
+
+  @@index([deletedAt])
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String    @id @default(cuid())
+  email        String    @unique
   passwordHash String
   firstName    String
   lastName     String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
 
   memberships   Membership[]
   refreshTokens RefreshToken[]
+
+  @@index([deletedAt])
 }
 
 model Membership {
-  id             String   @id @default(cuid())
-  role           Role     @default(MEMBER)
-  createdAt      DateTime @default(now())
+  id             String    @id @default(cuid())
+  role           Role      @default(MEMBER)
+  createdAt      DateTime  @default(now())
+  deletedAt      DateTime?
 
-  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Restrict)
   userId         String
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
   organizationId String
 
   @@unique([userId, organizationId])
   @@index([organizationId])
+  @@index([deletedAt])
 }
 
 model RefreshToken {

@@ -1,15 +1,16 @@
 import { PrismaClient } from '@prisma/client'
 import { env } from '../env'
+import { withSoftDelete } from './prisma-soft-delete'
 
 const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined
+  prisma: ReturnType<typeof withSoftDelete> | undefined
 }
 
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log: env.NODE_ENV === 'development' ? ['query', 'warn', 'error'] : ['error'],
-  })
+const baseClient = new PrismaClient({
+  log: env.NODE_ENV === 'development' ? ['query', 'warn', 'error'] : ['error'],
+})
+
+export const prisma = globalForPrisma.prisma ?? withSoftDelete(baseClient)
 
 if (env.NODE_ENV === 'development') {
   globalForPrisma.prisma = prisma

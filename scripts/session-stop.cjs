@@ -14,11 +14,14 @@ try { fs.mkdirSync(dir, { recursive: true }); } catch (e) {}
 
 // Read recent tool activity
 const toolLogPath = '.claude/tool.log';
-const log = fs.existsSync(toolLogPath)
+const hasToolLog = fs.existsSync(toolLogPath);
+const log = hasToolLog
   ? fs.readFileSync(toolLogPath, 'utf8').split('\n').slice(-30).join('\n')
   : 'No tool activity recorded.';
 
-const logLines = log.split('\n').filter(l => l.trim());
+const logLines = hasToolLog
+  ? log.split('\n').filter(l => l.trim())
+  : [];
 
 // Read memory snapshot
 const memPath = (function () {
@@ -98,6 +101,17 @@ const totalCalls = logLines.length;
 const estInputCost = (totalCalls * 500 * 3) / 1000000;
 const estOutputCost = (totalCalls * 1000 * 15) / 1000000;
 const estCost = Math.round((estInputCost + estOutputCost) * 100) / 100;
+
+// === 4. PERSIST COST ===
+const costsPath = path.join('thoughts', 'costs.jsonl');
+try { fs.mkdirSync('thoughts', { recursive: true }); } catch (e) {}
+const costEntry = JSON.stringify({
+  date: now.toISOString(),
+  tool_calls: totalCalls,
+  est_cost_usd: estCost,
+  source: 'session-stop',
+});
+fs.appendFileSync(costsPath, costEntry + '\n');
 
 // === OUTPUT ===
 const summary = [`Session saved: ${handoffPath}`];

@@ -8,14 +8,15 @@
 const { describe, it } = require('node:test');
 const assert = require('node:assert/strict');
 const path = require('path');
-const { spawn } = require('child_process');
+const { fork } = require('child_process');
 
-const SCRIPT_PATH = path.join(__dirname, 'file-protection.js');
+const SCRIPT_PATH = path.join(__dirname, 'file-protection.cjs');
 
 function runScript(filePath) {
   return new Promise((resolve) => {
-    const child = spawn(process.execPath, [SCRIPT_PATH], {
-      stdio: ['pipe', 'pipe', 'pipe'],
+    const child = fork(SCRIPT_PATH, [], {
+      stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
+      silent: true,
     });
 
     let stdout = '';
@@ -36,27 +37,29 @@ function runScript(filePath) {
 
 describe('file-protection.js', () => {
 
-  describe('PROTECTED_PATTERNS — should block with exit 2', () => {
+  describe('blocked_patterns — should block with exit 2', () => {
     it('should exit 2 when editing .env file', async () => {
-      const result = await runScript('/project/.env');
-      assert.equal(result.exitCode, 2);
-      assert.ok(result.stderr.includes('BLOCKED'), 'Should output BLOCKED message');
-    });
-
-    it('should exit 2 when editing .claude/settings.json', async () => {
-      const result = await runScript('/project/.claude/settings.json');
+      const result = await runScript(path.resolve(__dirname, '..', '.env'));
       assert.equal(result.exitCode, 2);
       assert.ok(result.stderr.includes('BLOCKED'), 'Should output BLOCKED message');
     });
 
     it('should exit 2 when editing node_modules/ path', async () => {
-      const result = await runScript('/project/node_modules/lodash/index.js');
+      const result = await runScript(path.resolve(__dirname, '..', 'node_modules', 'lodash', 'index.js'));
       assert.equal(result.exitCode, 2);
       assert.ok(result.stderr.includes('BLOCKED'), 'Should output BLOCKED message');
     });
 
     it('should exit 2 when editing package-lock.json', async () => {
-      const result = await runScript('/project/package-lock.json');
+      const result = await runScript(path.resolve(__dirname, '..', 'package-lock.json'));
+      assert.equal(result.exitCode, 2);
+      assert.ok(result.stderr.includes('BLOCKED'), 'Should output BLOCKED message');
+    });
+  });
+
+  describe('file-level protection — block', () => {
+    it('should exit 2 when editing .claude/settings.json', async () => {
+      const result = await runScript(path.resolve(__dirname, '..', '.claude', 'settings.json'));
       assert.equal(result.exitCode, 2);
       assert.ok(result.stderr.includes('BLOCKED'), 'Should output BLOCKED message');
     });
@@ -64,26 +67,26 @@ describe('file-protection.js', () => {
 
   describe('normal files — should allow with exit 0', () => {
     it('should exit 0 for a normal .ts file', async () => {
-      const result = await runScript('/project/src/app.ts');
+      const result = await runScript(path.resolve(__dirname, '..', 'src', 'app.ts'));
       assert.equal(result.exitCode, 0);
     });
 
     it('should exit 0 for a normal .js file', async () => {
-      const result = await runScript('/project/src/utils/helper.js');
+      const result = await runScript(path.resolve(__dirname, '..', 'src', 'utils', 'helper.js'));
       assert.equal(result.exitCode, 0);
     });
   });
 
-  describe('WARN_PATTERNS — should warn but allow', () => {
+  describe('file-level protection — warn', () => {
     it('should warn (stderr) but exit 0 for CLAUDE.md', async () => {
-      const result = await runScript('/project/CLAUDE.md');
+      const result = await runScript(path.resolve(__dirname, '..', 'CLAUDE.md'));
       assert.equal(result.exitCode, 0);
       assert.ok(result.stderr.includes('NOTICE'), 'Should output NOTICE warning');
       assert.ok(result.stderr.includes('CLAUDE.md'), 'Warning should mention the file');
     });
 
     it('should warn (stderr) but exit 0 for .claude/rules/*.md', async () => {
-      const result = await runScript('/project/.claude/rules/security.md');
+      const result = await runScript(path.resolve(__dirname, '..', '.claude', 'rules', 'security.md'));
       assert.equal(result.exitCode, 0);
       assert.ok(result.stderr.includes('NOTICE'), 'Should output NOTICE warning');
     });

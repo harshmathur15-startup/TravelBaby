@@ -9,23 +9,29 @@ const { describe, it, before, after } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('fs');
 const path = require('path');
-const { spawnSync } = require('child_process');
+const { execSync } = require('child_process');
 
 const SCRIPT_PATH = path.join(__dirname, 'session-stop.cjs');
 const TEST_DIR = path.join(__dirname, '__test_session_stop_tmp');
 
 function runScript(cwd) {
-  const result = spawnSync('node', [SCRIPT_PATH], {
-    encoding: 'utf8',
-    timeout: 15000,
-    cwd,
-    stdio: ['pipe', 'pipe', 'pipe'],
-  });
-  return {
-    exitCode: result.status,
-    stdout: result.stdout || '',
-    stderr: result.stderr || '',
-  };
+  try {
+    // execSync captures stderr in the error on non-zero exit.
+    // For exit 0 scripts that write to stderr, redirect stderr to stdout.
+    const output = execSync(`node "${SCRIPT_PATH}" 2>&1`, {
+      encoding: 'utf8',
+      timeout: 15000,
+      cwd,
+    });
+    return { exitCode: 0, stdout: output, stderr: output };
+  } catch (err) {
+    const combined = (err.stdout || '') + (err.stderr || '');
+    return {
+      exitCode: err.status,
+      stdout: err.stdout || '',
+      stderr: combined,
+    };
+  }
 }
 
 function setupTestDir() {

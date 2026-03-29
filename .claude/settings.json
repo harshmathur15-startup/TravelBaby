@@ -33,6 +33,10 @@
         "hooks": [
           {
             "type": "command",
+            "command": "node scripts/recycle-guard.cjs"
+          },
+          {
+            "type": "command",
             "command": "node scripts/bash-blocker.cjs"
           }
         ]
@@ -42,7 +46,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node scripts/file-protection.js"
+            "command": "node scripts/file-protection.cjs"
           }
         ]
       }

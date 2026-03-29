@@ -26,6 +26,9 @@ Thumbs.db
 coverage/
 .nyc_output/
 
+# Recycle bin (backup-before-delete)
+.recycle/
+
 # Temp
 tmp/
 temp/

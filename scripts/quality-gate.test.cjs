@@ -9,15 +9,16 @@ const { describe, it, before, after } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('fs');
 const path = require('path');
-const { spawn } = require('child_process');
+const { fork } = require('child_process');
 
 const SCRIPT_PATH = path.join(__dirname, 'quality-gate.cjs');
 const TEST_DIR = path.join(__dirname, '__test_quality_tmp');
 
 function runScript(filePath) {
   return new Promise((resolve) => {
-    const child = spawn(process.execPath, [SCRIPT_PATH], {
-      stdio: ['pipe', 'pipe', 'pipe'],
+    const child = fork(SCRIPT_PATH, [], {
+      stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
+      silent: true,
     });
 
     let stdout = '';
@@ -38,8 +39,9 @@ function runScript(filePath) {
 
 function runScriptWithInput(inputObj) {
   return new Promise((resolve) => {
-    const child = spawn(process.execPath, [SCRIPT_PATH], {
-      stdio: ['pipe', 'pipe', 'pipe'],
+    const child = fork(SCRIPT_PATH, [], {
+      stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
+      silent: true,
     });
 
     let stdout = '';

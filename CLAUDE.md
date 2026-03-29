@@ -56,11 +56,11 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when y
 ### AI Harness
 | Layer | Count | What It Does |
 |-------|-------|-------------|
-| **Core Skills** | 9 | Session lifecycle, reviews, retrospectives, search, reporting |
+| **Core Skills** | 10 | Session lifecycle, reviews, retrospectives, search, reporting, recycle bin |
 | **Extended Skills** | 21 | In `.claude/skills-extended/` — opt-in. Move to `.claude/skills/` to activate |
 | **SaaS Skills** | 18 | In `.claude/skills-saas/` — activate when adding backend (auth, API, database) |
-| **Hooks** | 10 | Health checks, file protection, formatting, quality gates, session tracking |
-| **Scripts** | 20 | Hook execution + skill utility scripts |
+| **Hooks** | 11 | Health checks, file protection, recycle guard, formatting, quality gates, session tracking |
+| **Scripts** | 22 | Hook execution + skill utility scripts |
 | **Rules** | 5 | Standards for code, security, frontend, performance, testing |
 | **Agents** | 3 | Thea (benchmark), Nell (debt), Priya (upstream extraction) |
 
@@ -71,6 +71,7 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when y
 | Session starts | Verify memory integrity | Catch stale/broken memory files |
 | Session starts | Check protected file drift | Detect unauthorized changes |
 | Session starts | Validate skills/agents structure | Catch missing frontmatter |
+| Before bash | Back up files before deletion | Recycle bin — nothing hard-deleted |
 | Before bash | Block destructive commands | Safety |
 | Before file edit | Check protected file patterns | Prevent accidental config edits |
 | Before compaction | Generate session handoff | Preserve context |
