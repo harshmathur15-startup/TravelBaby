@@ -1,0 +1,168 @@
+---
+/**
+ * AIAgents — agent showcase cards with accent colors and HITL badges.
+ * Accepts optional CMS props; falls back to generic defaults.
+ */
+
+import Container from '@components/ui/Container.astro'
+import SectionHeading from '@components/ui/SectionHeading.astro'
+import Badge from '@components/ui/Badge.astro'
+
+interface Agent {
+  name: string
+  tagline: string
+  description: string
+  hitl: string
+  accent: string
+}
+
+interface Props {
+  heading?: string
+  subtext?: string
+  items?: Agent[]
+}
+
+const DEFAULT_AGENTS: Agent[] = [
+  { name: 'Agent Alpha', tagline: 'Handles routine tasks automatically', description: 'Processes common requests using your knowledge base and company policies. Cites sources for every answer it gives.', hitl: 'Escalates to a human when confidence is low', accent: 'var(--color-primary-500)' },
+  { name: 'Agent Beta', tagline: 'Monitors and alerts proactively', description: 'Watches for anomalies, threshold breaches, and deadline risks. Sends actionable alerts before problems escalate.', hitl: 'Human approves every corrective action', accent: 'var(--color-success)' },
+  { name: 'Agent Gamma', tagline: 'Drafts content and summaries', description: 'Generates reports, review summaries, and documentation from structured data. Saves hours of manual writing.', hitl: 'Human reviews and approves every draft', accent: 'var(--color-accent-500)' },
+  { name: 'Agent Delta', tagline: 'Analyzes data and surfaces insights', description: 'Runs analysis across your data, identifies trends, and recommends actions. Presents findings with supporting evidence.', hitl: 'Human decides which recommendations to act on', accent: 'var(--color-info)' },
+]
+
+const heading = Astro.props.heading ?? 'Meet Your AI Team'
+const subtext = Astro.props.subtext ?? 'Specialized agents that operate, not just assist. Every action is logged, every decision is transparent, and humans stay in control.'
+const agents = Astro.props.items?.length
+  ? Astro.props.items.map((a) => ({ ...a, accent: a.accent || 'var(--color-primary-500)' }))
+  : DEFAULT_AGENTS
+---
+
+<section class="ai-agents" aria-labelledby="ai-agents-heading">
+  <Container>
+    <SectionHeading
+      id="ai-agents-heading"
+      eyebrow="AI Agents"
+      heading={heading}
+      subtext={subtext}
+      headingTag="h2"
+    />
+
+    <div class="ai-agents__grid">
+      {agents.map((agent) => (
+        <div class="agent-card" style={`--agent-accent: ${agent.accent}`}>
+          <div class="agent-card__icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+              <path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 011 1v3a1 1 0 01-1 1h-1.07A7.001 7.001 0 0113 23h-2a7.001 7.001 0 01-6.93-4H3a1 1 0 01-1-1v-3a1 1 0 011-1h1a7 7 0 017-7h1V5.73A2.002 2.002 0 0112 2zm-2 10a5 5 0 00-5 5 5 5 0 005 5h4a5 5 0 005-5 5 5 0 00-5-5h-4zm-1 5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm6 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
+            </svg>
+          </div>
+
+          <h3 class="agent-card__name">{agent.name}</h3>
+          <p class="agent-card__tagline">{agent.tagline}</p>
+          <p class="agent-card__description">{agent.description}</p>
+
+          <div class="agent-card__footer">
+            <Badge variant="success">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="12" height="12" aria-hidden="true" style="margin-right: 4px;">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              {agent.hitl}
+            </Badge>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .ai-agents {
+    padding: var(--space-16) 0;
+    background-color: var(--color-secondary-500);
+  }
+
+  .ai-agents :global(.section-eyebrow) {
+    color: var(--color-primary-300);
+  }
+
+  .ai-agents :global(.section-heading) {
+    color: var(--color-neutral-0);
+  }
+
+  .ai-agents :global(.section-subtext) {
+    color: var(--color-neutral-300);
+  }
+
+  .ai-agents__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-10);
+  }
+
+  .agent-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    transition: border-color var(--duration-normal) var(--ease-default);
+  }
+
+  .agent-card:hover {
+    border-color: var(--agent-accent, var(--color-primary-400));
+  }
+
+  .agent-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--agent-accent, var(--color-primary-400));
+  }
+
+  .agent-card__name {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-0);
+    margin: 0;
+  }
+
+  .agent-card__tagline {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary-300);
+    margin: 0;
+  }
+
+  .agent-card__description {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-neutral-300);
+    margin: 0;
+    flex: 1;
+  }
+
+  .agent-card__footer {
+    margin-top: var(--space-2);
+  }
+
+  @media (min-width: 640px) {
+    .ai-agents__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .ai-agents {
+      padding: var(--space-20) 0;
+    }
+  }
+
+  :global(.dark) .ai-agents { background-color: #071a2e; }
+  :global(.dark) .agent-card__name { color: #f8f9fa; }
+</style>

@@ -1,0 +1,169 @@
+---
+/**
+ * CompetitorCards — side-by-side cards comparing products at a glance.
+ * Accepts optional CMS props; falls back to generic defaults.
+ */
+
+import Container from '@components/ui/Container.astro'
+import SectionHeading from '@components/ui/SectionHeading.astro'
+import Badge from '@components/ui/Badge.astro'
+
+interface Competitor {
+  name: string
+  positioning: string
+  price: string
+  strength: string
+  weakness: string
+  highlight: boolean
+}
+
+interface Props {
+  heading?: string
+  subtext?: string
+  items?: Competitor[]
+}
+
+const DEFAULT_COMPETITORS: Competitor[] = [
+  { name: 'Our Product', positioning: 'Your product positioning', price: 'From $X/mo', strength: 'Key differentiator that sets you apart', weakness: 'Known limitation to address', highlight: true },
+  { name: 'Competitor A', positioning: 'Their market position', price: 'From $Y/mo', strength: 'What they do well', weakness: 'Where they fall short', highlight: false },
+  { name: 'Competitor B', positioning: 'Their market position', price: 'From $Z/mo', strength: 'What they do well', weakness: 'Where they fall short', highlight: false },
+  { name: 'Competitor C', positioning: 'Their market position', price: 'Custom pricing', strength: 'What they do well', weakness: 'Where they fall short', highlight: false },
+]
+
+const heading = Astro.props.heading ?? 'How We Compare'
+const subtext = Astro.props.subtext ?? 'See how the top solutions stack up on pricing, strengths, and trade-offs.'
+const competitors = Astro.props.items?.length ? Astro.props.items : DEFAULT_COMPETITORS
+---
+
+<section class="competitor-cards" aria-labelledby="competitor-cards-heading">
+  <Container>
+    <SectionHeading
+      id="competitor-cards-heading"
+      eyebrow="At a Glance"
+      heading={heading}
+      subtext={subtext}
+      headingTag="h2"
+    />
+
+    <div class="competitor-cards__grid">
+      {competitors.map((c) => (
+        <div class:list={['competitor-cards__card', { 'competitor-cards__card--highlight': c.highlight }]}>
+          <div class="competitor-cards__header">
+            <h3 class="competitor-cards__name">{c.name}</h3>
+            {c.highlight && <Badge variant="primary">Top Pick</Badge>}
+          </div>
+          <p class="competitor-cards__positioning">{c.positioning}</p>
+          <p class="competitor-cards__price">{c.price}</p>
+          <div class="competitor-cards__detail">
+            <span class="competitor-cards__label competitor-cards__label--strength">Strength</span>
+            <p class="competitor-cards__value">{c.strength}</p>
+          </div>
+          <div class="competitor-cards__detail">
+            <span class="competitor-cards__label competitor-cards__label--weakness">Weakness</span>
+            <p class="competitor-cards__value">{c.weakness}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .competitor-cards {
+    padding: var(--space-16) 0;
+    background-color: var(--color-neutral-0);
+  }
+
+  .competitor-cards__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    margin-top: var(--space-10);
+  }
+
+  .competitor-cards__card {
+    padding: var(--space-6);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-neutral-0);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .competitor-cards__card--highlight {
+    border-color: var(--color-primary-500);
+    border-width: 2px;
+    background-color: var(--color-primary-50);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .competitor-cards__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .competitor-cards__name {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-950);
+    margin: 0;
+  }
+
+  .competitor-cards__positioning {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-600);
+    margin: 0;
+  }
+
+  .competitor-cards__price {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-600);
+    margin: 0;
+  }
+
+  .competitor-cards__detail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .competitor-cards__label {
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .competitor-cards__label--strength { color: var(--color-success-dark); }
+  .competitor-cards__label--weakness { color: var(--color-error-dark); }
+
+  .competitor-cards__value {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-700);
+    margin: 0;
+    line-height: var(--leading-normal);
+  }
+
+  @media (min-width: 640px) {
+    .competitor-cards__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .competitor-cards__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .competitor-cards {
+      padding: var(--space-20) 0;
+    }
+  }
+</style>

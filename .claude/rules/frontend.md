@@ -41,6 +41,11 @@ paths:
 - Tailwind CSS for all styling — no inline styles
 - Loading, error, and empty states required for every data-fetching component
 
+## CSS Extraction
+- When component CSS exceeds 200 lines, extract to a sibling `.css` file
+- Use BEM naming (`block__element--modifier`) to avoid collisions — NOT Astro-scoped
+- Import via `import './component-name.css'` in the component frontmatter
+
 ## Bundle & Performance
 - No large library imports without checking tree-shaking
 - Lazy-load routes and heavy components
