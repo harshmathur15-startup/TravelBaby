@@ -1,0 +1,120 @@
+---
+/**
+ * AddOns — grid of optional add-on items with pricing.
+ * Used alongside PricingCards for SaaS products that offer
+ * modular extras beyond the base plans.
+ */
+
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+
+interface AddOn {
+  name: string;
+  description: string;
+  price: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  subtext?: string;
+  items?: AddOn[];
+}
+
+const {
+  eyebrow = 'Add-Ons',
+  heading = 'Customize Your Plan',
+  subtext = 'Extend your setup with optional modules. Available on any plan.',
+  items = [
+    { name: 'Priority Support', description: 'Dedicated support channel with 4-hour response time.', price: '$49/mo' },
+    { name: 'Advanced Analytics', description: 'Custom dashboards, export, and scheduled reports.', price: '$29/mo' },
+    { name: 'API Access', description: 'Full REST API with 10,000 requests/day included.', price: '$39/mo' },
+    { name: 'Custom Branding', description: 'White-label emails, portal, and documents.', price: '$19/mo' },
+  ],
+} = Astro.props;
+---
+
+<section class="addons" aria-labelledby="addons-heading">
+  <Container>
+    <SectionHeading
+      id="addons-heading"
+      eyebrow={eyebrow}
+      heading={heading}
+      subtext={subtext}
+      headingTag="h2"
+    />
+
+    <div class="addons__grid" role="list">
+      {items.map((item) => (
+        <div class="addons__card" role="listitem">
+          <h3 class="addons__name">{item.name}</h3>
+          <p class="addons__desc">{item.description}</p>
+          <p class="addons__price">{item.price}</p>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .addons {
+    padding: var(--space-16) 0;
+    background: var(--color-neutral-50);
+  }
+
+  .addons__grid {
+    margin-top: var(--space-10);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .addons__card {
+    background: var(--color-neutral-0);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .addons__name {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-neutral-950);
+    margin: 0 0 var(--space-2);
+  }
+
+  .addons__desc {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-600);
+    line-height: var(--leading-normal);
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .addons__price {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-600);
+    margin: var(--space-4) 0 0;
+  }
+
+  @media (min-width: 640px) {
+    .addons__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .addons {
+      padding: var(--space-20) 0;
+    }
+
+    .addons__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

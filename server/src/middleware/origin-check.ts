@@ -3,7 +3,11 @@ import { env } from '../env'
 
 const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS'])
 
-const allowedOrigins = new Set(env.CORS_ORIGIN.split(',').map(o => o.trim()))
+const allowedOrigins = new Set(
+  env.CORS_ORIGIN.split(',')
+    .map(o => o.trim())
+    .filter(Boolean),
+)
 
 /**
  * Origin header check for state-changing requests.

@@ -30,6 +30,7 @@ const {
 } = Astro.props;
 ---
 
+<!-- Parent must wrap PricingCard instances in a container with role="list" for correct a11y semantics. -->
 <div class:list={['pricing-card', { 'pricing-card--popular': popular }]} role="listitem">
   {popular && <span class="pricing-card__badge">Most Popular</span>}
   <h3 class="pricing-card__name">{name}</h3>

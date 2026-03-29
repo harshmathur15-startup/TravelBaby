@@ -3,6 +3,11 @@
 const MAX_LOGIN_ATTEMPTS = 5
 const LOCKOUT_DURATION_MS = 15 * 60 * 1000 // 15 minutes
 
+/**
+ * Login attempt tracking interface. Implementations must be safe for
+ * concurrent access within a single process (e.g. async request handlers).
+ * For multi-instance deployments, use a Redis-backed implementation.
+ */
 export interface LoginAttemptStore {
   isLocked(email: string): boolean
   recordFailure(email: string): void

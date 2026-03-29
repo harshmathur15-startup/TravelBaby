@@ -39,7 +39,7 @@ services:
     name: "[your-app]-api-staging"    # TODO: replace [your-app]
     runtime: node
     branch: staging
-    buildCommand: NODE_ENV=development npm ci && npm run db:generate && npm run build:server
+    buildCommand: npm ci --include=dev && npm run db:generate && npm run build:server
     startCommand: node server/dist/server.js
     envVars:
       - key: NODE_ENV

@@ -145,5 +145,23 @@ sprint:
 
 ---
 
-*Last updated: 2026-03-19 (Session 13)*
-*Source: Kira borrowing plan deep review — 19 competitor studies*
+## #71 GROQ Query Split
+**Trigger:** `src/lib/queries.ts` exceeds 200 lines
+**Source:** Zimyo (upstream extraction S36)
+**What it does:** Splits monolithic queries file into domain-specific modules: `src/lib/queries/site.ts`, `queries/pages.ts`, `queries/pricing.ts`, `queries/blog.ts`, `queries/testimonials.ts` with a barrel `index.ts`.
+**Implementation:** Create `src/lib/queries/` directory. Move related queries into domain files. Re-export everything from `index.ts`. Update imports across the codebase (all come from `@lib/queries`).
+**Key constraint:** Default template ships with a single `queries.ts` — split only when it outgrows the file length limit.
+
+---
+
+## #72 Data File Extraction
+**Trigger:** Component default props exceed 30 lines of hardcoded data
+**Source:** Zimyo (upstream extraction S36)
+**What it does:** Moves large hardcoded defaults (comparison tables, legal text, feature lists) out of components into `src/data/<component>-data.ts` files. Keeps components under the 200-line cap.
+**Implementation:** Create `src/data/` directory. Export typed constants. Import in components as default prop values.
+**Convention:** `src/data/` is for static content that could eventually come from a CMS. When CMS integration is added, these files become the fallback defaults.
+
+---
+
+*Last updated: 2026-03-29 (Session 36)*
+*Source: Kira borrowing plan deep review — 19 competitor studies + Priya upstream extractions*

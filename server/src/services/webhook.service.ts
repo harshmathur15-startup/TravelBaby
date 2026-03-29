@@ -11,7 +11,7 @@ const REBUILDABLE_TYPES = new Set([
   'blogPost',
   'siteSettings',
   'author',
-  // TODO: add your CMS document types that affect the static site
+  // TODO(template): add your CMS document types that affect the static site
 ])
 
 let lastRebuildAt = 0

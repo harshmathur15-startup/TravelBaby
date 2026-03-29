@@ -1,122 +1,113 @@
 import type { Request, Response, NextFunction } from 'express'
 
+import { getClientIp } from '../lib/utils'
+
 interface RateLimitEntry {
   count: number
   resetAt: number
 }
 
-const store = new Map<string, RateLimitEntry>()
-const authStore = new Map<string, RateLimitEntry>()
-const formStore = new Map<string, RateLimitEntry>()
+interface LimiterConfig {
+  store: Map<string, RateLimitEntry>
+  keyPrefix: string
+  max: number
+  errorMessage: string
+  /** Emit X-RateLimit-* headers (only for the general limiter). */
+  exposeHeaders?: boolean
+  /** Paths to skip entirely. */
+  exemptPaths?: string[]
+}
+
+/**
+ * In-memory rate limit stores. Single-instance only — behind a load balancer,
+ * each process maintains its own counters. Replace with Redis-backed stores
+ * (e.g. `ioredis` + sliding window) before running multiple instances.
+ */
+const stores = [
+  new Map<string, RateLimitEntry>(),
+  new Map<string, RateLimitEntry>(),
+  new Map<string, RateLimitEntry>(),
+] as const
 
 const WINDOW_MS = 15 * 60 * 1000 // 15 minutes
-const MAX_REQUESTS = 100 // per window per IP
-const AUTH_MAX_REQUESTS = 10 // stricter for login/register
-const FORM_MAX_REQUESTS = 10 // public forms (contact, newsletter)
-const CLEANUP_INTERVAL = 5 * 60 * 1000 // prune expired entries every 5 min
-
-const RATE_LIMIT_EXEMPT_PATHS = ['/api/v1/webhooks']
+const CLEANUP_INTERVAL = 5 * 60 * 1000
 
 setInterval(() => {
   const now = Date.now()
-  for (const [key, entry] of store) {
-    if (now > entry.resetAt) store.delete(key)
-  }
-  for (const [key, entry] of authStore) {
-    if (now > entry.resetAt) authStore.delete(key)
-  }
-  for (const [key, entry] of formStore) {
-    if (now > entry.resetAt) formStore.delete(key)
+  for (const s of stores) {
+    for (const [key, entry] of s) {
+      if (now > entry.resetAt) s.delete(key)
+    }
   }
 }, CLEANUP_INTERVAL).unref()
 
-function getClientIp(req: Request): string {
-  const forwarded = req.headers['x-forwarded-for']
-  if (typeof forwarded === 'string') return forwarded.split(',')[0]?.trim() ?? 'unknown'
-  return req.socket.remoteAddress ?? 'unknown'
+function createLimiter(config: LimiterConfig) {
+  const { store, keyPrefix, max, errorMessage, exposeHeaders = false, exemptPaths } = config
+
+  return (req: Request, res: Response, next: NextFunction): void => {
+    if (exemptPaths?.some(p => req.path.startsWith(p))) {
+      next()
+      return
+    }
+
+    const ip = getClientIp(req)
+    const now = Date.now()
+    const key = keyPrefix ? `${keyPrefix}:${ip}` : ip
+    const entry = store.get(key)
+
+    if (!entry || now > entry.resetAt) {
+      store.set(key, { count: 1, resetAt: now + WINDOW_MS })
+      if (exposeHeaders) {
+        res.setHeader('X-RateLimit-Limit', max)
+        res.setHeader('X-RateLimit-Remaining', max - 1)
+      }
+      next()
+      return
+    }
+
+    entry.count++
+
+    if (entry.count > max) {
+      const retryAfter = Math.ceil((entry.resetAt - now) / 1000)
+      res.setHeader('Retry-After', retryAfter)
+      if (exposeHeaders) {
+        res.setHeader('X-RateLimit-Limit', max)
+        res.setHeader('X-RateLimit-Remaining', 0)
+      }
+      res.status(429).json({ success: false, error: errorMessage })
+      return
+    }
+
+    if (exposeHeaders) {
+      res.setHeader('X-RateLimit-Limit', max)
+      res.setHeader('X-RateLimit-Remaining', max - entry.count)
+    }
+    next()
+  }
 }
 
 /** Strict rate limiter for auth endpoints (login, register, password reset). */
-export function authRateLimit(req: Request, res: Response, next: NextFunction): void {
-  const ip = getClientIp(req)
-  const now = Date.now()
-  const key = `auth:${ip}`
-  const entry = authStore.get(key)
-
-  if (!entry || now > entry.resetAt) {
-    authStore.set(key, { count: 1, resetAt: now + WINDOW_MS })
-    next()
-    return
-  }
-
-  entry.count++
-
-  if (entry.count > AUTH_MAX_REQUESTS) {
-    const retryAfter = Math.ceil((entry.resetAt - now) / 1000)
-    res.setHeader('Retry-After', retryAfter)
-    res.status(429).json({ success: false, error: 'Too many attempts. Please try again later.' })
-    return
-  }
-
-  next()
-}
+export const authRateLimit = createLimiter({
+  store: stores[0],
+  keyPrefix: 'auth',
+  max: 10,
+  errorMessage: 'Too many attempts. Please try again later.',
+})
 
 /** Strict rate limiter for public form submissions (contact, newsletter). */
-export function formRateLimit(req: Request, res: Response, next: NextFunction): void {
-  const ip = getClientIp(req)
-  const now = Date.now()
-  const key = `form:${ip}`
-  const entry = formStore.get(key)
-
-  if (!entry || now > entry.resetAt) {
-    formStore.set(key, { count: 1, resetAt: now + WINDOW_MS })
-    next()
-    return
-  }
-
-  entry.count++
-
-  if (entry.count > FORM_MAX_REQUESTS) {
-    const retryAfter = Math.ceil((entry.resetAt - now) / 1000)
-    res.setHeader('Retry-After', retryAfter)
-    res.status(429).json({ success: false, error: 'Too many submissions. Please try again later.' })
-    return
-  }
-
-  next()
-}
+export const formRateLimit = createLimiter({
+  store: stores[1],
+  keyPrefix: 'form',
+  max: 10,
+  errorMessage: 'Too many submissions. Please try again later.',
+})
 
 /** General rate limiter for all API requests. */
-export function rateLimit(req: Request, res: Response, next: NextFunction): void {
-  if (RATE_LIMIT_EXEMPT_PATHS.some(p => req.path.startsWith(p))) {
-    next()
-    return
-  }
-
-  const ip = getClientIp(req)
-  const now = Date.now()
-  const entry = store.get(ip)
-
-  if (!entry || now > entry.resetAt) {
-    store.set(ip, { count: 1, resetAt: now + WINDOW_MS })
-    res.setHeader('X-RateLimit-Limit', MAX_REQUESTS)
-    res.setHeader('X-RateLimit-Remaining', MAX_REQUESTS - 1)
-    next()
-    return
-  }
-
-  entry.count++
-
-  if (entry.count > MAX_REQUESTS) {
-    const retryAfter = Math.ceil((entry.resetAt - now) / 1000)
-    res.setHeader('Retry-After', retryAfter)
-    res.setHeader('X-RateLimit-Limit', MAX_REQUESTS)
-    res.setHeader('X-RateLimit-Remaining', 0)
-    res.status(429).json({ success: false, error: 'Too many requests. Please try again later.' })
-    return
-  }
-
-  res.setHeader('X-RateLimit-Limit', MAX_REQUESTS)
-  res.setHeader('X-RateLimit-Remaining', MAX_REQUESTS - entry.count)
-  next()
-}
+export const rateLimit = createLimiter({
+  store: stores[2],
+  keyPrefix: '',
+  max: 100,
+  errorMessage: 'Too many requests. Please try again later.',
+  exposeHeaders: true,
+  exemptPaths: ['/api/v1/webhooks'],
+})

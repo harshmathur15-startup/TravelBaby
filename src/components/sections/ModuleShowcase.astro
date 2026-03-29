@@ -1,0 +1,199 @@
+---
+/**
+ * ModuleShowcase — alternating feature deep-dive section.
+ * Shows product modules or feature areas with icon, heading, description,
+ * and bullet features. Alternates image/text layout on desktop.
+ */
+
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+
+interface Module {
+  icon?: string;
+  title: string;
+  description: string;
+  features: string[];
+}
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  subtext?: string;
+  modules?: Module[];
+}
+
+const {
+  eyebrow = 'What You Get',
+  heading = 'Built for Every Need',
+  subtext = 'Explore the core modules that power your workflow.',
+  modules = [
+    {
+      icon: '1',
+      title: 'Module One',
+      description: 'A brief explanation of what this module does and why it matters.',
+      features: ['Feature A', 'Feature B', 'Feature C'],
+    },
+    {
+      icon: '2',
+      title: 'Module Two',
+      description: 'Another module with its own set of capabilities and benefits.',
+      features: ['Feature D', 'Feature E', 'Feature F'],
+    },
+    {
+      icon: '3',
+      title: 'Module Three',
+      description: 'A third module rounding out the product offering.',
+      features: ['Feature G', 'Feature H', 'Feature I'],
+    },
+  ],
+} = Astro.props;
+---
+
+<section class="showcase" aria-labelledby="showcase-heading">
+  <Container>
+    <SectionHeading
+      id="showcase-heading"
+      eyebrow={eyebrow}
+      heading={heading}
+      subtext={subtext}
+      headingTag="h2"
+    />
+
+    <div class="showcase__list">
+      {modules.map((mod, i) => (
+        <div class:list={['showcase__item', { 'showcase__item--reversed': i % 2 !== 0 }]}>
+          <div class="showcase__content">
+            {mod.icon && <span class="showcase__icon" aria-hidden="true">{mod.icon}</span>}
+            <h3 class="showcase__title">{mod.title}</h3>
+            <p class="showcase__desc">{mod.description}</p>
+            <ul class="showcase__features" role="list">
+              {mod.features.map((feat) => (
+                <li class="showcase__feature">
+                  <svg class="showcase__check" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  {feat}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="showcase__visual">
+            <div class="showcase__placeholder" aria-hidden="true">
+              <span>{mod.title}</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .showcase {
+    padding: var(--space-16) 0;
+  }
+
+  .showcase__list {
+    margin-top: var(--space-12);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+  }
+
+  .showcase__item {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  .showcase__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--color-primary-100);
+    color: var(--color-primary-600);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-sm);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-4);
+  }
+
+  .showcase__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-neutral-950);
+    margin: 0 0 var(--space-3);
+  }
+
+  .showcase__desc {
+    font-size: var(--text-base);
+    color: var(--color-neutral-600);
+    line-height: var(--leading-relaxed);
+    margin: 0 0 var(--space-6);
+  }
+
+  .showcase__features {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .showcase__feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-neutral-700);
+  }
+
+  .showcase__check {
+    color: var(--color-success);
+    flex-shrink: 0;
+  }
+
+  .showcase__visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .showcase__placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--color-neutral-100);
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-sm);
+    color: var(--color-neutral-400);
+    font-weight: var(--font-weight-medium);
+  }
+
+  @media (min-width: 768px) {
+    .showcase {
+      padding: var(--space-20) 0;
+    }
+
+    .showcase__item {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .showcase__item--reversed {
+      direction: rtl;
+    }
+
+    .showcase__item--reversed > * {
+      direction: ltr;
+    }
+
+    .showcase__title {
+      font-size: var(--text-3xl);
+    }
+  }
+</style>

@@ -1,6 +1,10 @@
 import type { RequestHandler } from 'express'
 
-/** Server-side security headers for Express API. Complements helmet. */
+/**
+ * Server-side security headers for Express API. Complements helmet.
+ * CSP is intentionally restrictive (`default-src 'none'`) for a pure JSON API.
+ * If any endpoint serves HTML, loosen the policy for that route specifically.
+ */
 export const securityHeaders: RequestHandler = (_req, res, next) => {
   res.removeHeader('X-Powered-By')
   res.setHeader('Content-Security-Policy', "default-src 'none'; frame-ancestors 'none'")

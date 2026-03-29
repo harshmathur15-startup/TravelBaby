@@ -8,7 +8,7 @@ interface NavItem {
   end?: boolean
 }
 
-/** TODO: Add your admin navigation items here. */
+/** TODO(template): Add your admin navigation items here. */
 const NAV_ITEMS: NavItem[] = [
   { to: '/admin', label: 'Dashboard', end: true },
   { to: '/admin/contacts', label: 'Contacts' },
@@ -17,7 +17,7 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/admin/audit-log', label: 'Audit Log' },
 ]
 
-/** TODO: Replace with your application name. */
+/** TODO(template): Replace with your application name. */
 const APP_NAME = 'Admin'
 
 export function Sidebar() {
