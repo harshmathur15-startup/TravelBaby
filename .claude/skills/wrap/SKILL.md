@@ -92,6 +92,16 @@ After printing the summary, run these in order:
 
 Note: Handoff generation (PreCompact hook) and memory integrity (SessionStart hook) are handled automatically.
 
+## Delivery Ledger
+
+If this session produced findings, research, or action items tagged for another project (Kira, Zimyo, Reach, Template), append one delivery record per recipient to `~/.claude/signals/deliveries.jsonl`:
+
+```
+{"id":"d-<YYYYMMDDTHHMMSS>-<4hex>","ts":"<ISO>","from":"Template-Website","to":"<project>","type":"<research|gap|action|file>","summary":"<one line>","ref":"<file path if applicable>","session":"S<N>","status":"pending"}
+```
+
+Skip silently if nothing was tagged for delivery.
+
 ## Instructions
 - Keep the summary under 20 lines — this is a snapshot, not a report
 - "Next Session Should Start With" must be ONE specific thing — not a list

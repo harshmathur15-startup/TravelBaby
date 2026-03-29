@@ -21,6 +21,7 @@ Read all of the following in parallel:
 8. `.claude/tool.log` — last 5 lines (what tools ran recently)
 9. `./thoughts/handoffs/` — read the most recent handoff file (if exists)
 10. `agents/family/board.md` — read if exists (agent notes from last session)
+11. `~/.claude/signals/deliveries.jsonl` — scan for records where `"to":"Template-Website"` and no ack record with the same `id` exists. These are pending inbound deliveries. Count sessions since each delivery was sent. If 2+ sessions have passed: mark as **ESCALATE**.
 
 ## Health Checks (run in parallel with reads)
 
@@ -63,8 +64,13 @@ Print a structured session brief — keep it concise:
 **Last Session Handoff**
 - <key state from latest handoff file, or "No handoff found">
 
+**Pending Deliveries**
+- **ESCALATE** [id] From <project> (S<N>, <N> sessions ago): <summary>
+- [id] From <project> (S<N>): <summary>
+- or "None"
+
 **Suggested starting point:**
-<Based on recent commits + open specs + git status + handoff, recommend what to work on next — one clear sentence>
+<Based on recent commits + open specs + git status + handoff + pending deliveries, recommend what to work on next — one clear sentence>
 
 **Skills to run this session:**
 <Based on triggers below, recommend 2-5 relevant skills>
@@ -279,4 +285,8 @@ After [Accountability] returns, append governance score to the session brief. Su
 - Do NOT read every spec file in full — just list their names/titles
 - The "Suggested starting point" is the most valuable line — make it specific and actionable
 - Keep the whole output under 30 lines (excluding upstream table) — this is a brief, not a report
+- If pending deliveries exist, they MUST appear in "Suggested starting point"
+- When a delivery is acted on during the session, append an ack record to `~/.claude/signals/deliveries.jsonl`:
+  `{"id":"<same-id>","ts":"<ISO>","acked_by":"Template-Website","session":"S<N>","action":"<what was done — one line>"}`
+  If deferring: action should say "Deferred — <reason>". Deferred deliveries remain unacked and resurface next session.
 - After output, say: "Ready. What are we building?"
