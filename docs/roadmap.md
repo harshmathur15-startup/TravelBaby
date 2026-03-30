@@ -1,110 +1,71 @@
-> **Stale:** This roadmap was imported and needs updating to reflect the website template's actual roadmap.
+# Website Template Roadmap
 
-# Template Roadmap — Path to #1
-
-**Goal:** Be the best website boilerplate out there — then upgrade to SaaS.
-**Current website score:** 88/100 (Thea S34, 2026-03-28)
-**SaaS score:** 45/100 (Petra Run 5, 2026-03-21 — SaaS features not yet built)
-**Target:** 95+ website / 90+ SaaS
-
-All tools are free or pay-as-you-earn. $0/month until you have paying customers.
+**Goal:** The best free static-site boilerplate with AI governance built in.
+Clone, customize, ship. SaaS upgrade when you need it.
 
 ---
 
-## Phase 1 — Security (don't ship without these)
+## Phase 1 — Core Static Site [Complete]
 
-| # | What | Tool (Free) | Status |
-|---|------|-------------|--------|
-| 1 | Rate limiting on auth endpoints | express-rate-limit | Pending |
-| 2 | CSRF protection | csrf-csrf | Pending |
-| 3 | Request logging | pino-http | Pending |
-| 4 | Token revocation on logout | Prisma (already have) | Pending |
+Everything needed for a production marketing site.
 
-## Phase 2 — Ship It (make it deployable)
+| Area | What Ships | Count |
+|------|-----------|-------|
+| UI primitives | Badge, Button, Card, Container, Input, Pagination, Skeleton, etc. | 13 |
+| Section components | Navbar (3), Hero (4), Features, Stats, Testimonials, Pricing, FAQ, Footer (2), BentoGrid, Comparison, etc. | 28 |
+| Pages | Home, Features, Pricing, About, Contact, Get Started, Blog (listing/posts/categories), Compare, Preview, Search, Privacy, Terms, i18n (es), 404, 500 | 18 |
+| Route generators | robots.txt, RSS, manifest.json, OG images | 4 |
+| Design tokens | Colors, typography, spacing, shadows, radii, transitions (dark mode ready) | Full system |
+| CMS schemas | 8 document types + 7 object types (page builder, blog, pricing, testimonials, FAQ) | 15 |
+| SEO | OG, Twitter cards, canonical, JSON-LD, sitemap, RSS, dynamic OG images | Complete |
+| Performance | Non-blocking fonts, View Transitions, Pagefind search, path aliases | Complete |
 
-| # | What | Tool (Free) | Status |
-|---|------|-------------|--------|
-| 5 | Dockerfile (multi-stage production) | Docker | Pending |
-| 6 | Production docker-compose | Docker Compose | Pending |
-| 7 | Health check (DB + Redis) | Express (already have) | Pending |
-| 8 | Deployment guide | Railway (free $5/mo credit) | Pending |
+## Phase 2 — AI Governance Harness [Complete]
 
-## Phase 3 — Background Work (AI agents need this)
+The differentiator: agent contracts, HITL gates, observability from day one.
 
-| # | What | Tool (Free) | Status |
-|---|------|-------------|--------|
-| 9 | BullMQ example job with error handling | BullMQ + Redis | Pending |
-| 10 | Agent-to-BullMQ integration | BullMQ + BaseAgent | Pending |
-| 11 | SSE streaming for agent output | Express + EventSource | Pending |
-| 12 | Graceful worker shutdown | Node.js built-in | Pending |
+| Area | What Ships | Count |
+|------|-----------|-------|
+| Core skills | Session lifecycle, reviews, retros, search, reporting, recycle bin, decisions, diagrams, changelog | 22 |
+| Extended skills | Opt-in (.claude/skills-extended/) | 24 |
+| SaaS skills | Activate with backend (.claude/skills-saas/) | 20 |
+| Hooks | Health checks, file protection, recycle guard, formatting, quality gates, session tracking | 13 (via settings.json) |
+| Scripts | Hook execution + skill utilities | 24 |
+| Rules | general, security, frontend, performance, testing (+3 SaaS rules) | 5 + 3 |
+| Agents | Thea (benchmark), Nell (debt), Mira (drift), Anvi (quality), Priya (upstream) | 5 |
+| Docs | Getting started, deployment (4 hosts), skill tiers, inheritance, spawning, security headers, accessibility | 16 |
 
-## Phase 4 — Money + Communication
+## Phase 3 — Polish and Completeness [In Progress]
 
-| # | What | Tool | Cost |
-|---|------|------|------|
-| 13 | Payments (subscriptions, checkout, webhooks) | Stripe | Free until transactions (2.9% + 30c each) |
-| 14 | Transactional email (welcome, reset, invoice) | Resend | Free (100/day, 3000/month). Alt: Nodemailer + Gmail SMTP (500/day) |
+| # | Item | Status |
+|---|------|--------|
+| 1 | E2e tests (pages, navigation, forms, accessibility, visual, axe) | Done (6 specs) |
+| 2 | Agent unit tests (BaseAgent, logger, types) | Done (3 specs) |
+| 3 | Component unit tests (UI primitives, sections) | Not started |
+| 4 | Lighthouse CI score > 90 on all pages | Needs verification |
+| 5 | CMS seed data (demo content for all schema types) | Not started |
+| 6 | Deployment smoke test on all 4 hosts | Not started |
+| 7 | Accessibility audit (WCAG 2.1 AA) | Partial (axe spec exists) |
+| 8 | Image optimization (WebP, lazy loading audit) | Needs verification |
 
-## Phase 5 — Polish (good to best)
+## Phase 4 — SaaS Upgrade Path [Planned]
 
-| # | What | Tool (Free) | Status |
-|---|------|-------------|--------|
-| 15 | Admin routes (users, orgs, jobs) | Express + React | Pending |
-| 16 | File uploads | multer + Cloudflare R2 (10GB free) | Pending |
-| 17 | Pre-commit hooks | Husky + lint-staged | Pending |
-| 18 | OpenAPI/Swagger docs | swagger-jsdoc + swagger-ui-express | Pending |
-| 19 | React component tests | Vitest + React Testing Library | Pending |
-| 20 | Architecture diagram + ERD | Mermaid (/diagram skill) | Pending |
+Activate when you need auth, API, database, or background jobs.
+See [saas-upgrade.md](saas-upgrade.md) for the activation guide.
 
----
-
-## Tool Cost Summary
-
-| Tool | Monthly Cost |
-|------|-------------|
-| Docker | Free |
-| Redis | Free (local) or $0 (Upstash free tier) |
-| PostgreSQL | Free (local) or $0 (Neon/Supabase free tier) |
-| Stripe | $0 until transactions |
-| Resend | Free (3000 emails/month) |
-| Cloudflare R2 | Free (10GB storage) |
-| Railway | Free ($5/month credit) |
-| All npm packages | Free (open source) |
-
-**Total: $0/month until paying customers.**
-
----
-
-## Competitive Context (SaaS — Petra Run 5, pre-SaaS-upgrade)
-
-| Rank | Template | Score | Price |
-|------|----------|-------|-------|
-| 1 | Supastarter | 78 | $349 |
-| 2 | MakerKit | 75 | $299 |
-| 3 | Wasp Open SaaS | 72 | Free |
-| 4 | next-forge | 72 | Free |
-| ... | | | |
-| 12 | **This Template** | 45 | Free |
-
-**Our edge:** AI/Agent governance (16/20, best in field). No competitor has agent contracts, HITL gates, cost tracking, or a self-auditing family.
-
-**The gap:** They have payments, email, admin panels, deployment guides, 400+ pages of docs. We have the AI foundation they don't.
+| # | Item | Tool | Status |
+|---|------|------|--------|
+| 1 | Auth (JWT + refresh tokens) | Prisma + bcrypt | Planned |
+| 2 | API layer (/api/v1/) | Astro API routes | Planned |
+| 3 | Database (PostgreSQL) | Prisma ORM | Planned |
+| 4 | Background jobs | BullMQ + Redis | Planned |
+| 5 | SSE streaming for AI agents | EventSource | Planned |
+| 6 | Payments | Stripe | Planned |
+| 7 | Transactional email | Resend | Planned |
+| 8 | Admin panel | TBD | Planned |
+| 9 | Dockerfile + docker-compose | Docker | Planned |
+| 10 | Rate limiting + CSRF | express-rate-limit, csrf-csrf | Planned |
 
 ---
 
-## Learning Path (for non-coders)
-
-| Tool | What It Is | Why You Need It |
-|------|-----------|----------------|
-| Docker | Packages apps into portable containers | Ship anywhere without "works on my machine" |
-| Stripe | Payment processor | Accept money (subscriptions, one-time, usage) |
-| Redis | Fast in-memory database | Background jobs, caching, real-time |
-| BullMQ | Job queue on Redis | Run tasks without making users wait |
-| Prisma | Database toolkit | Talk to PostgreSQL without raw SQL |
-| SSE | Server-Sent Events | Stream AI output to browser in real-time |
-| Zustand | React state manager | Track logged-in user, app state |
-| Vite | Build tool | Turns code into what browsers understand |
-| Tailwind | CSS utility framework | Style UI without writing CSS files |
-| Resend | Email API | Send transactional emails |
-| Cloudflare R2 | Object storage | Store uploaded files (S3 alternative, free) |
-| Husky | Git hooks | Auto-check quality before every commit |
+**All tools are free or pay-as-you-earn. $0/month until you have paying customers.**

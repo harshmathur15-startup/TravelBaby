@@ -5,18 +5,10 @@ Shared notes between agents. Last 3 sessions only. Resolved entries move to boar
 
 ---
 
-### S34 — Full research-to-action cycle
-All 3 agents ran for the first time. Research reorganized (13 files mapped, 3 archived). Thea validated benchmark (83/100), extracted 12 improvements across Tiers 1-3. Nell closed 10 of 11 debt items. Priya pulled 3 components + 2 config files from Zimyo.
-Status: resolved | for:all
-
-### Esme removed — S34
-Esme fully removed. /quality-judge lives as a standalone skill in skills-extended. /mother was redundant with hooks.
-Status: resolved | for:all
-
 ### Mira — New (S38)
 Drift + integrity agent created. Equivalent of Template's Ada. First run pending.
 Status: new | for:kira (first run)
 
-### Anvi — New (S38)
-Quality + accountability agent created. Equivalent of Template's Lena. First run pending.
-Status: new | for:kira (first run)
+### Anvi — First run complete (S38)
+Quality audit baseline: 72/100. Clean code hygiene (0 lint violations). 3 oversized components (CommandLauncher 331, NavbarMega 273, DetailedComparison 263). Test coverage 30% lib (target 80%) — 7 lib files, 6 queries, 6 scripts untested. Full report: research/anvi-audit.md
+Status: complete | for:nell (test gaps), for:kira (component splits)

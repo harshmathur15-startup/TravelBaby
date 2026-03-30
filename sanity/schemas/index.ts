@@ -7,6 +7,10 @@ import { siteSettings } from './documents/siteSettings'
 import { testimonial } from './documents/testimonial'
 import { faqItem } from './documents/faqItem'
 import { richTextPage } from './documents/richTextPage'
+import { addOn } from './documents/addOn'
+import { aboutPage } from './documents/aboutPage'
+import { featuresPage } from './documents/featuresPage'
+import { comparePage } from './documents/comparePage'
 
 // Object types
 import { hero } from './objects/hero'
@@ -27,6 +31,10 @@ export const schemaTypes = [
   testimonial,
   faqItem,
   richTextPage,
+  addOn,
+  aboutPage,
+  featuresPage,
+  comparePage,
   // Objects
   hero,
   featureGrid,
