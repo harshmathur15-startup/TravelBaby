@@ -56,13 +56,13 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when y
 ### AI Harness
 | Layer | Count | What It Does |
 |-------|-------|-------------|
-| **Core Skills** | 16 | Session lifecycle, reviews, retrospectives, search, reporting, recycle bin, task prioritization, decisions, diagrams, changelog |
+| **Core Skills** | 22 | Session lifecycle, reviews, retrospectives, search, reporting, recycle bin, task prioritization, decisions, diagrams, changelog |
 | **Extended Skills** | 24 | In `.claude/skills-extended/` — opt-in. Move to `.claude/skills/` to activate |
-| **SaaS Skills** | 18 | In `.claude/skills-saas/` — activate when adding backend (auth, API, database) |
-| **Hooks** | 11 | Health checks, file protection, recycle guard, formatting, quality gates, session tracking |
+| **SaaS Skills** | 20 | In `.claude/skills-saas/` — activate when adding backend (auth, API, database) |
+| **Hooks** | 13 | Health checks, file protection, recycle guard, formatting, quality gates, session tracking |
 | **Scripts** | 24 | Hook execution + skill utility scripts |
 | **Rules** | 5 | Standards for code, security, frontend, performance, testing |
-| **Agents** | 3 | Thea (benchmark), Nell (debt), Priya (upstream extraction) |
+| **Agents** | 5 | Thea (benchmark), Nell (debt), Mira (drift), Anvi (quality), Priya (upstream extraction) |
 
 ## Hooks (Run Automatically)
 
@@ -79,6 +79,7 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when y
 | After file edit | Console.log detection | Code quality |
 | After any tool | Log to session tracker | Observability |
 | Session ends | Cost estimate | Token usage tracking |
+| Session ends | Capture drift baseline | Snapshot protected file hashes |
 
 ## Rules (5 Active + 3 SaaS)
 

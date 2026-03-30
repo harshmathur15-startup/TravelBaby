@@ -1,3 +1,5 @@
+> **Stale:** This roadmap was imported and needs updating to reflect the website template's actual roadmap.
+
 # Template Roadmap — Path to #1
 
 **Goal:** Be the best website boilerplate out there — then upgrade to SaaS.
