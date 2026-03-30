@@ -12,20 +12,23 @@ Every website product built from this template inherits our code — components,
 |------|------|-----------|-------------|
 | Thea | Blueprint architect — benchmarks against best website boilerplates | After major template changes | research/thea-report.md |
 | Nell | Debt scanner — finds TODOs, type escapes, missing tests, long files | Before refactoring or after adding code | research/debt-report.md |
+| Mira | Drift + integrity — verifies docs match codebase reality | After structural changes | research/mira-report.md, research/mira-integrity.md |
+| Anvi | Quality + accountability — audits health, tracks promises vs delivery | Periodic or after major builds | research/anvi-audit.md, research/anvi-ledger.md |
 | Priya | Upstream extractor — scans products for generic patterns | Every session (background at kickoff) | none (report only) |
 
 ## Execution Order
 
 ```
-Thea (benchmark) → Nell (debt)
+Thea (benchmark) → Nell (debt) → Mira (drift) → Anvi (quality)
 ```
+Priya runs in background (upstream extraction at kickoff).
 
-Thea identifies what's missing. Nell scans what's rotting. `/quality-judge` (extended skill) handles code scoring without needing a dedicated agent.
+Thea identifies what's missing. Nell scans what's rotting. Mira catches when docs drift from reality. Anvi enforces quality and tracks accountability.
 
 ## Notes
 
-- Blair (drift + integrity) removed S33 — replaced by SessionStart hooks: `drift-check.cjs`, `memory-integrity.cjs`, `component-validation.cjs`
-- Esme (quality + accountability) removed S33 — `/quality-judge` works standalone, `/mother` was redundant with hooks
+- Blair (drift + integrity) removed S33 — replaced by hooks. Mira added S38 as dedicated agent (deeper than hooks alone)
+- Esme (quality + accountability) removed S33 — `/quality-judge` standalone. Anvi added S38 for cumulative tracking hooks can't do
 - `/review-pipeline` and `/what-next` removed — covered by `/review` (core) and `/report` (core)
 
 ## Rules

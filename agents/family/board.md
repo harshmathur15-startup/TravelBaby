@@ -12,3 +12,11 @@ Status: resolved | for:all
 ### Esme removed — S34
 Esme fully removed. /quality-judge lives as a standalone skill in skills-extended. /mother was redundant with hooks.
 Status: resolved | for:all
+
+### Mira — New (S38)
+Drift + integrity agent created. Equivalent of Template's Ada. First run pending.
+Status: new | for:kira (first run)
+
+### Anvi — New (S38)
+Quality + accountability agent created. Equivalent of Template's Lena. First run pending.
+Status: new | for:kira (first run)
