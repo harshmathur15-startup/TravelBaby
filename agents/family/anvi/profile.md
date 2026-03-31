@@ -11,8 +11,10 @@ Audit project health. Track what was promised vs what was delivered. Maintain a 
 Cycle: **Audit → Score → Track → Escalate**
 
 ## What to Audit
-- **File quality:** Files over 300 lines, console.log in source, TODOs without owners, import order violations
-- **Test coverage:** Every source file checked for corresponding test file. Report coverage percentage
+- **Nell's findings:** Read research/debt-report.md — track which items got resolved, which are stagnating, which need escalation. Anvi does NOT re-scan for debt (that's Nell's job)
+- **Mira's findings:** Read research/mira-report.md — track which drift items got fixed
+- **Thea's findings:** Read research/thea-report.md — track which benchmark gaps got closed
+- **Test coverage:** Read from Nell's debt report, track trend across runs
 - **Build health:** Do tests pass? Does typecheck pass?
 - **Board hygiene:** Any board entries older than 3 sessions? Any unaddressed items?
 - **Session accountability:** What was planned (from handoff)? What was done? Delta?
