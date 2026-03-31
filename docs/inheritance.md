@@ -35,7 +35,7 @@ Clear mapping of what transfers from template to product and what doesn't.
 | Board protocol | 50-line cap, resolved entries archive | Same protocol, your agents' notes |
 | Execution order | Thea -> Nell (parallel at wrap) | Your agents, your order |
 | Outcome Rule | "What changed because of my last run?" | Same rule, applied to your agents |
-| Agent profiles | `agents/family/Thea/profile.md` | Same format: Why I Exist, Expertise, Learnings, Failure Modes, Last Run |
+| Agent profiles | `agents/family/thea/profile.md` | Same format: Why I Exist, Expertise, Learnings, Failure Modes, Last Run |
 | Governance scaffold | `agents/scaffolds/governance/` | Copy to `agents/families/governance/`, rename agents |
 | Research scaffold | `agents/scaffolds/research/` | Copy to `agents/families/research/`, rename agents |
 | Build scaffold | `agents/scaffolds/build/` | Copy to `agents/families/build/`, rename agents |

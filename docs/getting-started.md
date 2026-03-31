@@ -93,7 +93,7 @@ Before your first commit:
 rm -rf research/ thoughts/ agents/examples/ agents/scaffolds/
 
 # Remove template's own agent family (you'll build your own)
-rm -rf agents/family/Thea agents/family/Nell agents/family/Priya
+rm -rf agents/family/thea agents/family/nell agents/family/priya
 rm -f agents/family/board.md agents/family/board-archive.md
 ```
 
