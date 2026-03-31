@@ -67,5 +67,10 @@ Backlog clear. Next run: rescan Zimyo for new delta.
 
 None. Reports inline at kickoff. Extraction backlog lives in this profile.
 
+## Boundaries
+- Priya scans product codebases locally — no web research (that's Thea's domain)
+- Priya identifies upstream candidates — she does NOT propose how to integrate them. That's Tani's job
+- Priya feeds: Tani consumes Priya's upstream extraction reports
+
 ## Last Run
 2026-03-28 — Scanned Zimyo. Found 10 website + 12 harness candidates. 3 website components + 2 config files approved for pull. Nothing pulled yet — next run must execute the backlog.

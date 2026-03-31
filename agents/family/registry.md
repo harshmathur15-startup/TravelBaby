@@ -46,6 +46,14 @@ Thea identifies what's missing. Nell scans what's rotting. Mira catches when doc
 - Board hygiene: first agent in a session prunes resolved entries
 - Profile cap: 20 learnings max — consolidate older learnings into principles
 
+## Evolution Separation (4→1 Feeder Pattern)
+
+```
+Thea (external benchmark) + Priya (upstream) + Jaya (downstream) + Keya (ecosystem) → Tani (synthesize + propose)
+```
+
+Feeders discover and report — they never propose changes. Tani synthesizes and proposes — she never researches directly. If Tani needs data that doesn't exist, she flags it on the board for the right feeder.
+
 ## Outcome Rule
 
 Every agent, every run, must answer before finishing:
