@@ -8,13 +8,13 @@ Every website product built from this template inherits our code — components,
 
 ## Members
 
-| Name | Role | Runs When | Write Scope |
-|------|------|-----------|-------------|
-| Thea | Blueprint architect — benchmarks against best website boilerplates | After major template changes | research/thea-report.md |
-| Nell | Debt scanner — finds TODOs, type escapes, missing tests, long files | Before refactoring or after adding code | research/debt-report.md |
-| Mira | Drift + integrity — verifies docs match codebase reality | After structural changes | research/mira-report.md, research/mira-integrity.md |
-| Anvi | Quality + accountability — audits health, tracks promises vs delivery | Periodic or after major builds | research/anvi-audit.md, research/anvi-ledger.md |
-| Priya | Upstream extractor — scans products for generic patterns | Every session (background at kickoff) | none (report only) |
+| Name | Group | Role | Runs When | Write Scope |
+|------|-------|------|-----------|-------------|
+| Thea | Governance | Blueprint architect — benchmarks against best website boilerplates | After major template changes | research/thea-report.md |
+| Nell | Governance | Debt scanner — finds TODOs, type escapes, missing tests, long files | Before refactoring or after adding code | research/debt-report.md |
+| Mira | Governance | Drift + integrity — verifies docs match codebase reality | After structural changes | research/mira-report.md, research/mira-integrity.md |
+| Anvi | Governance | Quality + accountability — audits health, tracks promises vs delivery | Periodic or after major builds | research/anvi-audit.md, research/anvi-ledger.md |
+| Priya | Upstream | Upstream extractor — scans products for generic patterns | Every session (background at kickoff) | none (report only) |
 
 ## Execution Order
 
