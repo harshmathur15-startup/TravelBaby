@@ -15,13 +15,17 @@ Every website product built from this template inherits our code — components,
 | Mira | Governance | Drift + integrity — verifies docs match codebase reality | After structural changes | research/mira-report.md, research/mira-integrity.md |
 | Anvi | Governance | Quality + accountability — audits health, tracks promises vs delivery | Periodic or after major builds | research/anvi-audit.md, research/anvi-ledger.md |
 | Priya | Upstream | Upstream extractor — scans products for generic patterns | Every session (background at kickoff) | none (report only) |
+| Jaya | Downstream | Downstream tracker — scans products for template adoption patterns | Every 3-4 sessions | research/jaya-report.md, research/jaya-adoption.csv |
+| Keya | Ecosystem | Ecosystem watcher — tracks website stack health and evolution | Every 5-10 sessions, or manually | research/keya-report.md |
 
 ## Execution Order
 
 ```
 Thea (benchmark) → Nell (debt) → Mira (drift) → Anvi (quality)
-```
 Priya runs in background (upstream extraction at kickoff).
+(Jaya runs every 3-4 sessions — downstream)
+(Keya runs every 5-10 sessions — ecosystem)
+```
 
 Thea identifies what's missing. Nell scans what's rotting. Mira catches when docs drift from reality. Anvi enforces quality and tracks accountability.
 

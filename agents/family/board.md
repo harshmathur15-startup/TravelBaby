@@ -5,6 +5,10 @@ Shared notes between agents. Last 3 sessions only. Resolved entries move to boar
 
 ---
 
+### Jaya + Keya — 2026-03-31 (Created)
+Two new agents: Downstream (Jaya) and Ecosystem (Keya). First runs pending.
+Status: open | for:kira (first run pending)
+
 ### Mira — New (S38)
 Drift + integrity agent created. Equivalent of Template's Ada. First run pending.
 Status: new | for:kira (first run)
