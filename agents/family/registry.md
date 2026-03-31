@@ -18,6 +18,7 @@ Every website product built from this template inherits our code — components,
 | Jaya | Downstream | Downstream tracker — scans products for template adoption patterns | Every 3-4 sessions | research/jaya-report.md, research/jaya-adoption.csv |
 | Keya | Ecosystem | Ecosystem watcher — tracks website stack health and evolution | Every 5-10 sessions, or manually | research/keya-report.md |
 | Tani | Evolution | Evolution engine — synthesizes Thea + Priya + Jaya findings into concrete change proposals | After Thea, Priya, and Jaya have produced reports | research/tani-proposals.md, research/tani-report.md |
+| Siya | Scaffold | Scaffold tester — clones template scaffolds into temp directory, verifies they produce working output, tests new-user experience | After scaffold changes, or after major template changes | research/siya-report.md |
 
 ## Execution Order
 
@@ -27,6 +28,7 @@ Priya runs in background (upstream extraction at kickoff).
 (Jaya runs every 3-4 sessions — downstream)
 (Keya runs every 5-10 sessions — ecosystem)
 (Tani runs after Thea + Priya + Jaya reports — evolution)
+(Siya runs after scaffold changes — scaffold testing)
 ```
 
 Thea identifies what's missing. Nell scans what's rotting. Mira catches when docs drift from reality. Anvi enforces quality and tracks accountability. Tani synthesizes Thea + Priya + Jaya into concrete change proposals — the evolution engine.
