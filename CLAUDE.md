@@ -45,11 +45,11 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when y
 
 ### Website Layer
 - **13 UI primitives:** Badge, Button, Card, CommandLauncher, Container, Input, LanguagePicker, Pagination, PortableTextRenderer, PreferenceToggles, SectionHeading, Skeleton, ThemeToggle
-- **28 section components:** Navbar, NavbarMega, NavMobile, Hero, HeroSplit, HeroMinimal, HeroTrustBar, Features, Stats, Testimonials, PricingCards, FAQ, CtaSection, Footer, FooterNewsletter, BentoGrid, ComparisonTable, ComparisonCell, CompetitorCards, AIAgents, ContactInfo, HowItWorks, Integrations, TeamGrid, ModuleShowcase, AddOns, DetailedComparison, PricingCard
-- **18 pages:** Home, Features, Pricing, About, Contact, Get Started, Blog (listing, posts, categories), Components, Compare, Preview, Search, Privacy, Terms, i18n (es), 404, 500
+- **37 section components:** Navbar, NavbarMega, NavMobile, Hero, HeroSplit, HeroMinimal, HeroTrustBar, Features, Stats, Testimonials, PricingCards, FAQ, CtaSection, Footer, FooterNewsletter, BentoGrid, ComparisonTable, ComparisonCell, CompetitorCards, CompetitorSummary, AIAgents, ContactInfo, HowItWorks, Industries, Integrations, TeamGrid, ModuleShowcase, AddOns, DetailedComparison, PricingCard, PricingAddons, ProductHero, ProductFeatures, ProductModules, ProductBenefits, ProductUseCases, ProductFAQ
+- **20 pages:** Home, Features, Pricing, About, Contact, Get Started, Blog (listing, posts, categories), Components, Compare, Preview, Search, Privacy, Terms, Products (listing, detail), i18n (es), 404, 500
 - **4 route generators:** robots.txt, RSS feed, manifest.json, OG images
 - **Design tokens:** Full color, typography, spacing, shadow, radius, transition system (dark mode ready)
-- **CMS schemas:** 8 document types + 7 object types (page builder, rich text pages, blog, pricing, testimonials, FAQ)
+- **CMS schemas:** 13 document types + 7 object types (page builder, rich text pages, blog, pricing, testimonials, FAQ, products, about, compare, features)
 - **SEO:** BaseLayout with OG, Twitter, canonical, JSON-LD (Organization, WebSite, BreadcrumbList), RSS feed, sitemap, dynamic OG images
 - **Performance:** Non-blocking font loading, View Transitions, Lighthouse CI, Pagefind search, path aliases
 
@@ -59,9 +59,9 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when y
 | **Core Skills** | 22 | Session lifecycle, reviews, retrospectives, search, reporting, recycle bin, task prioritization, decisions, diagrams, changelog |
 | **Extended Skills** | 24 | In `.claude/skills-extended/` — opt-in. Move to `.claude/skills/` to activate |
 | **SaaS Skills** | 20 | In `.claude/skills-saas/` — activate when adding backend (auth, API, database) |
-| **Hooks** | 13 | Health checks, file protection, recycle guard, formatting, quality gates, session tracking |
-| **Scripts** | 31 | Hook execution, skill utilities, seed data, tests |
-| **Rules** | 5 | Standards for code, security, frontend, performance, testing |
+| **Hooks** | 28 | Health checks, file protection, recycle guard, formatting, quality gates, session tracking, drift baseline |
+| **Scripts** | 31 | Hook execution, skill utilities, seed data, tests, delivery check |
+| **Rules** | 8 | Standards for code, security, frontend, performance, testing + 3 SaaS |
 | **Agents** | 5 | Thea (benchmark), Nell (debt), Mira (drift), Anvi (quality), Priya (upstream extraction) |
 
 ## Hooks (Run Automatically)

@@ -1,0 +1,142 @@
+---
+/**
+ * Products index — lists all products with links to detail pages.
+ * Fetches from Sanity CMS first; falls back to config data.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro'
+import Container from '@components/ui/Container.astro'
+import SectionHeading from '@components/ui/SectionHeading.astro'
+import { sanityClient } from '@lib/sanity'
+import { ALL_PRODUCT_PAGES_QUERY } from '@lib/queries/products'
+import { PRODUCTS } from '@config/products'
+
+interface ProductSummary {
+  name: string
+  slug: string
+  tagline: string
+}
+
+const cmsProducts = sanityClient
+  ? await sanityClient.fetch<ProductSummary[]>(ALL_PRODUCT_PAGES_QUERY)
+  : []
+const products: ProductSummary[] =
+  cmsProducts.length > 0
+    ? cmsProducts
+    : PRODUCTS.map((p) => ({ name: p.name, slug: p.slug, tagline: p.tagline }))
+---
+
+<BaseLayout
+  title="Products"
+  description="Explore our product suite. Each product is designed to solve a specific challenge — pick what fits your needs."
+>
+  <section class="products-listing" aria-labelledby="products-heading">
+    <Container>
+      <SectionHeading
+        title="Our Products"
+        subtitle="Pick the right tool for each challenge. Use one or combine them all."
+        as="h1"
+        id="products-heading"
+      />
+      <div class="products-listing__grid">
+        {
+          products.map((product) => (
+            <a href={`/products/${product.slug}`} class="product-link">
+              <article class="product-link__card">
+                <h2 class="product-link__name">{product.name}</h2>
+                <p class="product-link__tagline">{product.tagline}</p>
+                <span class="product-link__cta" aria-hidden="true">
+                  Learn more &rarr;
+                </span>
+              </article>
+            </a>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  .products-listing {
+    padding: var(--space-16) 0;
+  }
+
+  .products-listing__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-12);
+  }
+
+  .product-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .product-link__card {
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    transition:
+      border-color var(--duration-normal) var(--ease-default),
+      box-shadow var(--duration-normal) var(--ease-default);
+  }
+
+  .product-link__card:hover {
+    border-color: var(--color-primary-300);
+    box-shadow: var(--shadow-md);
+  }
+
+  .product-link__name {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-950);
+    margin: 0 0 var(--space-2);
+  }
+
+  .product-link__tagline {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-neutral-600);
+    margin: 0 0 var(--space-3);
+  }
+
+  .product-link__cta {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary-500);
+  }
+
+  @media (min-width: 640px) {
+    .products-listing__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .products-listing {
+      padding: var(--space-20) 0;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .products-listing__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  :global(.dark) .product-link__card {
+    border-color: var(--color-neutral-700);
+  }
+  :global(.dark) .product-link__card:hover {
+    border-color: var(--color-primary-400);
+  }
+  :global(.dark) .product-link__name {
+    color: var(--color-neutral-50);
+  }
+  :global(.dark) .product-link__tagline {
+    color: var(--color-neutral-400);
+  }
+</style>

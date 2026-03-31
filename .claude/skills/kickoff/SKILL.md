@@ -21,7 +21,7 @@ Read all of the following in parallel:
 8. `.claude/tool.log` — last 5 lines (what tools ran recently)
 9. `./thoughts/handoffs/` — read the most recent handoff file (if exists)
 10. `agents/family/board.md` — read if exists (agent notes from last session)
-11. `~/.claude/signals/deliveries.jsonl` — scan for records where `"to":"Template-Website"` and no ack record with the same `id` exists. These are pending inbound deliveries. Count sessions since each delivery was sent. If 2+ sessions have passed: mark as **ESCALATE**.
+11. Run `node scripts/delivery-check.cjs "Template-Website"` — outputs pending inbound deliveries (pre-filtered, ack-aware). Use its output directly in the brief. Do NOT manually scan deliveries.jsonl.
 
 ## Health Checks (run in parallel with reads)
 

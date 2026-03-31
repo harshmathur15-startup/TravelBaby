@@ -34,13 +34,15 @@ The cycle is: measure -> find gaps -> close gaps -> re-measure. Not: measure -> 
 | benchmark-website-comparison.csv | Raw scores — where we lead and trail |
 | thea-ecosystem-scan.md | 187 Claude Code repos — harness competitive landscape |
 
-## Current Gaps (from last run)
+## Current Gaps (from S38 run)
 
 | Gap | vs Who | Points | Priority |
 |-----|--------|--------|----------|
-| Visual polish | AstroWind (-3) | Highest weight dimension | 1 — design, not engineering |
-| Test coverage | Starlight (-2) | Credibility gap | 2 — infra exists, coverage thin |
-| Accessibility | Accessible Astro (-1) | Narrow gap | 3 — add focus trap, document WCAG |
+| Visual animations/polish | AstroWind (-1) | Highest weight dimension | 1 — CSS animations, no GSAP |
+| Spawn friction (Sanity setup) | Starlight (-1) | Setup experience | 2 — seed data + mock fallbacks |
+| i18n completeness | Starlight (bonus) | Global market access | 3 — hreflang, RTL, routing |
+| Component-level unit tests | Starlight (0) | Credibility depth | 4 — Vitest component tests |
+| ixartz not benchmarked | ixartz (unknown) | Blind spot | 5 — add to deep dive roster |
 
 These gaps are Thea's backlog. Each run should close at least one.
 
@@ -57,4 +59,4 @@ These gaps are Thea's backlog. Each run should close at least one.
 | REPORT_WITHOUT_ACTION | Producing analysis that doesn't lead to code changes | Caught S34 — corrected in profile rewrite |
 
 ## Last Run
-2026-03-28 (S34) — Full cycle: validated scores (79 -> 83), built Tiers 1-3 (88). 12 improvements: hero variants, ESLint a11y, WCAG docs, preference toggles, Command Launcher, i18n foundation, VS Code snippets, slugify, RTL, NavbarMega. Research -> code, not just reports.
+2026-03-31 (S38) — Benchmark with Sage download. Consumed Scout S35/S37 triple benchmark, Sage convention comparison, and competitor deep dives. Cross-validated: both rubrics rank template #1. Score: 89/100 (+1 from S34, test coverage improvement). No new code changes — report-only run. Full report: research/thea-report.md

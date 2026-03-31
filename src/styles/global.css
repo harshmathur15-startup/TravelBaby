@@ -165,8 +165,31 @@
     --color-neutral-900: #f8fafc;
     --color-neutral-950: #ffffff;
 
+    /* --- Primary (Indigo) — shifted lighter for dark backgrounds --- */
+    --color-primary-50: #1e1b4b;
+    --color-primary-100: #312e81;
+    --color-primary-200: #3730a3;
+    --color-primary-300: #4338ca;
+    --color-primary-400: #6366f1;
     --color-primary-500: #818cf8;
-    --color-primary-600: #6366f1;
+    --color-primary-600: #a5b4fc;
+    --color-primary-700: #c7d2fe;
+    --color-primary-800: #e0e7ff;
+    --color-primary-900: #eef2ff;
+    --color-primary-950: #f5f7ff;
+
+    /* --- Accent (Amber) — shifted brighter for dark backgrounds --- */
+    --color-accent-50: #451a03;
+    --color-accent-100: #78350f;
+    --color-accent-200: #92400e;
+    --color-accent-300: #b45309;
+    --color-accent-400: #d97706;
+    --color-accent-500: #f59e0b;
+    --color-accent-600: #fbbf24;
+    --color-accent-700: #fcd34d;
+    --color-accent-800: #fde68a;
+    --color-accent-900: #fef3c7;
+    --color-accent-950: #fffbeb;
 
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
     --shadow-md: 0 0 10px 0 rgba(0, 0, 0, 0.4);
@@ -177,9 +200,9 @@
 
 /* --- Tailwind @theme extension --- */
 @theme {
-  --font-heading: "Poppins", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
 
   --color-primary-50: var(--color-primary-50);
   --color-primary-100: var(--color-primary-100);

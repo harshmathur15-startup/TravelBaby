@@ -13,6 +13,16 @@ export {
 
 export { ABOUT_PAGE, CONTACT_PAGE, FEATURES_PAGE, PRICING_PAGE, COMPARE_PAGE } from './pages'
 
+export { PRODUCTS } from './products'
+export type {
+  ProductData,
+  ProductFeature,
+  ProductModule,
+  ProductBenefit,
+  ProductUseCase,
+  ProductFaqItem,
+} from './products'
+
 export { THEME_CONFIG } from './theme'
 export type { ColorScale } from './theme'
 

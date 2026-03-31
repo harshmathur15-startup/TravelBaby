@@ -1,0 +1,174 @@
+---
+/**
+ * Industries — grid of industry/vertical cards with abbreviation badges.
+ * Accepts optional CMS props; falls back to generic placeholder data.
+ */
+
+import Container from '@components/ui/Container.astro'
+import SectionHeading from '@components/ui/SectionHeading.astro'
+
+interface Industry {
+  abbr: string
+  name: string
+  description: string
+}
+
+interface Props {
+  eyebrow?: string
+  heading?: string
+  subtext?: string
+  items?: Industry[]
+}
+
+const DEFAULT_INDUSTRIES: Industry[] = [
+  {
+    abbr: 'HC',
+    name: 'Healthcare',
+    description: 'Compliance-ready workflows, credential tracking, and shift management for clinical teams.',
+  },
+  {
+    abbr: 'FN',
+    name: 'Finance',
+    description: 'Audit trails, regulatory reporting, and secure data handling for financial institutions.',
+  },
+  {
+    abbr: 'ED',
+    name: 'Education',
+    description: 'Faculty management, enrollment workflows, and institutional reporting tools.',
+  },
+  {
+    abbr: 'RT',
+    name: 'Retail',
+    description: 'High-turnover workforce tools, seasonal scheduling, and multi-location management.',
+  },
+  {
+    abbr: 'TI',
+    name: 'Technology',
+    description: 'Distributed team coordination, rapid scaling support, and developer-friendly integrations.',
+  },
+  {
+    abbr: 'MF',
+    name: 'Manufacturing',
+    description: 'Shift rosters, safety compliance tracking, and overtime management for production teams.',
+  },
+]
+
+const {
+  eyebrow = 'Industries',
+  heading = 'Built for Your Industry',
+  subtext = 'One platform, tailored to the workflows and compliance needs of your vertical.',
+  items,
+} = Astro.props
+
+const industries = items?.length ? items : DEFAULT_INDUSTRIES
+---
+
+<section class="industries" aria-labelledby="industries-heading">
+  <Container>
+    <SectionHeading
+      id="industries-heading"
+      title={heading}
+      subtitle={subtext}
+      as="h2"
+    />
+    {eyebrow && <p class="industries__eyebrow">{eyebrow}</p>}
+
+    <div class="industries__grid" role="list">
+      {industries.map((industry) => (
+        <article class="industries__card" role="listitem">
+          <div class="industries__badge" aria-hidden="true">
+            <span class="industries__abbr">{industry.abbr}</span>
+          </div>
+          <h3 class="industries__name">{industry.name}</h3>
+          <p class="industries__desc">{industry.description}</p>
+        </article>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .industries {
+    padding: var(--space-16) 0;
+    background-color: var(--color-neutral-50);
+  }
+
+  .industries__eyebrow {
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-primary-500);
+    text-align: center;
+    margin: calc(-1 * var(--space-8)) 0 var(--space-4);
+  }
+
+  .industries__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-12);
+  }
+
+  .industries__card {
+    padding: var(--space-6);
+    background-color: var(--color-neutral-0);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    transition: border-color var(--duration-normal) var(--ease-default);
+  }
+
+  .industries__card:hover {
+    border-color: var(--color-primary-500);
+  }
+
+  .industries__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--color-primary-50);
+    margin-bottom: var(--space-4);
+  }
+
+  .industries__abbr {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-500);
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .industries__name {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-950);
+    margin: 0 0 var(--space-2);
+  }
+
+  .industries__desc {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-neutral-600);
+    margin: 0;
+  }
+
+  @media (min-width: 640px) {
+    .industries__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .industries {
+      padding: var(--space-20) 0;
+    }
+
+    .industries__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

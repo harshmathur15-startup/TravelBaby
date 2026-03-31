@@ -1,0 +1,157 @@
+---
+/**
+ * ProductFeatures — Grid of feature cards for product pages.
+ * Numbered cards with hover effects. Responsive 1 > 2 > 4 column grid.
+ */
+
+import Container from '@components/ui/Container.astro'
+
+interface Feature {
+  title: string
+  description: string
+  icon?: string
+}
+
+interface Props {
+  heading?: string
+  subtext?: string
+  features: Feature[]
+  productName?: string
+}
+
+const {
+  heading,
+  subtext,
+  features,
+  productName,
+} = Astro.props
+
+const resolvedHeading = heading ?? (productName ? `${productName} Features` : 'Features')
+---
+
+<section class="product-features" aria-labelledby="product-features-heading">
+  <Container>
+    <div class="product-features__header">
+      <h2 id="product-features-heading" class="product-features__heading">{resolvedHeading}</h2>
+      {subtext && <p class="product-features__subtext">{subtext}</p>}
+    </div>
+    <div class="product-features__grid" role="list">
+      {features.map((feature, i) => (
+        <article class="feature-card" role="listitem">
+          <div class="feature-card__icon" aria-hidden="true">
+            {feature.icon
+              ? <span>{feature.icon}</span>
+              : <span class="feature-card__number">{i + 1}</span>
+            }
+          </div>
+          <h3 class="feature-card__title">{feature.title}</h3>
+          <p class="feature-card__description">{feature.description}</p>
+        </article>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .product-features {
+    padding: var(--space-16) 0;
+  }
+
+  .product-features__header {
+    text-align: center;
+    margin-bottom: var(--space-10);
+  }
+
+  .product-features__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-neutral-950);
+    letter-spacing: var(--tracking-tight);
+    margin: 0 0 var(--space-4);
+  }
+
+  .product-features__subtext {
+    font-size: var(--text-lg);
+    color: var(--color-neutral-600);
+    max-width: var(--container-sm);
+    margin: 0 auto;
+    line-height: var(--leading-relaxed);
+  }
+
+  .product-features__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .feature-card {
+    background-color: var(--color-neutral-0);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    transition:
+      border-color var(--duration-fast),
+      box-shadow var(--duration-fast);
+  }
+
+  .feature-card:hover {
+    border-color: var(--color-primary-300);
+    box-shadow: var(--shadow-md);
+  }
+
+  .feature-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background-color: var(--color-primary-50);
+    color: var(--color-primary-500);
+    margin-bottom: var(--space-3);
+  }
+
+  .feature-card__number {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-500);
+  }
+
+  .feature-card__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-950);
+    margin: 0 0 var(--space-2);
+  }
+
+  .feature-card__description {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-neutral-600);
+    margin: 0;
+  }
+
+  @media (min-width: 640px) {
+    .product-features__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .product-features {
+      padding: var(--space-20) 0;
+    }
+    .product-features__heading {
+      font-size: var(--text-4xl);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .product-features__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

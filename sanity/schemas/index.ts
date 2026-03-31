@@ -11,6 +11,7 @@ import { addOn } from './documents/addOn'
 import { aboutPage } from './documents/aboutPage'
 import { featuresPage } from './documents/featuresPage'
 import { comparePage } from './documents/comparePage'
+import { productPage } from './documents/productPage'
 
 // Object types
 import { hero } from './objects/hero'
@@ -35,6 +36,7 @@ export const schemaTypes = [
   aboutPage,
   featuresPage,
   comparePage,
+  productPage,
   // Objects
   hero,
   featureGrid,

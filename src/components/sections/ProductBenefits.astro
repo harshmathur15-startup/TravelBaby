@@ -1,0 +1,144 @@
+---
+/**
+ * ProductBenefits — Stat cards on a gradient background.
+ * Bold numbers with labels and descriptions. Responsive 1 > 2 > 4 column grid.
+ */
+
+import Container from '@components/ui/Container.astro'
+
+interface Benefit {
+  stat: string
+  label: string
+  description?: string
+  icon?: string
+}
+
+interface Props {
+  heading?: string
+  benefits: Benefit[]
+}
+
+const {
+  heading = 'Why It Matters',
+  benefits,
+} = Astro.props
+---
+
+<section class="product-benefits" aria-labelledby="product-benefits-heading">
+  <Container>
+    <h2 id="product-benefits-heading" class="product-benefits__heading">{heading}</h2>
+    <div class="product-benefits__grid" role="list">
+      {benefits.map((benefit) => (
+        <div class="stat-card" role="listitem">
+          {benefit.icon && <div class="stat-card__icon" aria-hidden="true">{benefit.icon}</div>}
+          <span class="stat-card__number">{benefit.stat}</span>
+          <span class="stat-card__label">{benefit.label}</span>
+          {benefit.description && <p class="stat-card__description">{benefit.description}</p>}
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .product-benefits {
+    padding: var(--space-16) 0;
+    background: linear-gradient(
+      135deg,
+      var(--color-primary-700) 0%,
+      var(--color-primary-500) 50%,
+      var(--color-primary-400) 100%
+    );
+  }
+
+  .product-benefits__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    margin: 0 0 var(--space-10);
+    color: var(--color-neutral-0);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .product-benefits__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-6);
+    background-color: color-mix(in srgb, var(--color-neutral-0) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-neutral-0) 15%, transparent);
+    border-radius: var(--radius-lg);
+    transition: background-color var(--duration-fast);
+  }
+
+  .stat-card:hover {
+    background-color: color-mix(in srgb, var(--color-neutral-0) 15%, transparent);
+  }
+
+  .stat-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: var(--color-neutral-0);
+    margin-bottom: var(--space-2);
+  }
+
+  .stat-card__number {
+    font-family: var(--font-heading);
+    font-size: var(--text-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-neutral-0);
+    line-height: var(--leading-tight);
+  }
+
+  .stat-card__label {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    color: color-mix(in srgb, var(--color-neutral-0) 80%, transparent);
+    margin-top: var(--space-2);
+  }
+
+  .stat-card__description {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: color-mix(in srgb, var(--color-neutral-0) 70%, transparent);
+    margin: var(--space-2) 0 0;
+  }
+
+  @media (min-width: 640px) {
+    .product-benefits__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .product-benefits {
+      padding: var(--space-20) 0;
+    }
+    .product-benefits__heading {
+      font-size: var(--text-4xl);
+    }
+    .stat-card__number {
+      font-size: var(--text-5xl);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .product-benefits__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

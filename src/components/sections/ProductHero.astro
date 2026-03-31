@@ -1,0 +1,121 @@
+---
+/**
+ * ProductHero — Dark gradient hero for product detail pages.
+ * Full-width section with centered text, tagline, and CTA.
+ */
+
+import Container from '@components/ui/Container.astro'
+
+interface Props {
+  name: string
+  tagline: string
+  description?: string
+  ctaHref?: string
+  ctaLabel?: string
+}
+
+const {
+  name,
+  tagline,
+  description,
+  ctaHref = '/get-started',
+  ctaLabel = 'Get Started',
+} = Astro.props
+---
+
+<section class="product-hero" aria-labelledby="product-hero-heading">
+  <Container>
+    <div class="product-hero__inner">
+      <h1 id="product-hero-heading" class="product-hero__name">{name}</h1>
+      <p class="product-hero__tagline">{tagline}</p>
+      {description && <p class="product-hero__description">{description}</p>}
+      <a href={ctaHref} class="product-hero__cta">{ctaLabel}</a>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .product-hero {
+    padding: var(--space-16) 0;
+    background: linear-gradient(
+      135deg,
+      var(--color-neutral-950) 0%,
+      var(--color-primary-900) 50%,
+      var(--color-primary-700) 100%
+    );
+  }
+
+  .product-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-4);
+  }
+
+  .product-hero__name {
+    font-family: var(--font-heading);
+    font-size: var(--text-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-neutral-0);
+    margin: 0;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .product-hero__tagline {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-neutral-200);
+    margin: 0;
+    max-width: 36rem;
+    line-height: var(--leading-relaxed);
+  }
+
+  .product-hero__description {
+    font-size: var(--text-base);
+    color: var(--color-neutral-300);
+    margin: 0;
+    max-width: 32rem;
+    line-height: var(--leading-relaxed);
+  }
+
+  .product-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--space-4);
+    padding: var(--space-3) var(--space-8);
+    font-family: var(--font-heading);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-950);
+    background-color: var(--color-neutral-0);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition:
+      background-color var(--duration-fast),
+      transform var(--duration-fast);
+  }
+
+  .product-hero__cta:hover {
+    background-color: var(--color-neutral-100);
+    transform: translateY(-2px);
+  }
+
+  .product-hero__cta:focus-visible {
+    outline: 2px solid var(--color-primary-300);
+    outline-offset: 2px;
+  }
+
+  @media (min-width: 768px) {
+    .product-hero {
+      padding: var(--space-20) 0;
+    }
+    .product-hero__name {
+      font-size: var(--text-5xl);
+    }
+    .product-hero__tagline {
+      font-size: var(--text-2xl);
+    }
+  }
+</style>

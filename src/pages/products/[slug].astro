@@ -1,0 +1,102 @@
+---
+/**
+ * Dynamic product detail page — fetches from Sanity CMS with config fallback.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro'
+import ProductHero from '@components/sections/ProductHero.astro'
+import ProductFeatures from '@components/sections/ProductFeatures.astro'
+import ProductModules from '@components/sections/ProductModules.astro'
+import ProductBenefits from '@components/sections/ProductBenefits.astro'
+import ProductUseCases from '@components/sections/ProductUseCases.astro'
+import ProductFAQ from '@components/sections/ProductFAQ.astro'
+import { sanityClient } from '@lib/sanity'
+import { ALL_PRODUCT_PAGES_QUERY, PRODUCT_PAGE_BY_SLUG_QUERY } from '@lib/queries/products'
+import { PRODUCTS, type ProductData } from '@config/products'
+import { SITE_CONFIG } from '@config'
+
+interface SanityProduct {
+  name: string
+  slug: string
+  tagline: string
+  heroDescription: string
+  metaTitle?: string
+  metaDescription?: string
+  features: { title: string; description: string; icon?: string }[]
+  benefits: { stat: string; label: string; description: string; icon?: string }[]
+  useCases: { title: string; problem: string; solution: string }[]
+  faq: { question: string; answer: string }[]
+  modules: { title: string; description: string; icon?: string }[]
+  sortOrder: number
+}
+
+function normalizeSanityProduct(s: SanityProduct): ProductData {
+  const fallback = PRODUCTS.find((p) => p.slug === s.slug)
+  return {
+    slug: s.slug,
+    name: s.name,
+    tagline: s.tagline,
+    heroDescription: s.heroDescription,
+    metaTitle: s.metaTitle,
+    metaDescription: s.metaDescription,
+    features: s.features ?? fallback?.features ?? [],
+    modules: s.modules ?? fallback?.modules ?? [],
+    benefits: s.benefits ?? fallback?.benefits ?? [],
+    useCases: s.useCases ?? fallback?.useCases ?? [],
+    faq: s.faq ?? fallback?.faq ?? [],
+    sortOrder: s.sortOrder ?? fallback?.sortOrder ?? 0,
+  }
+}
+
+export async function getStaticPaths() {
+  const cmsProducts = sanityClient
+    ? await sanityClient.fetch<SanityProduct[]>(ALL_PRODUCT_PAGES_QUERY)
+    : []
+  const slugs =
+    cmsProducts.length > 0 ? cmsProducts.map((p) => p.slug) : PRODUCTS.map((p) => p.slug)
+  return slugs.map((slug) => ({ params: { slug } }))
+}
+
+const { slug } = Astro.params
+const cmsProduct = sanityClient
+  ? await sanityClient.fetch<SanityProduct | null>(PRODUCT_PAGE_BY_SLUG_QUERY, { slug })
+  : null
+const fallback = PRODUCTS.find((p) => p.slug === slug)
+
+if (!cmsProduct && !fallback) {
+  return Astro.redirect('/404')
+}
+
+const product: ProductData = cmsProduct ? normalizeSanityProduct(cmsProduct) : fallback!
+const metaTitle = product.metaTitle ?? `${product.name} — Products`
+const metaDescription = product.metaDescription ?? product.heroDescription
+---
+
+<BaseLayout title={metaTitle} description={metaDescription}>
+  <Fragment slot="head">
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: product.name,
+        applicationCategory: 'BusinessApplication',
+        description: product.heroDescription,
+        operatingSystem: 'Web',
+        offers: {
+          '@type': 'Offer',
+          url: `${SITE_CONFIG.url}/products/${product.slug}`,
+          priceCurrency: 'USD',
+          price: '0',
+          description: 'See pricing page for details',
+        },
+      })}
+    />
+  </Fragment>
+
+  <ProductHero name={product.name} tagline={product.tagline} description={product.heroDescription} />
+  {product.modules.length > 0 && <ProductModules modules={product.modules} productName={product.name} />}
+  {product.benefits.length > 0 && <ProductBenefits benefits={product.benefits} />}
+  {product.features.length > 0 && <ProductFeatures features={product.features} productName={product.name} />}
+  {product.useCases.length > 0 && <ProductUseCases useCases={product.useCases} productName={product.name} />}
+  {product.faq.length > 0 && <ProductFAQ items={product.faq} productName={product.name} />}
+</BaseLayout>

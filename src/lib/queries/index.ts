@@ -13,3 +13,4 @@ export {
 } from './blog'
 export { ALL_TESTIMONIALS_QUERY } from './testimonials'
 export { ALL_FAQ_ITEMS_QUERY, FAQ_BY_CATEGORY_QUERY } from './faq'
+export { ALL_PRODUCT_PAGES_QUERY, PRODUCT_PAGE_BY_SLUG_QUERY } from './products'
