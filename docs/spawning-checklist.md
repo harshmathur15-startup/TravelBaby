@@ -32,28 +32,32 @@ rm -rf agents/examples/
 
 ## 3. Set Up Agent Families
 
-### Governance (from scaffold)
+All agents live in a single `agents/family/` directory. Copy agents from scaffolds into it, using the "Group" column in `registry.md` to distinguish roles.
+
 ```bash
-cp -r agents/scaffolds/governance agents/family-governance
+mkdir -p agents/family
 ```
 
-In `agents/family-governance/`:
-1. Rename each role directory to your agent's name (warm, short, human, mostly female)
+**Governance agents** (from scaffold):
+```bash
+cp -r agents/scaffolds/governance/* agents/family/
+```
+
+**Research agents** (from scaffold):
+```bash
+cp -r agents/scaffolds/research/* agents/family/
+```
+
+**Build agents** (from scaffold):
+```bash
+cp -r agents/scaffolds/build/* agents/family/
+```
+
+In `agents/family/`:
+1. Rename each role directory to your agent's name (warm, short, human, lowercase)
 2. In each `profile.md`: replace `[RENAME]` with the agent name, fill in Personality
-3. In `registry.md`: replace all `[RENAME]` and `[Product]` placeholders
-4. Initialize `board.md` with your family name header
-
-### Research (from scaffold)
-```bash
-cp -r agents/scaffolds/research agents/family-research
-```
-Same rename + fill process. Four roles: Problem, Market, BRD, PRD.
-
-### Build (from scaffold)
-```bash
-cp -r agents/scaffolds/build agents/family-build
-```
-Define your own build agents mapped to your product roadmap phases.
+3. Merge scaffold `registry.md` files into one `agents/family/registry.md` with a "Group" column (Governance / Research / Build)
+4. Keep one `board.md` and one `board-archive.md` — shared across all agents
 
 ### Remove scaffolds (optional — keep for reference)
 ```bash
