@@ -1,6 +1,10 @@
 {
   "permissions": {
-    "allow": [],
+    "allow": [
+      "Bash(node scripts/delivery-check.cjs \"Template-Website\")",
+      "Edit(/.claude/skills/kickoff/**)",
+      "Bash(d:/AI/_template-website/.env.example:*)"
+    ],
     "additionalDirectories": []
   }
 }

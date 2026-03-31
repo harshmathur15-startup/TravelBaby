@@ -60,9 +60,9 @@ See [docs/saas-upgrade.md](docs/saas-upgrade.md) for the activation guide when y
 | **Extended Skills** | 24 | In `.claude/skills-extended/` — opt-in. Move to `.claude/skills/` to activate |
 | **SaaS Skills** | 20 | In `.claude/skills-saas/` — activate when adding backend (auth, API, database) |
 | **Hooks** | 28 | Health checks, file protection, recycle guard, formatting, quality gates, session tracking, drift baseline |
-| **Scripts** | 31 | Hook execution, skill utilities, seed data, tests, delivery check |
+| **Scripts** | 32 | Hook execution, skill utilities, seed data, tests, delivery check |
 | **Rules** | 8 | Standards for code, security, frontend, performance, testing + 3 SaaS |
-| **Agents** | 5 | Thea (benchmark), Nell (debt), Mira (drift), Anvi (quality), Priya (upstream extraction) |
+| **Agents** | 9 | Thea (benchmark), Nell (debt), Mira (drift), Anvi (quality), Priya (upstream), Jaya (downstream), Keya (ecosystem), Tani (evolution), Siya (scaffold) |
 
 ## Hooks (Run Automatically)
 

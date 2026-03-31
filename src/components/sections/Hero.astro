@@ -1,31 +1,49 @@
 ---
 import { HERO_CONTENT } from '@config';
+
+interface Props {
+  badge?: string;
+  heading?: string;
+  subtext?: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  trustLine?: string;
+}
+
+const {
+  badge = HERO_CONTENT.badge,
+  heading = HERO_CONTENT.heading,
+  subtext = HERO_CONTENT.subtext,
+  primaryCta = HERO_CONTENT.primaryCta,
+  secondaryCta = HERO_CONTENT.secondaryCta,
+  trustLine = HERO_CONTENT.trustLine,
+} = Astro.props;
 ---
 
 <section class="hero" aria-labelledby="hero-heading">
   <div class="hero__inner">
     <div class="hero__badge" aria-label="Announcement badge">
       <span class="hero__badge-dot" aria-hidden="true"></span>
-      {HERO_CONTENT.badge}
+      {badge}
     </div>
 
-    <h1 id="hero-heading" class="hero__heading" set:html={HERO_CONTENT.heading} />
+    <h1 id="hero-heading" class="hero__heading" set:html={heading} />
 
     <p class="hero__subtext">
-      {HERO_CONTENT.subtext}
+      {subtext}
     </p>
 
     <div class="hero__actions">
-      <a href={HERO_CONTENT.primaryCta.href} class="hero__cta hero__cta--primary" aria-label={HERO_CONTENT.primaryCta.label}>
-        {HERO_CONTENT.primaryCta.label}
+      <a href={primaryCta.href} class="hero__cta hero__cta--primary" aria-label={primaryCta.label}>
+        {primaryCta.label}
       </a>
-      <a href={HERO_CONTENT.secondaryCta.href} class="hero__cta hero__cta--ghost" aria-label={HERO_CONTENT.secondaryCta.label}>
-        {HERO_CONTENT.secondaryCta.label}
+      <a href={secondaryCta.href} class="hero__cta hero__cta--ghost" aria-label={secondaryCta.label}>
+        {secondaryCta.label}
       </a>
     </div>
 
     <p class="hero__trust" aria-label="Social proof">
-      {HERO_CONTENT.trustLine}
+      {trustLine}
     </p>
   </div>
 </section>

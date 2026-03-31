@@ -52,7 +52,7 @@ Then update:
 
 ## 6. Fill In CLAUDE.md
 
-Open `CLAUDE.md`. Below the `<!-- PRODUCT -->` marker, replace:
+Open `CLAUDE.md`. Under the `## Product: [Your Project Name]` section at the bottom, replace:
 - `[Your Project Name]` — your product name
 - `[What this product does]` — one paragraph
 - `[Your feature list]` — core features

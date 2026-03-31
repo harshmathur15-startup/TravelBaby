@@ -1,20 +1,27 @@
 ---
 import { FAQ_CONTENT } from '@config';
 
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 interface Props {
   heading?: string;
   subtext?: string;
+  items?: FaqItem[];
 }
 
 const {
   heading = 'Frequently Asked Questions',
   subtext = 'Common questions about getting started.',
+  items = FAQ_CONTENT,
 } = Astro.props;
 
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: FAQ_CONTENT.map((faq) => ({
+  mainEntity: items.map((faq) => ({
     '@type': 'Question',
     name: faq.question,
     acceptedAnswer: {
@@ -33,7 +40,7 @@ const faqJsonLd = {
     </div>
 
     <div class="faq__list">
-      {FAQ_CONTENT.map((faq, i) => (
+      {items.map((faq, i) => (
         <details class="faq__item" name="faq">
           <summary class="faq__question">
             <span>{faq.question}</span>
