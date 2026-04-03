@@ -11,7 +11,7 @@ export default defineConfig({
   integrations: [sitemap(), mdx()],
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'es'],
+    locales: ['en', 'hi'],
     routing: {
       prefixDefaultLocale: false,
     },
@@ -23,7 +23,7 @@ export default defineConfig({
       cssVariable: '--font-body',
       weights: [400, 500, 600, 700],
       styles: ['normal'],
-      subsets: ['latin'],
+      subsets: ['latin', 'devanagari'],
     },
     {
       provider: fontProviders.google(),
@@ -31,7 +31,7 @@ export default defineConfig({
       cssVariable: '--font-heading',
       weights: [500, 600, 700],
       styles: ['normal'],
-      subsets: ['latin'],
+      subsets: ['latin', 'devanagari'],
     },
     {
       provider: fontProviders.google(),

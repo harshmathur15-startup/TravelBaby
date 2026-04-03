@@ -13,7 +13,7 @@
  */
 
 export const defaultLocale = 'en' as const
-export const locales = ['en', 'es'] as const
+export const locales = ['en', 'hi'] as const
 export type Locale = (typeof locales)[number]
 
 const translations: Record<Locale, Record<string, string>> = {
@@ -39,26 +39,26 @@ const translations: Record<Locale, Record<string, string>> = {
     'search.placeholder': 'Search pages, posts, or type a URL...',
     'lang.switch': 'Language',
   },
-  es: {
-    'nav.features': 'Funcionalidades',
-    'nav.pricing': 'Precios',
-    'nav.compare': 'Comparar',
-    'nav.blog': 'Blog',
-    'nav.about': 'Nosotros',
-    'nav.contact': 'Contacto',
-    'nav.getStarted': 'Comenzar',
-    'nav.search': 'Buscar en el sitio',
-    'footer.copyright': '© 2026 Tu Empresa. Todos los derechos reservados.',
-    'footer.newsletter.heading': 'Mantente informado',
-    'footer.newsletter.subtext': 'Recibe actualizaciones, consejos y recursos en tu correo.',
-    'footer.newsletter.placeholder': 'tu@ejemplo.com',
-    'footer.newsletter.button': 'Suscribirse',
-    'a11y.skipToContent': 'Saltar al contenido principal',
-    'a11y.toggleDarkMode': 'Cambiar modo oscuro',
-    'a11y.highContrast': 'Cambiar modo alto contraste',
-    'a11y.reduceMotion': 'Reducir movimiento',
-    'search.placeholder': 'Buscar paginas, publicaciones o escribe una URL...',
-    'lang.switch': 'Idioma',
+  hi: {
+    'nav.features': 'विशेषताएं',
+    'nav.pricing': 'मूल्य',
+    'nav.compare': 'तुलना',
+    'nav.blog': 'ब्लॉग',
+    'nav.about': 'हमारे बारे में',
+    'nav.contact': 'संपर्क',
+    'nav.getStarted': 'शुरू करें',
+    'nav.search': 'साइट में खोजें',
+    'footer.copyright': '© 2026 Travel Baby. सर्वाधिकार सुरक्षित।',
+    'footer.newsletter.heading': 'बेहतरीन डील पाएं',
+    'footer.newsletter.subtext': 'हर हफ्ते सबसे अच्छी ट्रैवल डील, गाइड और टिप्स अपने इनबॉक्स में पाएं।',
+    'footer.newsletter.placeholder': 'aap@example.com',
+    'footer.newsletter.button': 'सब्सक्राइब करें',
+    'a11y.skipToContent': 'मुख्य सामग्री पर जाएं',
+    'a11y.toggleDarkMode': 'डार्क मोड टॉगल करें',
+    'a11y.highContrast': 'हाई कॉन्ट्रास्ट मोड टॉगल करें',
+    'a11y.reduceMotion': 'एनिमेशन कम करें',
+    'search.placeholder': 'पेज, पोस्ट या URL खोजें...',
+    'lang.switch': 'भाषा',
   },
 }
 
@@ -78,7 +78,7 @@ export function getAlternateLocales(
   return locales
     .filter(l => l !== currentLocale)
     .map(locale => {
-      const path = currentPath.replace(/^\/(en|es)\//, '/')
+      const path = currentPath.replace(/^\/(en|hi)\//, '/')
       const href = locale === defaultLocale ? path : `/${locale}${path}`
       return { locale, href }
     })

@@ -7,191 +7,236 @@
  */
 
 export const HERO_CONTENT = {
-  badge: 'Launch Your Product',
-  heading: 'Build Something<br />People Actually Want.',
+  badge: 'AI-Powered Travel Planning',
+  heading: 'Your Perfect Trip,<br />At the Best Price.',
   subtext:
-    'A modern website boilerplate with everything you need to launch fast. Design tokens, CMS integration, SEO, and responsive components out of the box.',
-  primaryCta: { label: 'Get Started Free', href: '/get-started' },
-  secondaryCta: { label: 'Learn More', href: '/features' },
-  trustLine: 'Trusted by growing companies',
-  trustLogos: ['Acme Corp', 'Globex', 'Initech', 'Umbrella Co'],
+    'Tell us where and when — Travel Baby\'s AI scans Skyscanner, Cleartrip, Trivago, Booking.com, and Agoda to find the best flights and stays, then assembles your ideal package.',
+  primaryCta: { label: 'Plan My Trip', href: '/plan-my-trip' },
+  secondaryCta: { label: 'See How It Works', href: '/#how-it-works' },
+  trustLine: 'Comparing deals across 50+ platforms in real time',
+  trustLogos: ['Skyscanner', 'Booking.com', 'Cleartrip', 'Agoda'],
 } as const
 
 export const FEATURES_CONTENT = {
-  eyebrow: 'Core Features',
-  heading: 'Everything You Need to Ship Fast',
-  subtext: 'A complete foundation so you can focus on what makes your product unique.',
+  eyebrow: 'Why Travel Baby',
+  heading: 'Smart Travel Planning, Zero Hassle',
+  subtext: 'Our AI searches dozens of platforms simultaneously to find you the best deals — so you can focus on packing.',
   items: [
     {
       icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
-      title: 'Blazing Fast',
+      title: 'AI-Powered Search',
       description:
-        'Built on Astro with zero JavaScript by default. Static pages ship only HTML and CSS for instant load times.',
+        'Our AI scans Skyscanner, Cleartrip, Trivago, Booking.com, and Agoda simultaneously to surface the best options in seconds.',
     },
     {
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="19" cy="17" r="2"/><circle cx="6" cy="18" r="3"/><path d="M13.5 9a6.5 6.5 0 0 0-6.5 6.5"/><path d="M13.5 9a4.5 4.5 0 0 1 4.5 4.5"/></svg>',
-      title: 'Design System',
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+      title: 'Best Price Guarantee',
       description:
-        'Complete design token system with CSS custom properties. Consistent spacing, typography, and color scales throughout.',
+        'We compare flights and hotels across 50+ sources so you never overpay. If there is a cheaper option, we will find it.',
+    },
+    {
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+      title: 'Personalized Packages',
+      description:
+        'Tell us your dates, budget, and travel style. We build a complete package tailored to exactly what you want.',
     },
     {
       icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
-      title: 'SEO Ready',
+      title: 'Domestic & International',
       description:
-        'Open Graph, Twitter cards, JSON-LD structured data, sitemaps, and canonical URLs configured out of the box.',
+        'From weekend getaways to month-long international adventures, we cover every type of trip across every destination.',
     },
     {
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="8" height="8" rx="1"/><rect x="14" y="2" width="8" height="8" rx="1"/><rect x="2" y="14" width="8" height="8" rx="1"/><rect x="14" y="14" width="8" height="8" rx="1"/></svg>',
-      title: 'CMS Integrated',
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+      title: 'Real-Time Deals',
       description:
-        'Sanity CMS with page builder, blog system, and content schemas. Edit content without touching code.',
+        'Prices are fetched live, not cached from yesterday. You see what is actually available right now, at today\'s rates.',
     },
     {
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>',
-      title: 'Fully Responsive',
+      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+      title: 'All-In-One Packages',
       description:
-        'Mobile-first design that looks great on every device and screen size. No breakpoint left behind.',
-    },
-    {
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
-      title: 'Production Ready',
-      description:
-        'TypeScript strict mode, CI/CD pipeline, and security headers baked in. Ship to production with confidence.',
+        'Flights, hotels, and local transport bundled and optimized. One search, one package, one price — no juggling tabs.',
     },
   ],
 } as const
 
 export const STATS_CONTENT = [
-  { value: '<1s', label: 'First contentful paint' },
-  { value: '100', label: 'Lighthouse performance' },
-  { value: '0', label: 'JavaScript by default' },
-  { value: '10min', label: 'Clone to running site' },
+  { value: '50+', label: 'Platforms compared' },
+  { value: '30s', label: 'Average search time' },
+  { value: '40%', label: 'Average savings' },
+  { value: '10K+', label: 'Trips planned' },
 ] as const
 
 export const PRICING_CONTENT = {
-  eyebrow: 'Pricing',
-  heading: 'Simple, Transparent Pricing',
-  subtext: 'Choose the plan that fits your needs. Scale as you grow.',
-  trialNote: 'All plans include a 14-day free trial. No credit card required.',
+  eyebrow: 'Simple Pricing',
+  heading: 'One Search, Best Prices',
+  subtext: 'Start free, upgrade when you need more. No hidden fees, cancel anytime.',
+  trialNote: 'Quick Search is always free. No credit card required.',
   tiers: [
     {
-      name: 'Free',
+      name: 'Quick Search',
       monthlyPrice: 0,
       annualPrice: 0,
       popular: false,
-      description: 'Perfect for personal projects and experimentation.',
-      cta: 'Get Started',
-      ctaHref: '/get-started',
+      description: 'Perfect for exploring options and domestic getaways.',
+      cta: 'Search Free',
+      ctaHref: '/plan-my-trip',
       features: [
-        'Up to 5 pages',
-        '10 components',
-        'Community support',
-        'Basic SEO setup',
-        'GitHub repository access',
+        'Top 3 flight + hotel combos',
+        'Domestic destinations only',
+        'Basic price comparison',
+        'Results within 60 seconds',
+        'Email delivery',
       ],
     },
     {
-      name: 'Pro',
-      monthlyPrice: 29,
-      annualPrice: 24,
+      name: 'Smart Package',
+      monthlyPrice: 499,
+      annualPrice: 399,
       popular: true,
-      description: 'For teams building production websites and apps.',
-      cta: 'Start Free Trial',
-      ctaHref: '/get-started?plan=pro',
+      description: 'Full-powered search for travelers who want the best deal.',
+      cta: 'Get Smart Package',
+      ctaHref: '/plan-my-trip',
       features: [
-        'Unlimited pages',
-        'All components',
-        'CMS integration',
-        'Priority email support',
-        'Custom design tokens',
-        'Analytics dashboard',
-        'Multiple environments',
+        'Top 10 optimized combos',
+        'Domestic + international',
+        'Flights, hotels, and Airbnb',
+        'Multi-city routing',
+        'Price drop alerts for 30 days',
+        'Budget optimization',
+        'Priority results in 30 seconds',
       ],
     },
     {
-      name: 'Enterprise',
-      monthlyPrice: null,
-      annualPrice: null,
+      name: 'Concierge',
+      monthlyPrice: 1999,
+      annualPrice: 1599,
       popular: false,
-      description: 'For organizations with custom requirements.',
-      cta: 'Contact Us',
-      ctaHref: '/contact',
+      description: 'White-glove travel planning with a dedicated planner.',
+      cta: 'Get Concierge',
+      ctaHref: '/plan-my-trip',
       features: [
-        'Everything in Pro',
-        'Dedicated support',
-        'Custom integrations',
-        'SLA guarantees',
-        'On-premise deployment',
-        'Security audit',
-        'Team onboarding',
+        'Everything in Smart Package',
+        'Dedicated travel planner',
+        'Complex multi-city itineraries',
+        'Rebooking if prices drop',
+        'Visa and travel advisory',
+        'Priority 24/7 support',
+        'Group and family packages',
       ],
     },
   ],
 } as const
 
 export const TESTIMONIALS_CONTENT = {
-  eyebrow: 'Testimonials',
-  heading: 'What People Are Saying',
-  subtext: 'Hear from developers who shipped faster with this boilerplate.',
+  eyebrow: 'Traveler Stories',
+  heading: 'Real Trips, Real Savings',
+  subtext: 'Hear from travelers who found better deals and stress-free planning with Travel Baby.',
   items: [
     {
       quote:
-        'We went from zero to a fully deployed marketing site in under a day. The design tokens and component library saved us weeks of setup work.',
-      name: 'Sarah Chen',
-      role: 'CTO, Launchpad Labs',
+        'I was planning a week in Bali and had 20 tabs open comparing flights and hotels. Travel Baby found a package that saved me over $400 — in under a minute. I am never going back to manual searching.',
+      name: 'Ananya Sharma',
+      role: 'Solo Traveler, Delhi',
     },
     {
       quote:
-        'The CMS integration was the deciding factor. Our content team can update pages without filing engineering tickets. The SEO setup is excellent too.',
-      name: 'Marcus Rivera',
-      role: 'Lead Developer, Clearview',
+        'We needed a family trip to Europe for five people on a tight budget. Travel Baby found us flights through Istanbul that were half the price of direct routes, plus a stunning Airbnb in Barcelona. Incredible.',
+      name: 'Rajesh Patel',
+      role: 'Family of 5, Mumbai',
     },
     {
       quote:
-        'Clean code, great documentation, and it actually works out of the box. No mystery configurations or broken dependencies. Just clone and build.',
-      name: 'Priya Sharma',
-      role: 'Founder, Nimbus Studio',
+        'The Concierge plan is worth every penny. My planner rebooked our flights when prices dropped two days later and saved us another $200. That kind of service does not exist anywhere else at this price.',
+      name: 'Meera Krishnan',
+      role: 'Frequent Traveler, Bangalore',
     },
   ],
 } as const
 
 export const FAQ_CONTENT = [
   {
-    question: 'How do I get started with the boilerplate?',
+    question: 'How does Travel Baby find the best deals?',
     answer:
-      'Clone the repository, run npm install, and start the dev server. The getting-started guide walks you through configuration, environment variables, and your first deployment in under 10 minutes.',
+      'Our AI simultaneously searches Skyscanner, Cleartrip, Trivago, Booking.com, Agoda, and other platforms to compare flights, hotels, and Airbnb options. It then combines the best options into optimized packages based on your dates, budget, and preferences.',
   },
   {
-    question: 'Can I customize the design tokens and styling?',
+    question: 'Is Travel Baby free to use?',
     answer:
-      'Yes. All design decisions flow from CSS custom properties defined in the tokens file. Change colors, typography, spacing, and breakpoints in one place and the entire site updates automatically.',
+      'Yes — our Quick Search plan is completely free and gives you the top 3 flight and hotel combinations for domestic trips. For international travel, multi-city routing, and advanced features like price drop alerts, check out our Smart Package and Concierge plans.',
   },
   {
-    question: 'How does the CMS integration work?',
+    question: 'How far in advance should I plan my trip?',
     answer:
-      'The boilerplate connects to Sanity CMS out of the box. Content schemas for pages, blog posts, and reusable blocks are pre-configured. Your content team can edit pages visually without touching code.',
+      'For the best deals, we recommend searching 4 to 8 weeks before domestic trips and 8 to 12 weeks before international trips. However, Travel Baby also finds last-minute deals — sometimes the best prices appear within 2 weeks of departure.',
   },
   {
-    question: 'How do I deploy to production?',
+    question: 'Do you handle both domestic and international trips?',
     answer:
-      'The boilerplate includes CI/CD configuration for popular platforms including Vercel, Netlify, and AWS. Push to your main branch and the pipeline handles building, testing, and deploying automatically.',
+      'Yes. Our Quick Search covers domestic destinations, while the Smart Package and Concierge plans include full international coverage with multi-city routing, visa advisories, and local transport options.',
   },
   {
-    question: 'How do I receive updates and new features?',
+    question: 'How do you compare flight prices?',
     answer:
-      'The boilerplate uses a template inheritance model. When updates are released, you can pull them into your project selectively. Breaking changes are documented in the changelog with migration guides.',
+      'We pull real-time pricing from Skyscanner, Cleartrip, and airline direct sites. Our AI considers not just the ticket price but also baggage fees, layover times, and total travel duration to recommend the best overall value.',
   },
   {
-    question: 'What kind of support is available?',
+    question: 'What accommodation types do you include?',
     answer:
-      'Free users get community support through GitHub discussions. Pro users receive priority email support with 24-hour response times. Enterprise customers get dedicated support with SLA guarantees.',
+      'We search hotels via Trivago, Booking.com, and Agoda, plus Airbnb and similar platforms for apartment and villa options. You can set preferences for hotel class, amenities, or accommodation type in your search.',
+  },
+  {
+    question: 'Can I set a budget limit?',
+    answer:
+      'Absolutely. Tell us your total budget or per-night accommodation limit, and our AI will only surface options that fit within your range. The Smart Package plan also includes budget optimization to stretch your money further.',
+  },
+  {
+    question: 'How do you handle multi-city trips?',
+    answer:
+      'The Smart Package and Concierge plans support multi-city routing. Tell us your cities and preferred order, and we will find the optimal flight path, layovers, and accommodations for each stop.',
+  },
+  {
+    question: 'What if prices change after I receive my package?',
+    answer:
+      'Flight and hotel prices fluctuate constantly. Smart Package includes 30-day price drop alerts — if a better deal appears, we notify you immediately. Concierge plan goes further: your planner will rebook automatically if prices drop.',
+  },
+  {
+    question: 'Do you book for me or just find deals?',
+    answer:
+      'Currently, Travel Baby finds and recommends the best deals with direct booking links. You book directly with the airline or hotel at the price we found. We are working on one-click booking for a future release.',
+  },
+  {
+    question: 'What information do I need to provide?',
+    answer:
+      'At minimum: your travel dates and destination (or "surprise me" for deal-based suggestions). For better results, also share your budget, number of travelers, accommodation preferences, and trip style (adventure, relaxation, cultural, etc.).',
+  },
+  {
+    question: 'How long does it take to get my package?',
+    answer:
+      'Quick Search delivers results in about 60 seconds. Smart Package results arrive in about 30 seconds with more options. Concierge packages are curated by a human planner and delivered within 4 hours.',
+  },
+  {
+    question: 'Can I customize the package after receiving it?',
+    answer:
+      'Yes. Every package is a recommendation, not a locked booking. Swap out flights, change hotels, adjust dates — the package is your starting point. Concierge users can request unlimited revisions from their planner.',
+  },
+  {
+    question: 'Do you offer group and family packages?',
+    answer:
+      'Yes. All plans support multiple travelers. The Smart Package optimizes for group bookings, and the Concierge plan specializes in complex family and group itineraries with coordinated flights and adjacent rooms.',
+  },
+  {
+    question: 'What payment methods are supported?',
+    answer:
+      'You pay the airlines and hotels directly using whatever payment methods they accept. For Travel Baby plan subscriptions (Smart Package and Concierge), we accept all major credit cards and UPI.',
   },
 ] as const
 
 export const CTA_CONTENT = {
-  heading: 'Ready to Launch Your Website?',
+  heading: 'Stop Overpaying for Travel',
   subtext:
-    'Clone the boilerplate and start building in minutes. Everything you need is already set up.',
-  buttonLabel: 'Get Started',
-  buttonHref: '/get-started',
+    'Let AI find your perfect trip at the best price. Flights, hotels, and everything in between — one search, one package.',
+  buttonLabel: 'Plan My Trip',
+  buttonHref: '/plan-my-trip',
 } as const

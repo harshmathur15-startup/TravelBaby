@@ -1,0 +1,945 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@components/ui/Container.astro';
+---
+
+<BaseLayout title="Plan My Trip — Travel Baby" description="Tell us your travel preferences and we'll find the best deals for your perfect trip.">
+  <section class="plan-hero" aria-labelledby="plan-hero-heading">
+    <Container size="sm">
+      <h1 id="plan-hero-heading" class="plan-hero__title">Plan My Trip</h1>
+      <p class="plan-hero__subtitle">Answer a few questions and we'll find the best deals for your perfect trip.</p>
+    </Container>
+  </section>
+
+  <section class="plan-form-section" aria-label="Trip planning questionnaire">
+    <Container size="sm">
+      <div class="progress" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="8" aria-label="Form progress">
+        <p class="progress__label"><span id="step-label">Step 1 of 8</span></p>
+        <div class="progress__track">
+          <div class="progress__fill" id="progress-fill" style="width: 12.5%"></div>
+        </div>
+      </div>
+
+      <form
+        id="trip-form"
+        class="trip-form"
+        method="POST"
+        action="https://formspree.io/f/your-form-id"
+        novalidate
+      >
+        <!-- Step 1: Trip Type -->
+        <fieldset class="step" id="step-1" data-step="1">
+          <legend class="step__heading">What type of trip are you planning?</legend>
+          <p class="step__description">Choose domestic for local travel or international for overseas adventures.</p>
+          <div class="card-grid card-grid--2">
+            <label class="card-option">
+              <input type="radio" name="tripType" value="domestic" required />
+              <span class="card-option__inner">
+                <span class="card-option__icon" aria-hidden="true">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg>
+                </span>
+                <span class="card-option__label">Domestic</span>
+              </span>
+            </label>
+            <label class="card-option">
+              <input type="radio" name="tripType" value="international" required />
+              <span class="card-option__inner">
+                <span class="card-option__icon" aria-hidden="true">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                </span>
+                <span class="card-option__label">International</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Step 2: Dates -->
+        <fieldset class="step" id="step-2" data-step="2" hidden>
+          <legend class="step__heading">When do you want to travel?</legend>
+          <p class="step__description">Flexible? No worries -- give us your best estimate.</p>
+          <div class="input-grid input-grid--2">
+            <div class="field">
+              <label for="departure-date" class="field__label">Departure date <span class="field__required" aria-hidden="true">*</span></label>
+              <input type="date" id="departure-date" name="departureDate" required class="field__input" />
+            </div>
+            <div class="field">
+              <label for="return-date" class="field__label">Return date <span class="field__required" aria-hidden="true">*</span></label>
+              <input type="date" id="return-date" name="returnDate" required class="field__input" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Step 3: Destination -->
+        <fieldset class="step" id="step-3" data-step="3" hidden>
+          <legend class="step__heading">Where do you want to go?</legend>
+          <p class="step__description">Enter your dream destination or let us surprise you with the best deals.</p>
+          <div class="field">
+            <label for="destination" class="field__label">Destination</label>
+            <input type="text" id="destination" name="destination" placeholder="e.g. Bali, Paris, Tokyo..." class="field__input" />
+          </div>
+          <label class="checkbox-row">
+            <input type="checkbox" id="surprise-me" name="surpriseMe" value="yes" />
+            <span class="checkbox-row__label">I'm flexible -- surprise me with the best deals</span>
+          </label>
+        </fieldset>
+
+        <!-- Step 4: Travelers -->
+        <fieldset class="step" id="step-4" data-step="4" hidden>
+          <legend class="step__heading">Who's traveling?</legend>
+          <p class="step__description">Tell us how many adults and children are joining the trip.</p>
+          <div class="input-grid input-grid--2">
+            <div class="field">
+              <label for="adults" class="field__label">Adults <span class="field__required" aria-hidden="true">*</span></label>
+              <input type="number" id="adults" name="adults" min="1" max="20" value="1" required class="field__input" />
+            </div>
+            <div class="field">
+              <label for="children" class="field__label">Children</label>
+              <input type="number" id="children" name="children" min="0" max="20" value="0" class="field__input" />
+            </div>
+          </div>
+          <div id="children-ages" class="children-ages" hidden>
+            <p class="field__label">Ages of children</p>
+            <div id="children-ages-inputs" class="input-grid input-grid--3"></div>
+          </div>
+        </fieldset>
+
+        <!-- Step 5: Budget -->
+        <fieldset class="step" id="step-5" data-step="5" hidden>
+          <legend class="step__heading">What's your budget?</legend>
+          <p class="step__description">Per person, including flights and accommodation.</p>
+          <div class="card-grid card-grid--2">
+            <label class="card-option">
+              <input type="radio" name="budget" value="budget" required />
+              <span class="card-option__inner">
+                <span class="card-option__icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                </span>
+                <span class="card-option__label">Budget</span>
+                <span class="card-option__meta">Under &#8377;25,000</span>
+              </span>
+            </label>
+            <label class="card-option">
+              <input type="radio" name="budget" value="mid-range" required />
+              <span class="card-option__inner">
+                <span class="card-option__icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                </span>
+                <span class="card-option__label">Mid-Range</span>
+                <span class="card-option__meta">&#8377;25,000 - &#8377;75,000</span>
+              </span>
+            </label>
+            <label class="card-option">
+              <input type="radio" name="budget" value="premium" required />
+              <span class="card-option__inner">
+                <span class="card-option__icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                </span>
+                <span class="card-option__label">Premium</span>
+                <span class="card-option__meta">&#8377;75,000 - &#8377;1,50,000</span>
+              </span>
+            </label>
+            <label class="card-option">
+              <input type="radio" name="budget" value="luxury" required />
+              <span class="card-option__inner">
+                <span class="card-option__icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                </span>
+                <span class="card-option__label">Luxury</span>
+                <span class="card-option__meta">&#8377;1,50,000+</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Step 6: Trip Style -->
+        <fieldset class="step" id="step-6" data-step="6" hidden>
+          <legend class="step__heading">What's your travel style?</legend>
+          <p class="step__description">Pick as many as you like -- we'll tailor deals to match.</p>
+          <div class="card-grid card-grid--3">
+            <label class="card-option card-option--checkbox">
+              <input type="checkbox" name="tripStyle" value="adventure" />
+              <span class="card-option__inner">
+                <span class="card-option__icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18l-4-4h3V11h2v3h3l-4 4z"/></svg>
+                </span>
+                <span class="card-option__label">Adventure</span>
+              </span>
+            </label>
+            <label class="card-option card-option--checkbox">
+              <input type="checkbox" name="tripStyle" value="relaxation" />
+              <span class="card-option__inner">
+                <span class="card-option__icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 110-14h8.5"/><path d="M21 12a2.5 2.5 0 01-2.5 2.5H17"/></svg>
+                </span>
+                <span class="card-option__label">Relaxation</span>
+              </span>
+            </label>
+            <label class="card-option card-option--checkbox">
+              <input type="checkbox" name="tripStyle" value="cultural" />
+              <span class="card-option__inner">
+                <span class="card-option__icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </span>
+                <span class="card-option__label">Cultural</span>
+              </span>
+            </label>
+            <label class="card-option card-option--checkbox">
+              <input type="checkbox" name="tripStyle" value="nightlife" />
+              <span class="card-option__inner">
+                <span class="card-option__icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8l4 4-4 4"/><path d="M3 12h18"/><path d="M7 8l-4 4 4 4"/></svg>
+                </span>
+                <span class="card-option__label">Nightlife</span>
+              </span>
+            </label>
+            <label class="card-option card-option--checkbox">
+              <input type="checkbox" name="tripStyle" value="family-friendly" />
+              <span class="card-option__inner">
+                <span class="card-option__icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="card-option__label">Family-Friendly</span>
+              </span>
+            </label>
+            <label class="card-option card-option--checkbox">
+              <input type="checkbox" name="tripStyle" value="romantic" />
+              <span class="card-option__inner">
+                <span class="card-option__icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                </span>
+                <span class="card-option__label">Romantic</span>
+              </span>
+            </label>
+            <label class="card-option card-option--checkbox">
+              <input type="checkbox" name="tripStyle" value="food-wine" />
+              <span class="card-option__inner">
+                <span class="card-option__icon" aria-hidden="true">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                </span>
+                <span class="card-option__label">Food & Wine</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Step 7: Preferences -->
+        <fieldset class="step" id="step-7" data-step="7" hidden>
+          <legend class="step__heading">Any preferences?</legend>
+          <p class="step__description">Help us narrow down the best options for you.</p>
+          <div class="preferences-grid">
+            <div class="preference-group">
+              <p class="preference-group__title">Accommodation</p>
+              <div class="radio-list">
+                <label class="radio-row"><input type="radio" name="accommodation" value="hotel" /> Hotel</label>
+                <label class="radio-row"><input type="radio" name="accommodation" value="airbnb" /> Airbnb / Apartment</label>
+                <label class="radio-row"><input type="radio" name="accommodation" value="hostel" /> Hostel</label>
+                <label class="radio-row"><input type="radio" name="accommodation" value="no-preference" checked /> No preference</label>
+              </div>
+            </div>
+            <div class="preference-group">
+              <p class="preference-group__title">Transport</p>
+              <div class="radio-list">
+                <label class="radio-row"><input type="radio" name="transport" value="flight" /> Flight</label>
+                <label class="radio-row"><input type="radio" name="transport" value="train" /> Train</label>
+                <label class="radio-row"><input type="radio" name="transport" value="bus" /> Bus</label>
+                <label class="radio-row"><input type="radio" name="transport" value="no-preference" checked /> No preference</label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Step 8: Contact & Special Requests -->
+        <fieldset class="step" id="step-8" data-step="8" hidden>
+          <legend class="step__heading">Almost done! How can we reach you?</legend>
+          <p class="step__description">We'll email your personalized trip package within 24 hours.</p>
+          <div class="input-grid input-grid--2">
+            <div class="field">
+              <label for="contact-name" class="field__label">Name <span class="field__required" aria-hidden="true">*</span></label>
+              <input type="text" id="contact-name" name="name" required class="field__input" placeholder="Your full name" />
+            </div>
+            <div class="field">
+              <label for="contact-email" class="field__label">Email <span class="field__required" aria-hidden="true">*</span></label>
+              <input type="email" id="contact-email" name="email" required class="field__input" placeholder="you@example.com" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="contact-phone" class="field__label">Phone <span class="field__optional">(optional)</span></label>
+            <input type="tel" id="contact-phone" name="phone" class="field__input" placeholder="(555) 000-0000" />
+          </div>
+          <div class="field">
+            <label for="special-requests" class="field__label">Special requirements <span class="field__optional">(optional)</span></label>
+            <textarea id="special-requests" name="specialRequests" rows="4" class="field__textarea" placeholder="Dietary needs, accessibility requirements, must-see places..."></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Navigation buttons -->
+        <div class="step-nav">
+          <button type="button" id="btn-back" class="step-nav__btn step-nav__btn--back" hidden>Back</button>
+          <button type="button" id="btn-next" class="step-nav__btn step-nav__btn--next">Next</button>
+          <button type="submit" id="btn-submit" class="step-nav__btn step-nav__btn--submit" hidden>Submit</button>
+        </div>
+      </form>
+
+      <!-- Thank you message -->
+      <div id="thank-you" class="thank-you" hidden>
+        <div class="thank-you__icon" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h2 class="thank-you__heading">We're on it!</h2>
+        <p class="thank-you__text">Thanks for sharing your travel preferences. Our AI is already searching for the best deals. You'll receive your personalized trip package within 24 hours.</p>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .plan-hero {
+    padding: var(--space-16) 0 var(--space-8);
+    background: linear-gradient(180deg, var(--color-primary-50) 0%, var(--color-neutral-0) 100%);
+    text-align: center;
+  }
+  .plan-hero__title {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-3);
+  }
+  .plan-hero__subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-neutral-600);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: var(--leading-normal);
+  }
+
+  /* Form Section */
+  .plan-form-section {
+    padding: var(--space-4) 0 var(--space-16);
+  }
+
+  /* Progress bar */
+  .progress {
+    margin-bottom: var(--space-8);
+  }
+  .progress__label {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-500);
+    margin-bottom: var(--space-2);
+    text-align: center;
+    font-weight: 500;
+  }
+  .progress__track {
+    width: 100%;
+    height: 6px;
+    background: var(--color-neutral-200);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+  .progress__fill {
+    height: 100%;
+    background: var(--color-primary-500);
+    border-radius: var(--radius-full);
+    transition: width var(--duration-normal) var(--ease-in-out);
+  }
+
+  /* Form */
+  .trip-form {
+    background: var(--color-neutral-0);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+  }
+
+  /* Steps */
+  .step {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+  .step__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-2);
+    line-height: var(--leading-tight);
+  }
+  .step__description {
+    font-size: var(--text-base);
+    color: var(--color-neutral-500);
+    margin-bottom: var(--space-6);
+    line-height: var(--leading-normal);
+  }
+
+  /* Card grids */
+  .card-grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .card-grid--2 {
+    grid-template-columns: 1fr;
+  }
+  .card-grid--3 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Card option (radio/checkbox styled as card) */
+  .card-option {
+    cursor: pointer;
+    display: block;
+  }
+  .card-option input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+  .card-option__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-4);
+    border: 2px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    background: var(--color-neutral-0);
+    text-align: center;
+    transition: border-color var(--duration-normal) var(--ease-in-out),
+                background-color var(--duration-normal) var(--ease-in-out),
+                box-shadow var(--duration-normal) var(--ease-in-out),
+                transform var(--duration-fast) var(--ease-in-out);
+  }
+  .card-option__inner:hover {
+    border-color: var(--color-primary-300);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+  .card-option input:checked + .card-option__inner {
+    border-color: var(--color-primary-500);
+    background: var(--color-primary-50);
+    box-shadow: var(--shadow-md);
+  }
+  .card-option input:focus-visible + .card-option__inner {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+  }
+  .card-option__icon {
+    color: var(--color-primary-500);
+  }
+  .card-option__label {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-neutral-900);
+  }
+  .card-option__meta {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-500);
+  }
+
+  /* Form fields */
+  .field {
+    margin-bottom: var(--space-4);
+  }
+  .field__label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-neutral-700);
+    margin-bottom: var(--space-1);
+  }
+  .field__required {
+    color: var(--color-error);
+  }
+  .field__optional {
+    color: var(--color-neutral-400);
+    font-weight: 400;
+  }
+  .field__input,
+  .field__textarea,
+  .field__select {
+    width: 100%;
+    padding: var(--space-3);
+    border: 1px solid var(--color-neutral-300);
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    color: var(--color-neutral-900);
+    background: var(--color-neutral-0);
+    font-family: inherit;
+    transition: border-color var(--duration-fast) var(--ease-in-out),
+                box-shadow var(--duration-fast) var(--ease-in-out);
+  }
+  .field__input:focus,
+  .field__textarea:focus,
+  .field__select:focus {
+    outline: none;
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px var(--color-primary-100);
+  }
+  .field__input::placeholder,
+  .field__textarea::placeholder {
+    color: var(--color-neutral-400);
+  }
+  .field__input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--color-neutral-50);
+  }
+  .field__textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  .field__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-3) center;
+    padding-right: var(--space-8);
+  }
+
+  .input-grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .input-grid--2 {
+    grid-template-columns: 1fr;
+  }
+  .input-grid--3 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Checkbox row */
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    margin-top: var(--space-4);
+    transition: background-color var(--duration-fast) var(--ease-in-out);
+  }
+  .checkbox-row:hover {
+    background: var(--color-neutral-50);
+  }
+  .checkbox-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-primary-500);
+    flex-shrink: 0;
+  }
+  .checkbox-row__label {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-700);
+  }
+
+  /* Preferences (step 7) */
+  .preferences-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  .preference-group {
+    background: var(--color-neutral-50);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+  }
+  .preference-group__title {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-3);
+  }
+  .radio-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .radio-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-neutral-700);
+    cursor: pointer;
+    padding: var(--space-1) 0;
+  }
+  .radio-row input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--color-primary-500);
+    flex-shrink: 0;
+  }
+
+  /* Children ages */
+  .children-ages {
+    margin-top: var(--space-4);
+    padding: var(--space-4);
+    background: var(--color-neutral-50);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-md);
+  }
+
+  /* Navigation buttons */
+  .step-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-neutral-200);
+  }
+  .step-nav__btn {
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: background-color var(--duration-fast) var(--ease-in-out),
+                color var(--duration-fast) var(--ease-in-out),
+                transform var(--duration-fast) var(--ease-in-out);
+  }
+  .step-nav__btn:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+  }
+  .step-nav__btn--back {
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-700);
+  }
+  .step-nav__btn--back:hover {
+    background: var(--color-neutral-200);
+  }
+  .step-nav__btn--next,
+  .step-nav__btn--submit {
+    background: var(--color-primary-500);
+    color: var(--color-neutral-0);
+    margin-left: auto;
+  }
+  .step-nav__btn--next:hover,
+  .step-nav__btn--submit:hover {
+    background: var(--color-primary-600);
+    transform: translateY(-1px);
+  }
+  .step-nav__btn--next:active,
+  .step-nav__btn--submit:active {
+    transform: translateY(0);
+  }
+
+  /* Validation error */
+  .field__input.is-invalid,
+  .field__textarea.is-invalid {
+    border-color: var(--color-error);
+  }
+  .step .validation-error {
+    color: var(--color-error);
+    font-size: var(--text-sm);
+    margin-top: var(--space-2);
+  }
+
+  /* Thank you */
+  .thank-you {
+    text-align: center;
+    padding: var(--space-16) var(--space-4);
+  }
+  .thank-you__icon {
+    color: var(--color-success);
+    margin-bottom: var(--space-4);
+    display: flex;
+    justify-content: center;
+  }
+  .thank-you__heading {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-3);
+  }
+  .thank-you__text {
+    font-size: var(--text-base);
+    color: var(--color-neutral-600);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: var(--leading-normal);
+  }
+
+  /* Responsive */
+  @media (min-width: 640px) {
+    .card-grid--2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    .card-grid--3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .input-grid--2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    .input-grid--3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .preferences-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 1024px) {
+    .plan-hero {
+      padding: var(--space-20) 0 var(--space-10);
+    }
+    .plan-hero__title {
+      font-size: var(--text-4xl);
+    }
+  }
+</style>
+
+<script>
+  const TOTAL_STEPS = 8;
+  let currentStep = 1;
+
+  const form = document.getElementById('trip-form') as HTMLFormElement | null;
+  const progressFill = document.getElementById('progress-fill') as HTMLElement | null;
+  const stepLabel = document.getElementById('step-label') as HTMLElement | null;
+  const btnBack = document.getElementById('btn-back') as HTMLButtonElement | null;
+  const btnNext = document.getElementById('btn-next') as HTMLButtonElement | null;
+  const btnSubmit = document.getElementById('btn-submit') as HTMLButtonElement | null;
+  const thankYou = document.getElementById('thank-you') as HTMLElement | null;
+  const progressBar = document.querySelector('.progress') as HTMLElement | null;
+
+  function showStep(step: number): void {
+    document.querySelectorAll<HTMLFieldSetElement>('.step').forEach((el) => {
+      const s = Number(el.dataset.step);
+      el.hidden = s !== step;
+    });
+
+    if (progressFill) {
+      progressFill.style.width = `${(step / TOTAL_STEPS) * 100}%`;
+    }
+    if (stepLabel) {
+      stepLabel.textContent = `Step ${step} of ${TOTAL_STEPS}`;
+    }
+    if (progressBar) {
+      progressBar.setAttribute('aria-valuenow', String(step));
+    }
+
+    if (btnBack) btnBack.hidden = step === 1;
+    if (btnNext) btnNext.hidden = step === TOTAL_STEPS;
+    if (btnSubmit) btnSubmit.hidden = step !== TOTAL_STEPS;
+  }
+
+  function validateStep(step: number): boolean {
+    const stepEl = document.getElementById(`step-${step}`);
+    if (!stepEl) return true;
+
+    // Clear previous errors
+    stepEl.querySelectorAll('.validation-error').forEach((el) => el.remove());
+    stepEl.querySelectorAll('.is-invalid').forEach((el) => el.classList.remove('is-invalid'));
+
+    switch (step) {
+      case 1: {
+        const checked = stepEl.querySelector<HTMLInputElement>('input[name="tripType"]:checked');
+        if (!checked) {
+          showError(stepEl, 'Please select a trip type.');
+          return false;
+        }
+        return true;
+      }
+      case 2: {
+        const dep = stepEl.querySelector<HTMLInputElement>('#departure-date');
+        const ret = stepEl.querySelector<HTMLInputElement>('#return-date');
+        if (!dep?.value) {
+          dep?.classList.add('is-invalid');
+          showError(stepEl, 'Please enter a departure date.');
+          return false;
+        }
+        if (!ret?.value) {
+          ret?.classList.add('is-invalid');
+          showError(stepEl, 'Please enter a return date.');
+          return false;
+        }
+        if (dep.value && ret.value && ret.value < dep.value) {
+          ret?.classList.add('is-invalid');
+          showError(stepEl, 'Return date must be after departure date.');
+          return false;
+        }
+        return true;
+      }
+      case 3: {
+        const dest = stepEl.querySelector<HTMLInputElement>('#destination');
+        const surprise = stepEl.querySelector<HTMLInputElement>('#surprise-me');
+        if (!surprise?.checked && !dest?.value.trim()) {
+          dest?.classList.add('is-invalid');
+          showError(stepEl, 'Please enter a destination or check "surprise me".');
+          return false;
+        }
+        return true;
+      }
+      case 4: {
+        const adults = stepEl.querySelector<HTMLInputElement>('#adults');
+        if (!adults?.value || Number(adults.value) < 1) {
+          adults?.classList.add('is-invalid');
+          showError(stepEl, 'At least 1 adult is required.');
+          return false;
+        }
+        return true;
+      }
+      case 5: {
+        const checked = stepEl.querySelector<HTMLInputElement>('input[name="budget"]:checked');
+        if (!checked) {
+          showError(stepEl, 'Please select a budget range.');
+          return false;
+        }
+        return true;
+      }
+      case 6:
+        // Multi-select, optional
+        return true;
+      case 7:
+        // Has defaults, always valid
+        return true;
+      case 8: {
+        const name = stepEl.querySelector<HTMLInputElement>('#contact-name');
+        const email = stepEl.querySelector<HTMLInputElement>('#contact-email');
+        if (!name?.value.trim()) {
+          name?.classList.add('is-invalid');
+          showError(stepEl, 'Please enter your name.');
+          return false;
+        }
+        if (!email?.value.trim() || !isValidEmail(email.value)) {
+          email?.classList.add('is-invalid');
+          showError(stepEl, 'Please enter a valid email address.');
+          return false;
+        }
+        return true;
+      }
+      default:
+        return true;
+    }
+  }
+
+  function showError(container: Element, message: string): void {
+    const p = document.createElement('p');
+    p.className = 'validation-error';
+    p.setAttribute('role', 'alert');
+    p.textContent = message;
+    container.appendChild(p);
+  }
+
+  function isValidEmail(email: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  // Next button
+  btnNext?.addEventListener('click', () => {
+    if (validateStep(currentStep) && currentStep < TOTAL_STEPS) {
+      currentStep++;
+      showStep(currentStep);
+    }
+  });
+
+  // Back button
+  btnBack?.addEventListener('click', () => {
+    if (currentStep > 1) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  });
+
+  // Form submit
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validateStep(currentStep)) return;
+
+    btnSubmit?.setAttribute('disabled', 'true');
+    btnSubmit && (btnSubmit.textContent = 'Sending...');
+
+    try {
+      const formData = new FormData(form);
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: 'application/json' },
+      });
+
+      if (response.ok) {
+        form.hidden = true;
+        if (progressBar) progressBar.hidden = true;
+        if (thankYou) thankYou.hidden = false;
+        document.querySelector('.step-nav')?.remove();
+      } else {
+        btnSubmit?.removeAttribute('disabled');
+        btnSubmit && (btnSubmit.textContent = 'Submit');
+        showError(form, 'Something went wrong. Please try again.');
+      }
+    } catch {
+      btnSubmit?.removeAttribute('disabled');
+      btnSubmit && (btnSubmit.textContent = 'Submit');
+      showError(form, 'Network error. Please check your connection and try again.');
+    }
+  });
+
+  // Surprise me checkbox — disable destination input
+  const surpriseCheckbox = document.getElementById('surprise-me') as HTMLInputElement | null;
+  const destinationInput = document.getElementById('destination') as HTMLInputElement | null;
+
+  surpriseCheckbox?.addEventListener('change', () => {
+    if (destinationInput) {
+      destinationInput.disabled = surpriseCheckbox.checked;
+      if (surpriseCheckbox.checked) {
+        destinationInput.value = '';
+      }
+    }
+  });
+
+  // Children count — show/hide age inputs
+  const childrenInput = document.getElementById('children') as HTMLInputElement | null;
+  const childrenAges = document.getElementById('children-ages') as HTMLElement | null;
+  const childrenAgesInputs = document.getElementById('children-ages-inputs') as HTMLElement | null;
+
+  childrenInput?.addEventListener('input', () => {
+    const count = Math.min(Number(childrenInput.value) || 0, 20);
+    if (count > 0 && childrenAges && childrenAgesInputs) {
+      childrenAges.hidden = false;
+      childrenAgesInputs.innerHTML = '';
+      for (let i = 0; i < count; i++) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'field';
+        const label = document.createElement('label');
+        label.className = 'field__label';
+        label.setAttribute('for', `child-age-${i}`);
+        label.textContent = `Child ${i + 1}`;
+        const select = document.createElement('select');
+        select.id = `child-age-${i}`;
+        select.name = `childAge${i + 1}`;
+        select.className = 'field__input field__select';
+        for (let age = 0; age <= 17; age++) {
+          const opt = document.createElement('option');
+          opt.value = String(age);
+          opt.textContent = age === 0 ? 'Under 1' : `${age} year${age > 1 ? 's' : ''}`;
+          select.appendChild(opt);
+        }
+        wrapper.appendChild(label);
+        wrapper.appendChild(select);
+        childrenAgesInputs.appendChild(wrapper);
+      }
+    } else if (childrenAges) {
+      childrenAges.hidden = true;
+    }
+  });
+
+  // Keyboard: Enter key triggers Next (not submit) unless on last step
+  form?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && currentStep < TOTAL_STEPS) {
+      const target = e.target as HTMLElement;
+      if (target.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        btnNext?.click();
+      }
+    }
+  });
+
+  // Initialize
+  showStep(1);
+</script>

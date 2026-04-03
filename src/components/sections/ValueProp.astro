@@ -1,0 +1,138 @@
+---
+/**
+ * ValueProp — Two-column section with text and image placeholder.
+ * Responsive: stacked on mobile, side-by-side on desktop.
+ * Use imagePosition prop to swap column order.
+ */
+
+import Container from '@components/ui/Container.astro';
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  paragraphs?: string[];
+  imagePosition?: 'left' | 'right';
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+const {
+  eyebrow = 'Why Travel Baby',
+  heading = 'Tell Us Your Dream Trip. We Handle the Rest.',
+  paragraphs = [
+    'Planning the perfect trip used to mean hours of searching — comparing flights on one site, hotels on another, juggling dates and prices across twenty browser tabs. Travel Baby changes that.',
+    'Just tell us your dates, destination, and budget. Our AI searches Skyscanner, Cleartrip, Trivago, Booking.com, and Agoda simultaneously — then combines the best flights and stays into one optimized package delivered in seconds.',
+  ],
+  imagePosition = 'right',
+  imageSrc = '/images/value-prop-1.jpg',
+  imageAlt = 'Travelers planning their perfect trip',
+} = Astro.props;
+
+const isReversed = imagePosition === 'left';
+---
+
+<section class="value-prop" aria-labelledby="value-prop-heading" data-animate>
+  <Container>
+    <div class:list={['value-prop__grid', { 'value-prop__grid--reversed': isReversed }]}>
+      <div class="value-prop__content" data-animate="fade-up">
+        <span class="value-prop__eyebrow">{eyebrow}</span>
+        <h2 id="value-prop-heading" class="value-prop__heading">{heading}</h2>
+        {paragraphs.map((p) => (
+          <p class="value-prop__text">{p}</p>
+        ))}
+      </div>
+      <div class="value-prop__visual" data-animate="fade-up">
+        {imageSrc ? (
+          <img src={imageSrc} alt={imageAlt} class="value-prop__image" loading="lazy" />
+        ) : (
+          <div class="value-prop__placeholder" aria-hidden="true">
+            <span>Your Image</span>
+          </div>
+        )}
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .value-prop {
+    padding: var(--space-16) 0;
+  }
+
+  .value-prop__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+    align-items: center;
+  }
+
+  .value-prop__eyebrow {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-primary-500);
+    margin-bottom: var(--space-3);
+  }
+
+  .value-prop__heading {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-4);
+  }
+
+  .value-prop__text {
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: var(--color-neutral-600);
+    margin-bottom: var(--space-4);
+  }
+
+  .value-prop__text:last-child {
+    margin-bottom: 0;
+  }
+
+  .value-prop__visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .value-prop__image {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+    box-shadow: var(--shadow-md);
+  }
+
+  .value-prop__placeholder {
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 4 / 3;
+    background: var(--color-neutral-100);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-neutral-400);
+    font-size: var(--text-lg);
+    font-weight: 500;
+  }
+
+  @media (min-width: 768px) {
+    .value-prop__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .value-prop__grid--reversed .value-prop__content {
+      order: 2;
+    }
+
+    .value-prop__grid--reversed .value-prop__visual {
+      order: 1;
+    }
+  }
+</style>

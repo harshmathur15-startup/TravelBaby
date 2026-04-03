@@ -1,0 +1,109 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import CtaSection from '@components/sections/CtaSection.astro';
+import { SERVICES_PAGE } from '@config';
+
+const { hero, services } = SERVICES_PAGE;
+---
+
+<BaseLayout title="Services — Travel Baby" description={hero.subtitle}>
+  <!-- Hero -->
+  <section class="services-hero" aria-labelledby="services-hero-heading">
+    <Container>
+      <div class="services-hero__inner">
+        <SectionHeading
+          title={hero.title}
+          subtitle={hero.subtitle}
+          as="h1"
+          id="services-hero-heading"
+        />
+      </div>
+    </Container>
+  </section>
+
+  <!-- Service Cards -->
+  <section class="services-grid" aria-labelledby="services-heading">
+    <Container>
+      <div class="services-grid__cards">
+        {services.map((service) => (
+          <div class="services-grid__card">
+            <img
+              src={service.image}
+              alt={service.title}
+              class="services-grid__image"
+              loading="lazy"
+            />
+            <div class="services-grid__body">
+              <h3 class="services-grid__title">{service.title}</h3>
+              <p class="services-grid__text">{service.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .services-hero {
+    padding: var(--space-16) 0 var(--space-12);
+    background: linear-gradient(180deg, var(--color-primary-50) 0%, var(--color-neutral-0) 100%);
+  }
+  .services-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  /* Service Cards */
+  .services-grid {
+    padding: var(--space-12) 0;
+  }
+  .services-grid__cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  .services-grid__card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-neutral-200);
+    background: var(--color-neutral-0);
+    transition: transform var(--duration-normal), box-shadow var(--duration-normal);
+  }
+  .services-grid__card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .services-grid__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  .services-grid__body {
+    padding: var(--space-6);
+  }
+  .services-grid__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-2);
+  }
+  .services-grid__text {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--color-neutral-600);
+  }
+
+  @media (min-width: 768px) {
+    .services-grid__cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

@@ -1,16 +1,49 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Hero from '@components/sections/Hero.astro';
+import ValueProp from '@components/sections/ValueProp.astro';
+import HowItWorks from '@components/sections/HowItWorks.astro';
 import Features from '@components/sections/Features.astro';
 import Stats from '@components/sections/Stats.astro';
+import PricingCards from '@components/sections/PricingCards.astro';
 import Testimonials from '@components/sections/Testimonials.astro';
 import CtaSection from '@components/sections/CtaSection.astro';
+import FAQ from '@components/sections/FAQ.astro';
 ---
 
-<BaseLayout title="Website">
+<BaseLayout title="Travel Baby — AI-Powered Travel Planning" description="Find the best flights, hotels, and travel packages with AI. Travel Baby searches 50+ platforms to build your perfect trip at the best price.">
   <Hero />
+  <ValueProp />
+  <div id="how-it-works">
+    <HowItWorks
+      eyebrow="Simple Process"
+      heading="How Travel Baby Works"
+      subtext="Three steps to your perfect trip."
+      steps={[
+        {
+          number: '1',
+          title: 'Describe Your Trip',
+          description: 'Tell us your dates, destination, budget, and travel style. Prefer beaches over mountains? Budget hotel or boutique Airbnb? The more you share, the better your package.',
+        },
+        {
+          number: '2',
+          title: 'AI Finds the Best Deals',
+          description: 'Our AI searches Skyscanner, Cleartrip, Trivago, Booking.com, Agoda, and more — comparing thousands of flight and hotel combinations in real time.',
+        },
+        {
+          number: '3',
+          title: 'Get Your Package',
+          description: 'Receive an optimized package with the best flights, hotels, and total price. Book directly with providers at the prices we found — no markup.',
+        },
+      ]}
+    />
+  </div>
   <Features />
   <Stats />
+  <PricingCards />
   <Testimonials />
   <CtaSection />
+  <div id="faq">
+    <FAQ />
+  </div>
 </BaseLayout>

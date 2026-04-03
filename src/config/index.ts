@@ -11,7 +11,7 @@ export {
   CTA_CONTENT,
 } from './content'
 
-export { ABOUT_PAGE, CONTACT_PAGE, FEATURES_PAGE, PRICING_PAGE, COMPARE_PAGE } from './pages'
+export { ABOUT_PAGE, CONTACT_PAGE, FEATURES_PAGE, PRICING_PAGE, COMPARE_PAGE, SERVICES_PAGE } from './pages'
 
 export { PRODUCTS } from './products'
 export type {
