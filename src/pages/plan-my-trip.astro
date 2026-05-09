@@ -24,9 +24,11 @@ import Container from '@components/ui/Container.astro';
         id="trip-form"
         class="trip-form"
         method="POST"
-        action="https://formspree.io/f/your-form-id"
+        action="https://formsubmit.co/ajax/harshmathur15@gmail.com"
         novalidate
       >
+        <input type="hidden" name="_subject" value="New Trip Request — Travel Baby" />
+        <input type="hidden" name="_captcha" value="false" />
         <!-- Step 1: Trip Type -->
         <fieldset class="step" id="step-1" data-step="1">
           <legend class="step__heading">What type of trip are you planning?</legend>
@@ -71,8 +73,12 @@ import Container from '@components/ui/Container.astro';
 
         <!-- Step 3: Destination -->
         <fieldset class="step" id="step-3" data-step="3" hidden>
-          <legend class="step__heading">Where do you want to go?</legend>
-          <p class="step__description">Enter your dream destination or let us surprise you with the best deals.</p>
+          <legend class="step__heading">Where are you traveling?</legend>
+          <p class="step__description">Tell us your route so we can find the best flights and hotels.</p>
+          <div class="field">
+            <label for="origin" class="field__label">Departing from <span class="field__required" aria-hidden="true">*</span></label>
+            <input type="text" id="origin" name="origin" placeholder="e.g. Mumbai, Delhi, Bangalore..." class="field__input" required />
+          </div>
           <div class="field">
             <label for="destination" class="field__label">Destination</label>
             <input type="text" id="destination" name="destination" placeholder="e.g. Bali, Paris, Tokyo..." class="field__input" />
@@ -280,13 +286,34 @@ import Container from '@components/ui/Container.astro';
         </div>
       </form>
 
-      <!-- Thank you message -->
-      <div id="thank-you" class="thank-you" hidden>
-        <div class="thank-you__icon" aria-hidden="true">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <!-- Results panel -->
+      <div id="results-panel" class="results-panel" hidden>
+        <div class="results-panel__header">
+          <div class="results-panel__check" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h2 class="results-panel__title">Here are the best places to book</h2>
+          <p class="results-panel__subtitle">We've matched your trip across the top travel platforms. Click any to see live prices.</p>
         </div>
-        <h2 class="thank-you__heading">We're on it!</h2>
-        <p class="thank-you__text">Thanks for sharing your travel preferences. Our AI is already searching for the best deals. You'll receive your personalized trip package within 24 hours.</p>
+
+        <div class="results-grid">
+          <div class="results-category">
+            <h3 class="results-category__title">
+              <span aria-hidden="true">✈️</span> Flights
+            </h3>
+            <div class="results-links" id="flight-links"></div>
+          </div>
+          <div class="results-category">
+            <h3 class="results-category__title">
+              <span aria-hidden="true">🏨</span> Hotels
+            </h3>
+            <div class="results-links" id="hotel-links"></div>
+          </div>
+        </div>
+
+        <p class="results-panel__note">
+          Your request has also been sent to our team — we'll follow up with a curated package within 24 hours.
+        </p>
       </div>
     </Container>
   </section>
@@ -642,29 +669,99 @@ import Container from '@components/ui/Container.astro';
     margin-top: var(--space-2);
   }
 
-  /* Thank you */
-  .thank-you {
-    text-align: center;
-    padding: var(--space-16) var(--space-4);
+  /* Results panel */
+  .results-panel {
+    background: var(--color-neutral-0);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
   }
-  .thank-you__icon {
-    color: var(--color-success);
-    margin-bottom: var(--space-4);
+  .results-panel__header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+  }
+  .results-panel__check {
+    color: var(--color-success, #16a34a);
     display: flex;
     justify-content: center;
+    margin-bottom: var(--space-4);
   }
-  .thank-you__heading {
+  .results-panel__title {
     font-size: var(--text-2xl);
     font-weight: 700;
     color: var(--color-neutral-900);
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-2);
   }
-  .thank-you__text {
+  .results-panel__subtitle {
     font-size: var(--text-base);
-    color: var(--color-neutral-600);
+    color: var(--color-neutral-500);
     max-width: 480px;
     margin: 0 auto;
     line-height: var(--leading-normal);
+  }
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+  .results-category {
+    background: var(--color-neutral-50);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+  }
+  .results-category__title {
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--color-neutral-700);
+    margin-bottom: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .results-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .results-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-neutral-0);
+    border: 1px solid var(--color-neutral-200);
+    border-left: 4px solid var(--platform-color, var(--color-primary-500));
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: box-shadow var(--duration-fast), transform var(--duration-fast);
+  }
+  .results-link:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+  .results-link__name {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-neutral-900);
+  }
+  .results-link__arrow {
+    font-size: var(--text-lg);
+    color: var(--platform-color, var(--color-primary-500));
+  }
+  .results-panel__note {
+    text-align: center;
+    font-size: var(--text-sm);
+    color: var(--color-neutral-500);
+    border-top: 1px solid var(--color-neutral-200);
+    padding-top: var(--space-5);
+    margin: 0;
+  }
+  @media (min-width: 640px) {
+    .results-grid {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
   /* Responsive */
@@ -705,7 +802,6 @@ import Container from '@components/ui/Container.astro';
   const btnBack = document.getElementById('btn-back') as HTMLButtonElement | null;
   const btnNext = document.getElementById('btn-next') as HTMLButtonElement | null;
   const btnSubmit = document.getElementById('btn-submit') as HTMLButtonElement | null;
-  const thankYou = document.getElementById('thank-you') as HTMLElement | null;
   const progressBar = document.querySelector('.progress') as HTMLElement | null;
 
   function showStep(step: number): void {
@@ -767,8 +863,14 @@ import Container from '@components/ui/Container.astro';
         return true;
       }
       case 3: {
+        const origin = stepEl.querySelector<HTMLInputElement>('#origin');
         const dest = stepEl.querySelector<HTMLInputElement>('#destination');
         const surprise = stepEl.querySelector<HTMLInputElement>('#surprise-me');
+        if (!origin?.value.trim()) {
+          origin?.classList.add('is-invalid');
+          showError(stepEl, 'Please enter your departure city.');
+          return false;
+        }
         if (!surprise?.checked && !dest?.value.trim()) {
           dest?.classList.add('is-invalid');
           showError(stepEl, 'Please enter a destination or check "surprise me".');
@@ -847,37 +949,96 @@ import Container from '@components/ui/Container.astro';
     }
   });
 
+  function buildPlatformLinks(data: FormData): void {
+    const destination = (data.get('destination') as string || 'your destination').trim();
+    const origin = (data.get('origin') as string || '').trim();
+    const departure = (data.get('departureDate') as string || '');
+    const returnDate = (data.get('returnDate') as string || '');
+    const adults = Number(data.get('adults') || 1);
+    const children = Number(data.get('children') || 0);
+
+    const destSlug = destination.toLowerCase().replace(/\s+/g, '-');
+    const originSlug = origin.toLowerCase().replace(/\s+/g, '-');
+
+    const flightPlatforms = [
+      {
+        name: 'Skyscanner',
+        url: `https://www.skyscanner.co.in/flights/${originSlug}/${destSlug}/${departure.replace(/-/g, '')}/${returnDate.replace(/-/g, '')}/?adults=${adults}&children=${children}`,
+        color: '#00a6de',
+      },
+      {
+        name: 'Cleartrip',
+        url: `https://www.cleartrip.com/flights/results?from=${encodeURIComponent(origin)}&to=${encodeURIComponent(destination)}&depart_date=${departure}&return_date=${returnDate}&adults=${adults}&childs=${children}&class=Economy`,
+        color: '#e84c3d',
+      },
+      {
+        name: 'MakeMyTrip',
+        url: `https://www.makemytrip.com/flights/international/results/?itinerary=${encodeURIComponent(origin)}-${encodeURIComponent(destination)}-${departure.replace(/-/g, '')}&tripType=R&paxType=A-${adults}_C-${children}_I-0&cabinClass=E&ccde=IN&lang=eng`,
+        color: '#1a73c1',
+      },
+    ];
+
+    const hotelPlatforms = [
+      {
+        name: 'Booking.com',
+        url: `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(destination)}&checkin=${departure}&checkout=${returnDate}&group_adults=${adults}&group_children=${children}&no_rooms=1`,
+        color: '#003580',
+      },
+      {
+        name: 'Agoda',
+        url: `https://www.agoda.com/search?city=${encodeURIComponent(destination)}&checkIn=${departure}&checkOut=${returnDate}&rooms=1&adults=${adults}&children=${children}`,
+        color: '#e8455a',
+      },
+      {
+        name: 'MakeMyTrip',
+        url: `https://www.makemytrip.com/hotels/hotel-listing/#${encodeURIComponent(destination)}|${departure}|${returnDate}|1|${adults}|0|0|2|undefined`,
+        color: '#1a73c1',
+      },
+    ];
+
+    const flightLinks = document.getElementById('flight-links');
+    const hotelLinks = document.getElementById('hotel-links');
+
+    [{ el: flightLinks, platforms: flightPlatforms }, { el: hotelLinks, platforms: hotelPlatforms }].forEach(({ el, platforms }) => {
+      if (!el) return;
+      el.innerHTML = '';
+      platforms.forEach((p) => {
+        const a = document.createElement('a');
+        a.href = p.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.className = 'results-link';
+        a.innerHTML = `<span class="results-link__name">${p.name}</span><span class="results-link__arrow" aria-hidden="true">→</span>`;
+        a.style.setProperty('--platform-color', p.color);
+        el.appendChild(a);
+      });
+    });
+  }
+
   // Form submit
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!validateStep(currentStep)) return;
 
     btnSubmit?.setAttribute('disabled', 'true');
-    btnSubmit && (btnSubmit.textContent = 'Sending...');
+    btnSubmit && (btnSubmit.textContent = 'Finding options...');
 
-    try {
-      const formData = new FormData(form);
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: formData,
-        headers: { Accept: 'application/json' },
-      });
+    const formData = new FormData(form);
 
-      if (response.ok) {
-        form.hidden = true;
-        if (progressBar) progressBar.hidden = true;
-        if (thankYou) thankYou.hidden = false;
-        document.querySelector('.step-nav')?.remove();
-      } else {
-        btnSubmit?.removeAttribute('disabled');
-        btnSubmit && (btnSubmit.textContent = 'Submit');
-        showError(form, 'Something went wrong. Please try again.');
-      }
-    } catch {
-      btnSubmit?.removeAttribute('disabled');
-      btnSubmit && (btnSubmit.textContent = 'Submit');
-      showError(form, 'Network error. Please check your connection and try again.');
-    }
+    // Show results immediately, send email in background
+    form.hidden = true;
+    if (progressBar) progressBar.hidden = true;
+    document.querySelector('.step-nav')?.remove();
+    buildPlatformLinks(formData);
+    const resultsPanel = document.getElementById('results-panel');
+    if (resultsPanel) resultsPanel.hidden = false;
+
+    // Background email notification
+    fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: { Accept: 'application/json' },
+    }).catch(() => {});
   });
 
   // Surprise me checkbox — disable destination input
