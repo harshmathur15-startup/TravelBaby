@@ -6,7 +6,7 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com', // TODO: Replace with your domain
+  site: 'https://travelbaby-ius3.onrender.com',
   output: 'static',
   integrations: [sitemap(), mdx()],
   i18n: {
