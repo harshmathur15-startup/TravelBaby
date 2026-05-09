@@ -26,7 +26,7 @@ export const SITE_CONFIG = {
   name: 'Travel Baby',
 
   /** Production URL — used in sitemap, RSS, robots.txt, OG tags */
-  url: 'https://travelbaby.com',
+  url: 'https://travelbaby.in',
 
   /** Default meta description */
   description:
