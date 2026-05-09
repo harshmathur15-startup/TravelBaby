@@ -12,7 +12,7 @@ import FAQ from '@components/sections/FAQ.astro';
 ---
 
 <BaseLayout title="Travel Baby — AI-Powered Travel Planning" description="Find the best flights, hotels, and travel packages with AI. Travel Baby searches 50+ platforms to build your perfect trip at the best price.">
-  <Hero />
+  <Hero featuredDestinations={[{ label: 'Vietnam', href: '/destinations/vietnam', emoji: '🇻🇳' }]} />
   <ValueProp />
   <div id="how-it-works">
     <HowItWorks

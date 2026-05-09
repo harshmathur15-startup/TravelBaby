@@ -8,6 +8,7 @@ interface Props {
   primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
   trustLine?: string;
+  featuredDestinations?: Array<{ label: string; href: string; emoji?: string }>;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   primaryCta = HERO_CONTENT.primaryCta,
   secondaryCta = HERO_CONTENT.secondaryCta,
   trustLine = HERO_CONTENT.trustLine,
+  featuredDestinations,
 } = Astro.props;
 ---
 
@@ -45,6 +47,18 @@ const {
     <p class="hero__trust" aria-label="Social proof">
       {trustLine}
     </p>
+
+    {featuredDestinations && featuredDestinations.length > 0 && (
+      <div class="hero__destinations" aria-label="Featured destinations">
+        <span class="hero__destinations-label">Explore:</span>
+        {featuredDestinations.map((dest) => (
+          <a href={dest.href} class="hero__destination-pill">
+            {dest.emoji && <span aria-hidden="true">{dest.emoji}</span>}
+            {dest.label}
+          </a>
+        ))}
+      </div>
+    )}
   </div>
 </section>
 
@@ -178,6 +192,44 @@ const {
 
   @media (min-width: 768px) {
     .hero__heading { font-size: var(--text-5xl); }
+  }
+
+  .hero__destinations {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-6);
+  }
+
+  .hero__destinations-label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-neutral-400);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .hero__destination-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-700);
+    background: var(--color-primary-50);
+    border: 1px solid var(--color-primary-200);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: background var(--duration-fast), border-color var(--duration-fast), transform var(--duration-fast);
+  }
+
+  .hero__destination-pill:hover {
+    background: var(--color-primary-100);
+    border-color: var(--color-primary-400);
+    transform: translateY(-1px);
   }
 
   @media (max-width: 640px) {

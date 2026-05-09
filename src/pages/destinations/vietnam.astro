@@ -1,0 +1,592 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@components/ui/Container.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import Card from '@components/ui/Card.astro';
+import Badge from '@components/ui/Badge.astro';
+import CtaSection from '@components/sections/CtaSection.astro';
+
+const destinations = [
+  {
+    name: 'Ha Long Bay',
+    region: 'North',
+    description:
+      'UNESCO World Heritage site with thousands of limestone karsts rising from emerald waters. Take a cruise and kayak through hidden caves.',
+    highlight: 'Overnight cruise',
+    emoji: '⛵',
+  },
+  {
+    name: 'Hanoi',
+    region: 'North',
+    description:
+      "The capital blends French colonial architecture with ancient temples. Explore the Old Quarter's 36 guilds streets and Hoan Kiem Lake.",
+    highlight: 'Street food capital',
+    emoji: '🏛️',
+  },
+  {
+    name: 'Hoi An',
+    region: 'Central',
+    description:
+      'A lantern-lit ancient town with a perfectly preserved trading port. Stroll the pedestrian streets at night when thousands of silk lanterns glow.',
+    highlight: 'Full Moon Festival',
+    emoji: '🏮',
+  },
+  {
+    name: 'Da Nang',
+    region: 'Central',
+    description:
+      'Gateway to the Marble Mountains and My Khe Beach — one of the finest in Asia. Base for day trips to Hoi An and Hue.',
+    highlight: 'Beach & mountains',
+    emoji: '🏖️',
+  },
+  {
+    name: 'Ho Chi Minh City',
+    region: 'South',
+    description:
+      "Vietnam's most dynamic city, moving at full speed 24/7. War history, French villas, rooftop bars, and the best banh mi you'll ever eat.",
+    highlight: 'Cu Chi Tunnels nearby',
+    emoji: '🌆',
+  },
+  {
+    name: 'Mekong Delta',
+    region: 'South',
+    description:
+      'A maze of waterways, rice paddies, and floating markets. Take a boat through Can Tho and sample tropical fruit straight from the tree.',
+    highlight: 'Floating markets',
+    emoji: '🛶',
+  },
+];
+
+type BadgeVariant = 'default' | 'primary' | 'success' | 'warning' | 'error' | 'accent';
+
+const seasons: Array<{ period: string; label: string; variant: BadgeVariant; description: string }> = [
+  {
+    period: 'Nov – Apr',
+    label: 'Best time',
+    variant: 'success',
+    description:
+      'Dry season across the south and central coast. Cool and clear in the north (Dec–Feb can be chilly in Hanoi).',
+  },
+  {
+    period: 'May – Aug',
+    label: 'Good for north',
+    variant: 'warning',
+    description:
+      'Hot and rainy in the south, but the north (Sapa, Ha Long) is green and lush. Expect afternoon showers.',
+  },
+  {
+    period: 'Sep – Oct',
+    label: 'Shoulder season',
+    variant: 'default',
+    description:
+      'Typhoon risk on the central coast. Fewer crowds and lower prices. Central highlands are beautiful.',
+  },
+];
+
+const tips = [
+  {
+    icon: '🛂',
+    title: 'Visa',
+    body: 'Most nationalities get 45 days visa-free or can obtain an e-visa online for ~$25. Apply at least 3 days before travel.',
+  },
+  {
+    icon: '💵',
+    title: 'Currency',
+    body: 'Vietnamese Dong (VND). Budget ~$30–60/day for comfortable mid-range travel. Cash is still king outside cities.',
+  },
+  {
+    icon: '🚌',
+    title: 'Getting Around',
+    body: 'Fly between major cities (cheap with VietJet/Bamboo). Night trains between Hanoi and Da Nang are a scenic overnight option.',
+  },
+  {
+    icon: '🍜',
+    title: 'Food',
+    body: 'Eat where locals eat — street stalls and pho shops. A full meal costs under $3. Try pho, bánh mì, bún bò Huế, and cơm tấm.',
+  },
+  {
+    icon: '📱',
+    title: 'Connectivity',
+    body: 'Buy a local SIM at the airport for ~$5. Viettel and Vinaphone have the best coverage across rural areas.',
+  },
+  {
+    icon: '🌡️',
+    title: 'Health',
+    body: 'Drink bottled water, use sunscreen, and bring mosquito repellent for rural areas. Travel insurance is strongly recommended.',
+  },
+];
+---
+
+<BaseLayout
+  title="Travel to Vietnam — Deals, Tips & Itineraries | Travel Baby"
+  description="Plan your Vietnam trip with Travel Baby. AI-powered deals on flights and hotels, plus expert tips on the best destinations, seasons, and itineraries."
+>
+  <!-- Hero -->
+  <section class="vn-hero" aria-labelledby="vn-hero-heading">
+    <Container>
+      <div class="vn-hero__inner">
+        <p class="vn-hero__eyebrow">Destination Guide</p>
+        <h1 id="vn-hero-heading" class="vn-hero__title">
+          Discover <span class="vn-hero__highlight">Vietnam</span>
+        </h1>
+        <p class="vn-hero__subtitle">
+          From limestone karsts to lantern-lit ancient towns — Vietnam packs a lifetime of
+          experiences into one slender country. Travel Baby finds you the best flights and hotels
+          so you spend less time searching and more time exploring.
+        </p>
+        <div class="vn-hero__tags">
+          <Badge variant="primary">Southeast Asia</Badge>
+          <Badge variant="secondary">2–4 weeks ideal</Badge>
+          <Badge variant="secondary">Budget-friendly</Badge>
+          <Badge variant="secondary">Year-round</Badge>
+        </div>
+        <a href="/plan-my-trip" class="vn-hero__cta">Find Vietnam Deals</a>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Quick stats -->
+  <section class="vn-stats" aria-label="Vietnam at a glance">
+    <Container>
+      <ul class="vn-stats__list" role="list">
+        <li class="vn-stats__item">
+          <span class="vn-stats__value">~$30–60</span>
+          <span class="vn-stats__label">per day (mid-range)</span>
+        </li>
+        <li class="vn-stats__item">
+          <span class="vn-stats__value">45 days</span>
+          <span class="vn-stats__label">visa-free for most</span>
+        </li>
+        <li class="vn-stats__item">
+          <span class="vn-stats__value">3 regions</span>
+          <span class="vn-stats__label">north · central · south</span>
+        </li>
+        <li class="vn-stats__item">
+          <span class="vn-stats__value">1,650 km</span>
+          <span class="vn-stats__label">of coastline</span>
+        </li>
+      </ul>
+    </Container>
+  </section>
+
+  <!-- Top Destinations -->
+  <section class="vn-destinations" aria-labelledby="vn-dest-heading">
+    <Container>
+      <SectionHeading
+        title="Top Destinations"
+        subtitle="Vietnam's highlights span three distinct regions — each with its own culture, cuisine, and landscape."
+        id="vn-dest-heading"
+      />
+      <div class="vn-destinations__grid">
+        {destinations.map((dest) => (
+          <Card variant="outlined" padding="lg">
+            <div class="vn-dest__emoji" aria-hidden="true">{dest.emoji}</div>
+            <div class="vn-dest__header">
+              <h3 class="vn-dest__name">{dest.name}</h3>
+              <span class="vn-dest__region">{dest.region}</span>
+            </div>
+            <p class="vn-dest__text">{dest.description}</p>
+            <p class="vn-dest__highlight">
+              <span aria-hidden="true">★</span> {dest.highlight}
+            </p>
+          </Card>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Best Time to Visit -->
+  <section class="vn-seasons" aria-labelledby="vn-seasons-heading">
+    <Container>
+      <SectionHeading
+        title="Best Time to Visit"
+        subtitle="Vietnam's climate varies dramatically from north to south — there's always a good region to visit."
+        id="vn-seasons-heading"
+      />
+      <div class="vn-seasons__grid">
+        {seasons.map((s) => (
+          <div class="vn-seasons__card">
+            <div class="vn-seasons__top">
+              <span class="vn-seasons__period">{s.period}</span>
+              <Badge variant={s.variant}>{s.label}</Badge>
+            </div>
+            <p class="vn-seasons__text">{s.description}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Travel Tips -->
+  <section class="vn-tips" aria-labelledby="vn-tips-heading">
+    <Container>
+      <SectionHeading
+        title="Essential Travel Tips"
+        subtitle="Everything you need to know before you go."
+        id="vn-tips-heading"
+      />
+      <div class="vn-tips__grid">
+        {tips.map((tip) => (
+          <div class="vn-tips__item">
+            <span class="vn-tips__icon" aria-hidden="true">{tip.icon}</span>
+            <div>
+              <h3 class="vn-tips__title">{tip.title}</h3>
+              <p class="vn-tips__text">{tip.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Sample Itinerary -->
+  <section class="vn-itinerary" aria-labelledby="vn-itin-heading">
+    <Container>
+      <SectionHeading
+        title="Sample 2-Week Itinerary"
+        subtitle="A north-to-south route hitting Vietnam's greatest hits."
+        id="vn-itin-heading"
+      />
+      <ol class="vn-itin__list" role="list">
+        <li class="vn-itin__item">
+          <span class="vn-itin__days">Days 1–3</span>
+          <div>
+            <strong class="vn-itin__place">Hanoi</strong>
+            <p class="vn-itin__desc">Arrive, explore the Old Quarter, visit Hoan Kiem Lake and the Temple of Literature.</p>
+          </div>
+        </li>
+        <li class="vn-itin__item">
+          <span class="vn-itin__days">Days 4–5</span>
+          <div>
+            <strong class="vn-itin__place">Ha Long Bay</strong>
+            <p class="vn-itin__desc">Overnight cruise through the karsts — kayaking, cave exploration, and sunrise on deck.</p>
+          </div>
+        </li>
+        <li class="vn-itin__item">
+          <span class="vn-itin__days">Days 6–8</span>
+          <div>
+            <strong class="vn-itin__place">Hoi An</strong>
+            <p class="vn-itin__desc">Fly to Da Nang, transfer to Hoi An. Wander the lantern-lit Ancient Town and get a suit tailored.</p>
+          </div>
+        </li>
+        <li class="vn-itin__item">
+          <span class="vn-itin__days">Days 9–11</span>
+          <div>
+            <strong class="vn-itin__place">Ho Chi Minh City</strong>
+            <p class="vn-itin__desc">Fly south. War Remnants Museum, Cu Chi Tunnels day trip, and dinner on Bui Vien street.</p>
+          </div>
+        </li>
+        <li class="vn-itin__item">
+          <span class="vn-itin__days">Days 12–14</span>
+          <div>
+            <strong class="vn-itin__place">Mekong Delta</strong>
+            <p class="vn-itin__desc">Day trip or overnight to Can Tho — floating markets, river villages, and the world's best tropical fruit.</p>
+          </div>
+        </li>
+      </ol>
+    </Container>
+  </section>
+
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .vn-hero {
+    padding: var(--space-20) 0 var(--space-16);
+    background: linear-gradient(160deg, #e8f5e9 0%, var(--color-primary-50) 50%, var(--color-neutral-0) 100%);
+  }
+  .vn-hero__inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+  }
+  .vn-hero__eyebrow {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-primary-600);
+  }
+  .vn-hero__title {
+    font-size: var(--text-4xl);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--color-neutral-900);
+  }
+  .vn-hero__highlight {
+    color: var(--color-primary-600);
+  }
+  .vn-hero__subtitle {
+    font-size: var(--text-lg);
+    line-height: 1.7;
+    color: var(--color-neutral-600);
+    max-width: 600px;
+  }
+  .vn-hero__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: center;
+  }
+  .vn-hero__cta {
+    display: inline-block;
+    padding: var(--space-3) var(--space-8);
+    background: var(--color-primary-600);
+    color: #fff;
+    font-size: var(--text-base);
+    font-weight: 600;
+    border-radius: var(--radius-full, 9999px);
+    text-decoration: none;
+    transition: background var(--duration-normal);
+  }
+  .vn-hero__cta:hover {
+    background: var(--color-primary-700);
+  }
+  @media (min-width: 1024px) {
+    .vn-hero__title {
+      font-size: var(--text-5xl);
+    }
+  }
+
+  /* Stats */
+  .vn-stats {
+    padding: var(--space-10) 0;
+    background: var(--color-primary-600);
+    color: #fff;
+  }
+  .vn-stats__list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  .vn-stats__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .vn-stats__value {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+  }
+  .vn-stats__label {
+    font-size: var(--text-sm);
+    opacity: 0.8;
+  }
+  @media (min-width: 640px) {
+    .vn-stats__list {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* Destinations */
+  .vn-destinations {
+    padding: var(--space-16) 0;
+  }
+  .vn-destinations__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-10);
+  }
+  .vn-dest__emoji {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-3);
+  }
+  .vn-dest__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+  .vn-dest__name {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+  }
+  .vn-dest__region {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-primary-600);
+    background: var(--color-primary-50);
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+  }
+  .vn-dest__text {
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    color: var(--color-neutral-600);
+    margin-bottom: var(--space-3);
+  }
+  .vn-dest__highlight {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-primary-700);
+  }
+  @media (min-width: 768px) {
+    .vn-destinations__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .vn-destinations__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Seasons */
+  .vn-seasons {
+    padding: var(--space-16) 0;
+    background: var(--color-neutral-50);
+  }
+  .vn-seasons__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-10);
+  }
+  .vn-seasons__card {
+    background: var(--color-neutral-0);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+  }
+  .vn-seasons__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+  .vn-seasons__period {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+  }
+  .vn-seasons__text {
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    color: var(--color-neutral-600);
+  }
+  @media (min-width: 768px) {
+    .vn-seasons__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Tips */
+  .vn-tips {
+    padding: var(--space-16) 0;
+  }
+  .vn-tips__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-10);
+  }
+  .vn-tips__item {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+  .vn-tips__icon {
+    font-size: var(--text-2xl);
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 2px;
+  }
+  .vn-tips__title {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-1);
+  }
+  .vn-tips__text {
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    color: var(--color-neutral-600);
+  }
+  @media (min-width: 640px) {
+    .vn-tips__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .vn-tips__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Itinerary */
+  .vn-itinerary {
+    padding: var(--space-16) 0;
+    background: var(--color-neutral-50);
+  }
+  .vn-itin__list {
+    margin-top: var(--space-10);
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-left: 3px solid var(--color-primary-200);
+    margin-left: var(--space-4);
+  }
+  .vn-itin__item {
+    display: flex;
+    gap: var(--space-6);
+    align-items: flex-start;
+    padding: var(--space-5) 0 var(--space-5) var(--space-8);
+    position: relative;
+  }
+  .vn-itin__item::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: calc(var(--space-5) + 6px);
+    width: 13px;
+    height: 13px;
+    background: var(--color-primary-600);
+    border-radius: 50%;
+    border: 2px solid var(--color-neutral-0);
+    box-shadow: 0 0 0 2px var(--color-primary-300);
+  }
+  .vn-itin__days {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-primary-700);
+    white-space: nowrap;
+    min-width: 90px;
+    padding-top: 2px;
+  }
+  .vn-itin__place {
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+    display: block;
+    margin-bottom: var(--space-1);
+  }
+  .vn-itin__desc {
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    color: var(--color-neutral-600);
+    margin: 0;
+  }
+  @media (min-width: 768px) {
+    .vn-itin__list {
+      margin-left: var(--space-8);
+    }
+  }
+</style>
