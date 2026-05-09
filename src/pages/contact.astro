@@ -28,7 +28,10 @@ const { legal, socialLinks } = SITE_CONFIG;
       <div class="contact-grid">
         <!-- Form -->
         <div class="contact-form-wrapper">
-          <form class="contact-form" method="post" action={form.actionUrl} novalidate>
+          <form class="contact-form" method="POST" action={form.actionUrl}>
+            <input type="hidden" name="_subject" value="New Contact — Travel Baby" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_next" value="https://travelbaby.in/contact" />
             <div class="contact-form__row">
               <Input label="First Name" name="firstName" placeholder="Jane" required />
               <Input label="Last Name" name="lastName" placeholder="Smith" required />
