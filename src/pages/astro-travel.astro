@@ -35,14 +35,19 @@ import CtaSection from '@components/sections/CtaSection.astro';
                 <p class="at-field__hint">From your birth certificate if possible</p>
               </div>
             </div>
-            <div class="at-field">
-              <label for="pob" class="at-field__label">Place of Birth</label>
-              <input type="text" id="pob" name="pob" required placeholder="e.g. Mumbai, India" class="at-field__input" />
-            </div>
-            <div class="at-field">
-              <label for="at-email" class="at-field__label">Your Email</label>
-              <input type="email" id="at-email" name="email" required placeholder="you@example.com" class="at-field__input" />
-              <p class="at-field__hint">We'll send your full reading here</p>
+            <div class="at-form__grid">
+              <div class="at-field">
+                <label for="at-country" class="at-field__label">Country of Birth</label>
+                <select id="at-country" name="country" required class="at-field__input at-field__select">
+                  <option value="">Select country…</option>
+                </select>
+              </div>
+              <div class="at-field">
+                <label for="at-city" class="at-field__label">City of Birth</label>
+                <select id="at-city" name="city" required class="at-field__input at-field__select" disabled>
+                  <option value="">Select country first…</option>
+                </select>
+              </div>
             </div>
             <p id="at-error" class="at-error" hidden></p>
             <button type="submit" class="at-submit" id="at-submit">
@@ -226,6 +231,7 @@ import CtaSection from '@components/sections/CtaSection.astro';
     box-shadow: 0 0 0 3px rgba(139,92,246,0.25);
   }
   .at-field__hint { font-size: var(--text-xs); color: rgba(255,255,255,0.35); }
+  .at-field__select option { background: #1a0a3d; color: #fff; }
   .at-error { font-size: var(--text-sm); color: #f87171; text-align: center; }
   .at-submit {
     width: 100%;
@@ -487,12 +493,78 @@ import CtaSection from '@components/sections/CtaSection.astro';
 </style>
 
 <script>
+  const CITIES: Record<string, string[]> = {
+    Australia: ['Adelaide', 'Brisbane', 'Melbourne', 'Perth', 'Sydney'],
+    Canada: ['Calgary', 'Montreal', 'Ottawa', 'Toronto', 'Vancouver'],
+    France: ['Lyon', 'Marseille', 'Nice', 'Paris'],
+    Germany: ['Berlin', 'Frankfurt', 'Hamburg', 'Munich'],
+    India: [
+      'Ahmedabad', 'Bangalore', 'Bhopal', 'Chandigarh', 'Chennai', 'Delhi',
+      'Guwahati', 'Hyderabad', 'Indore', 'Jaipur', 'Kochi', 'Kolkata',
+      'Lucknow', 'Mumbai', 'Nagpur', 'Patna', 'Pune', 'Surat',
+      'Vadodara', 'Varanasi', 'Visakhapatnam',
+    ],
+    Indonesia: ['Bali', 'Jakarta', 'Surabaya'],
+    Italy: ['Florence', 'Milan', 'Rome', 'Venice'],
+    Japan: ['Kyoto', 'Osaka', 'Tokyo'],
+    Malaysia: ['Johor Bahru', 'Kuala Lumpur', 'Penang'],
+    Nepal: ['Kathmandu', 'Pokhara'],
+    Netherlands: ['Amsterdam', 'Rotterdam'],
+    'New Zealand': ['Auckland', 'Christchurch', 'Wellington'],
+    Portugal: ['Lisbon', 'Porto'],
+    Singapore: ['Singapore'],
+    'South Africa': ['Cape Town', 'Durban', 'Johannesburg'],
+    Spain: ['Barcelona', 'Madrid', 'Seville'],
+    'Sri Lanka': ['Colombo', 'Kandy'],
+    Thailand: ['Bangkok', 'Chiang Mai', 'Phuket'],
+    Turkey: ['Ankara', 'Istanbul'],
+    UAE: ['Abu Dhabi', 'Dubai', 'Sharjah'],
+    UK: ['Birmingham', 'Edinburgh', 'Glasgow', 'Leeds', 'London', 'Manchester'],
+    USA: ['Chicago', 'Dallas', 'Houston', 'Las Vegas', 'Los Angeles', 'Miami', 'New York', 'San Francisco', 'Seattle'],
+    Vietnam: ['Da Nang', 'Hanoi', 'Ho Chi Minh City'],
+  };
+
+  const countryEl = document.getElementById('at-country') as HTMLSelectElement | null;
+  const cityEl = document.getElementById('at-city') as HTMLSelectElement | null;
   const form = document.getElementById('at-form') as HTMLFormElement | null;
   const loadingEl = document.getElementById('at-loading') as HTMLElement | null;
   const resultsSection = document.getElementById('at-results') as HTMLElement | null;
   const errorEl = document.getElementById('at-error') as HTMLElement | null;
   const submitBtn = document.getElementById('at-submit') as HTMLButtonElement | null;
   const formCard = document.getElementById('at-form-card') as HTMLElement | null;
+
+  // Populate country dropdown
+  if (countryEl) {
+    Object.keys(CITIES).sort().forEach((country) => {
+      const opt = document.createElement('option');
+      opt.value = country;
+      opt.textContent = country;
+      countryEl.appendChild(opt);
+    });
+  }
+
+  // Update cities when country changes
+  countryEl?.addEventListener('change', () => {
+    if (!cityEl || !countryEl) return;
+    const cities = CITIES[countryEl.value] ?? [];
+    cityEl.innerHTML = '';
+    if (!cities.length) {
+      cityEl.innerHTML = '<option value="">Select country first…</option>';
+      cityEl.disabled = true;
+      return;
+    }
+    cityEl.disabled = false;
+    const placeholder = document.createElement('option');
+    placeholder.value = '';
+    placeholder.textContent = 'Select city…';
+    cityEl.appendChild(placeholder);
+    cities.forEach((city) => {
+      const opt = document.createElement('option');
+      opt.value = city;
+      opt.textContent = city;
+      cityEl.appendChild(opt);
+    });
+  });
 
   function showError(msg: string): void {
     if (errorEl) { errorEl.textContent = msg; errorEl.hidden = false; }
@@ -507,15 +579,16 @@ import CtaSection from '@components/sections/CtaSection.astro';
 
     const dob = (document.getElementById('dob') as HTMLInputElement).value;
     const tob = (document.getElementById('tob') as HTMLInputElement).value;
-    const pob = (document.getElementById('pob') as HTMLInputElement).value.trim();
-    const email = (document.getElementById('at-email') as HTMLInputElement).value.trim();
+    const country = countryEl?.value ?? '';
+    const city = cityEl?.value ?? '';
 
-    if (!dob || !tob || !pob || !email) {
+    if (!dob || !tob || !country || !city) {
       showError('Please fill in all fields.');
       return;
     }
 
-    // Show loading
+    const pob = `${city}, ${country}`;
+
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Reading your chart…'; }
     if (form) form.hidden = true;
     if (loadingEl) loadingEl.hidden = false;
@@ -533,23 +606,21 @@ import CtaSection from '@components/sections/CtaSection.astro';
         return;
       }
 
-      // Populate results
       const setText = (id: string, val: string) => {
         const el = document.getElementById(id);
         if (el) el.textContent = val;
       };
 
-      setText('at-profile-sign', `${data.symbol}`);
-      setText('at-profile-name', `${data.sign}`);
+      setText('at-profile-sign', data.symbol ?? '');
+      setText('at-profile-name', data.sign ?? '');
       setText('at-profile-meta', `${data.element} Sign · Rising: ${data.risingSign}`);
-      setText('at-profile-style', data.travelStyle);
-      setText('at-profile-style-desc', data.travelStyleDesc);
-      setText('at-cosmic-profile', data.cosmicProfile);
-      setText('at-best-months', data.bestMonths?.join(', '));
-      setText('at-avoid', data.avoidTip);
-      setText('at-closing-msg', data.cosmicMessage);
+      setText('at-profile-style', data.travelStyle ?? '');
+      setText('at-profile-style-desc', data.travelStyleDesc ?? '');
+      setText('at-cosmic-profile', data.cosmicProfile ?? '');
+      setText('at-best-months', (data.bestMonths ?? []).join(', '));
+      setText('at-avoid', data.avoidTip ?? '');
+      setText('at-closing-msg', data.cosmicMessage ?? '');
 
-      // Destinations
       const destContainer = document.getElementById('at-destinations');
       if (destContainer && Array.isArray(data.destinations)) {
         destContainer.innerHTML = '';
@@ -574,30 +645,15 @@ import CtaSection from '@components/sections/CtaSection.astro';
         });
       }
 
-      // Show results, hide loading
       if (loadingEl) loadingEl.hidden = true;
       if (formCard) formCard.hidden = true;
       if (resultsSection) { resultsSection.hidden = false; resultsSection.scrollIntoView({ behavior: 'smooth' }); }
-
-      // Background email notification
-      fetch('https://formsubmit.co/ajax/harshmathur15@gmail.com', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          _subject: 'New Astro Travel Reading — Travel Baby',
-          _captcha: 'false',
-          dob, tob, pob, email,
-          sign: data.sign,
-          destinations: data.destinations?.map((d: { name: string }) => d.name).join(', '),
-        }),
-      }).catch(() => {});
 
     } catch {
       showError('Network error. Please check your connection and try again.');
     }
   });
 
-  // Restart
   document.getElementById('at-restart')?.addEventListener('click', () => {
     if (resultsSection) resultsSection.hidden = true;
     if (formCard) formCard.hidden = false;

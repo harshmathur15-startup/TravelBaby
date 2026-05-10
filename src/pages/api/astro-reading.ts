@@ -35,7 +35,7 @@ Based on their astrological chart, provide personalised travel recommendations. 
 - Dominant element and modality
 - Ruling planet and what it governs in travel
 
-Respond ONLY with valid JSON in exactly this structure (no markdown, no extra text):
+Respond ONLY with valid JSON in exactly this structure (no markdown, no extra text, no code fences):
 {
   "sign": "Sun sign name",
   "symbol": "Zodiac symbol emoji",
@@ -82,19 +82,23 @@ Respond ONLY with valid JSON in exactly this structure (no markdown, no extra te
       messages: [{ role: 'user', content: prompt }],
     })
 
-    const text = message.content[0].type === 'text' ? message.content[0].text : ''
-    const data = JSON.parse(text)
+    const raw = message.content[0].type === 'text' ? message.content[0].text : ''
+    // Strip markdown code fences if present
+    const cleaned = raw
+      .replace(/^```(?:json)?\s*/m, '')
+      .replace(/\s*```\s*$/m, '')
+      .trim()
+    const data = JSON.parse(cleaned)
 
     return new Response(JSON.stringify(data), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     })
-  } catch {
+  } catch (err) {
+    console.error('[astro-reading] error:', err)
     return new Response(
       JSON.stringify({ error: 'Failed to generate reading. Please try again.' }),
-      {
-        status: 500,
-      },
+      { status: 500 },
     )
   }
 }
