@@ -1,0 +1,821 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Container from '@components/ui/Container.astro';
+import CtaSection from '@components/sections/CtaSection.astro';
+
+const zodiacDestinations = [
+  {
+    sign: 'Aries',
+    symbol: '♈',
+    dates: 'Mar 21 – Apr 19',
+    element: 'Fire',
+    elementColor: '#ef4444',
+    destination: 'Iceland',
+    tagline: 'Chase volcanoes, waterfalls, and the Northern Lights.',
+    trait: 'Bold & Adventurous',
+    emoji: '🌋',
+    bg: 'linear-gradient(135deg, #1a0a0a 0%, #3d1515 40%, #6b2020 100%)',
+  },
+  {
+    sign: 'Taurus',
+    symbol: '♉',
+    dates: 'Apr 20 – May 20',
+    element: 'Earth',
+    elementColor: '#16a34a',
+    destination: 'Tuscany, Italy',
+    tagline: 'Rolling vineyards, fine cuisine, and timeless beauty.',
+    trait: 'Sensual & Grounded',
+    emoji: '🍷',
+    bg: 'linear-gradient(135deg, #0a1a0a 0%, #1a3d1a 40%, #2d6b2d 100%)',
+  },
+  {
+    sign: 'Gemini',
+    symbol: '♊',
+    dates: 'May 21 – Jun 20',
+    element: 'Air',
+    elementColor: '#eab308',
+    destination: 'Tokyo, Japan',
+    tagline: 'Ancient temples and neon streets — two worlds in one city.',
+    trait: 'Curious & Adaptable',
+    emoji: '🏙️',
+    bg: 'linear-gradient(135deg, #1a1a0a 0%, #3d3a15 40%, #6b6020 100%)',
+  },
+  {
+    sign: 'Cancer',
+    symbol: '♋',
+    dates: 'Jun 21 – Jul 22',
+    element: 'Water',
+    elementColor: '#3b82f6',
+    destination: 'Maldives',
+    tagline: 'Overwater sanctuaries where the ocean meets the sky.',
+    trait: 'Nurturing & Intuitive',
+    emoji: '🌊',
+    bg: 'linear-gradient(135deg, #0a0f1a 0%, #152040 40%, #1e3a6b 100%)',
+  },
+  {
+    sign: 'Leo',
+    symbol: '♌',
+    dates: 'Jul 23 – Aug 22',
+    element: 'Fire',
+    elementColor: '#f97316',
+    destination: 'Santorini, Greece',
+    tagline: 'Golden sunsets on clifftop villages made for royalty.',
+    trait: 'Radiant & Bold',
+    emoji: '☀️',
+    bg: 'linear-gradient(135deg, #1a0f0a 0%, #3d2415 40%, #6b3a10 100%)',
+  },
+  {
+    sign: 'Virgo',
+    symbol: '♍',
+    dates: 'Aug 23 – Sep 22',
+    element: 'Earth',
+    elementColor: '#84cc16',
+    destination: 'Kyoto, Japan',
+    tagline: 'Zen gardens, bamboo groves, and meticulous perfection.',
+    trait: 'Precise & Thoughtful',
+    emoji: '🎋',
+    bg: 'linear-gradient(135deg, #0d1a0a 0%, #213d15 40%, #356b20 100%)',
+  },
+  {
+    sign: 'Libra',
+    symbol: '♎',
+    dates: 'Sep 23 – Oct 22',
+    element: 'Air',
+    elementColor: '#ec4899',
+    destination: 'Paris, France',
+    tagline: 'Art, romance, and the most beautiful city on Earth.',
+    trait: 'Harmonious & Romantic',
+    emoji: '🗼',
+    bg: 'linear-gradient(135deg, #1a0a12 0%, #3d1530 40%, #6b2050 100%)',
+  },
+  {
+    sign: 'Scorpio',
+    symbol: '♏',
+    dates: 'Oct 23 – Nov 21',
+    element: 'Water',
+    elementColor: '#8b5cf6',
+    destination: 'Marrakech, Morocco',
+    tagline: 'Labyrinthine souks, mystic riads, and desert mystery.',
+    trait: 'Intense & Magnetic',
+    emoji: '🕌',
+    bg: 'linear-gradient(135deg, #0d0a1a 0%, #201540 40%, #3a1a6b 100%)',
+  },
+  {
+    sign: 'Sagittarius',
+    symbol: '♐',
+    dates: 'Nov 22 – Dec 21',
+    element: 'Fire',
+    elementColor: '#f59e0b',
+    destination: 'Patagonia, Argentina',
+    tagline: 'Edge-of-the-world landscapes for the ultimate explorer.',
+    trait: 'Free-Spirited & Philosophical',
+    emoji: '🏔️',
+    bg: 'linear-gradient(135deg, #1a100a 0%, #3d2a15 40%, #6b4a15 100%)',
+  },
+  {
+    sign: 'Capricorn',
+    symbol: '♑',
+    dates: 'Dec 22 – Jan 19',
+    element: 'Earth',
+    elementColor: '#6b7280',
+    destination: 'Machu Picchu, Peru',
+    tagline: 'Summit the clouds — a reward worthy of your ambition.',
+    trait: 'Disciplined & Ambitious',
+    emoji: '🏛️',
+    bg: 'linear-gradient(135deg, #0f0f0f 0%, #252525 40%, #3d3d3d 100%)',
+  },
+  {
+    sign: 'Aquarius',
+    symbol: '♒',
+    dates: 'Jan 20 – Feb 18',
+    element: 'Air',
+    elementColor: '#06b6d4',
+    destination: 'New Zealand',
+    tagline: 'Untouched landscapes that rewrite what travel can be.',
+    trait: 'Visionary & Unconventional',
+    emoji: '🌿',
+    bg: 'linear-gradient(135deg, #0a161a 0%, #153040 40%, #1a506b 100%)',
+  },
+  {
+    sign: 'Pisces',
+    symbol: '♓',
+    dates: 'Feb 19 – Mar 20',
+    element: 'Water',
+    elementColor: '#a78bfa',
+    destination: 'Bali, Indonesia',
+    tagline: 'Temple rituals, rice terraces, and spiritual surrender.',
+    trait: 'Dreamy & Spiritual',
+    emoji: '🌺',
+    bg: 'linear-gradient(135deg, #0f0a1a 0%, #251540 40%, #3a1a6b 100%)',
+  },
+];
+---
+
+<BaseLayout
+  title="Astro Travel — Find Your Destination by the Stars | Travel Baby"
+  description="Discover your perfect travel destination guided by astrology. Enter your birth details and let the stars lead the way."
+>
+  <!-- Carousel hero -->
+  <section class="astro-hero" aria-label="Zodiac destination carousel">
+    <div class="carousel" id="carousel" role="region" aria-label="Zodiac destinations" aria-live="polite">
+      {zodiacDestinations.map((z, i) => (
+        <div
+          class="carousel__slide"
+          id={`slide-${i}`}
+          data-index={i}
+          aria-hidden={i !== 0}
+          style={`background: ${z.bg};`}
+        >
+          <div class="carousel__content">
+            <div class="carousel__sign-badge">
+              <span class="carousel__symbol" aria-hidden="true">{z.symbol}</span>
+              <span class="carousel__sign">{z.sign}</span>
+              <span class="carousel__dates">{z.dates}</span>
+            </div>
+            <p class="carousel__element" style={`color: ${z.elementColor}`}>
+              {z.element} Sign · {z.trait}
+            </p>
+            <h2 class="carousel__destination">
+              <span class="carousel__emoji" aria-hidden="true">{z.emoji}</span>
+              {z.destination}
+            </h2>
+            <p class="carousel__tagline">{z.tagline}</p>
+            <a href="#birth-form" class="carousel__cta">
+              Is this your sign? Find out →
+            </a>
+          </div>
+        </div>
+      ))}
+
+      <!-- Controls -->
+      <button class="carousel__btn carousel__btn--prev" id="carousel-prev" aria-label="Previous zodiac sign">
+        ‹
+      </button>
+      <button class="carousel__btn carousel__btn--next" id="carousel-next" aria-label="Next zodiac sign">
+        ›
+      </button>
+
+      <!-- Dots -->
+      <div class="carousel__dots" role="tablist" aria-label="Zodiac signs">
+        {zodiacDestinations.map((z, i) => (
+          <button
+            class="carousel__dot"
+            role="tab"
+            aria-selected={i === 0}
+            aria-label={z.sign}
+            data-dot={i}
+          ></button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="astro-intro" aria-labelledby="astro-intro-heading">
+    <Container>
+      <div class="astro-intro__inner">
+        <p class="astro-intro__eyebrow">✨ Astro Travel</p>
+        <h1 id="astro-intro-heading" class="astro-intro__title">
+          Let the Stars Choose<br />Your Next Destination
+        </h1>
+        <p class="astro-intro__text">
+          Your birth chart is a cosmic map — and it points to places that will resonate with your
+          energy. Enter your birth details below and we'll reveal the destinations written in your stars.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Birth details form -->
+  <section class="astro-form-section" id="birth-form" aria-labelledby="birth-form-heading">
+    <Container size="sm">
+      <div class="astro-form-card">
+        <h2 id="birth-form-heading" class="astro-form-card__title">Enter Your Birth Details</h2>
+        <p class="astro-form-card__subtitle">We use your sun sign, rising sign, and planetary positions to match you with the perfect destination.</p>
+
+        <form id="astro-form" class="astro-form" novalidate>
+          <div class="astro-form__grid">
+            <div class="astro-field">
+              <label for="dob" class="astro-field__label">Date of Birth <span aria-hidden="true">*</span></label>
+              <input type="date" id="dob" name="dob" required class="astro-field__input" />
+            </div>
+            <div class="astro-field">
+              <label for="tob" class="astro-field__label">Time of Birth <span aria-hidden="true">*</span></label>
+              <input type="time" id="tob" name="tob" required class="astro-field__input" />
+              <p class="astro-field__hint">Check your birth certificate for accuracy</p>
+            </div>
+          </div>
+          <div class="astro-field">
+            <label for="pob" class="astro-field__label">Place of Birth <span aria-hidden="true">*</span></label>
+            <input type="text" id="pob" name="pob" required placeholder="e.g. Mumbai, India" class="astro-field__input" />
+          </div>
+          <div class="astro-field">
+            <label for="astro-email" class="astro-field__label">Your Email <span aria-hidden="true">*</span></label>
+            <input type="email" id="astro-email" name="email" required placeholder="you@example.com" class="astro-field__input" />
+            <p class="astro-field__hint">We'll send your full astro-travel report here</p>
+          </div>
+          <button type="submit" class="astro-form__submit">
+            ✨ Reveal My Destination
+          </button>
+          <p id="astro-form-error" class="astro-form__error" hidden></p>
+        </form>
+
+        <!-- Result -->
+        <div id="astro-result" class="astro-result" hidden>
+          <div class="astro-result__sign" id="astro-result-sign"></div>
+          <h3 class="astro-result__title">Your Cosmic Destination</h3>
+          <div class="astro-result__destination" id="astro-result-destination"></div>
+          <p class="astro-result__tagline" id="astro-result-tagline"></p>
+          <a href="/plan-my-trip" class="astro-result__cta">Plan This Trip with Travel Baby →</a>
+          <p class="astro-result__note">A full astro-travel report is on its way to your inbox.</p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Zodiac grid -->
+  <section class="astro-grid-section" aria-labelledby="astro-grid-heading">
+    <Container>
+      <h2 id="astro-grid-heading" class="astro-grid-section__title">All Zodiac Destinations</h2>
+      <div class="astro-grid">
+        {zodiacDestinations.map((z) => (
+          <div class="astro-card" style={`--card-color: ${z.elementColor}`}>
+            <div class="astro-card__top">
+              <span class="astro-card__symbol" aria-hidden="true">{z.symbol}</span>
+              <div>
+                <p class="astro-card__sign">{z.sign}</p>
+                <p class="astro-card__dates">{z.dates}</p>
+              </div>
+            </div>
+            <p class="astro-card__emoji" aria-hidden="true">{z.emoji}</p>
+            <p class="astro-card__destination">{z.destination}</p>
+            <p class="astro-card__tagline">{z.tagline}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <CtaSection />
+</BaseLayout>
+
+<style>
+  /* ── Carousel ── */
+  .astro-hero {
+    position: relative;
+    height: 90vh;
+    min-height: 520px;
+    max-height: 760px;
+    overflow: hidden;
+  }
+  .carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .carousel__slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+  }
+  .carousel__slide[aria-hidden="false"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .carousel__content {
+    text-align: center;
+    color: #fff;
+    padding: var(--space-6);
+    max-width: 640px;
+  }
+  .carousel__sign-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--radius-full);
+    padding: var(--space-2) var(--space-4);
+    margin-bottom: var(--space-5);
+    backdrop-filter: blur(8px);
+  }
+  .carousel__symbol {
+    font-size: var(--text-xl);
+  }
+  .carousel__sign {
+    font-size: var(--text-base);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .carousel__dates {
+    font-size: var(--text-xs);
+    opacity: 0.7;
+    border-left: 1px solid rgba(255,255,255,0.3);
+    padding-left: var(--space-2);
+  }
+  .carousel__element {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-4);
+  }
+  .carousel__destination {
+    font-family: var(--font-heading);
+    font-size: var(--text-4xl);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: var(--space-4);
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  }
+  .carousel__emoji {
+    display: block;
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-2);
+  }
+  .carousel__tagline {
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    opacity: 0.85;
+    margin-bottom: var(--space-8);
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .carousel__cta {
+    display: inline-block;
+    padding: var(--space-3) var(--space-8);
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: var(--radius-full);
+    color: #fff;
+    font-size: var(--text-base);
+    font-weight: 600;
+    text-decoration: none;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .carousel__cta:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+  }
+  .carousel__btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s, transform 0.2s;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .carousel__btn:hover {
+    background: rgba(255,255,255,0.3);
+    transform: translateY(-50%) scale(1.1);
+  }
+  .carousel__btn--prev { left: var(--space-4); }
+  .carousel__btn--next { right: var(--space-4); }
+  .carousel__dots {
+    position: absolute;
+    bottom: var(--space-5);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--space-2);
+    z-index: 10;
+  }
+  .carousel__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .carousel__dot[aria-selected="true"] {
+    background: #fff;
+    transform: scale(1.4);
+  }
+  @media (min-width: 768px) {
+    .carousel__destination { font-size: var(--text-5xl); }
+    .carousel__btn { width: 56px; height: 56px; }
+    .carousel__btn--prev { left: var(--space-8); }
+    .carousel__btn--next { right: var(--space-8); }
+  }
+
+  /* ── Intro ── */
+  .astro-intro {
+    padding: var(--space-16) 0 var(--space-8);
+    background: linear-gradient(180deg, #0f0a1a 0%, var(--color-neutral-0) 100%);
+  }
+  .astro-intro__inner {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .astro-intro__eyebrow {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-primary-400);
+    margin-bottom: var(--space-4);
+  }
+  .astro-intro__title {
+    font-size: var(--text-3xl);
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-4);
+  }
+  .astro-intro__text {
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: var(--color-neutral-600);
+  }
+  @media (min-width: 768px) {
+    .astro-intro__title { font-size: var(--text-4xl); }
+  }
+
+  /* ── Birth form ── */
+  .astro-form-section {
+    padding: var(--space-4) 0 var(--space-16);
+  }
+  .astro-form-card {
+    background: var(--color-neutral-0);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-lg);
+  }
+  .astro-form-card__title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-2);
+    text-align: center;
+  }
+  .astro-form-card__subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-500);
+    text-align: center;
+    margin-bottom: var(--space-6);
+    line-height: 1.6;
+  }
+  .astro-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .astro-form__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+  @media (min-width: 640px) {
+    .astro-form__grid { grid-template-columns: 1fr 1fr; }
+  }
+  .astro-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .astro-field__label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-neutral-700);
+  }
+  .astro-field__label span {
+    color: var(--color-primary-500);
+  }
+  .astro-field__input {
+    width: 100%;
+    padding: var(--space-3);
+    border: 1px solid var(--color-neutral-300);
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    color: var(--color-neutral-900);
+    background: var(--color-neutral-0);
+    font-family: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .astro-field__input:focus {
+    outline: none;
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px var(--color-primary-100);
+  }
+  .astro-field__hint {
+    font-size: var(--text-xs);
+    color: var(--color-neutral-400);
+  }
+  .astro-form__submit {
+    width: 100%;
+    padding: var(--space-4);
+    background: linear-gradient(135deg, var(--color-primary-600) 0%, #7c3aed 100%);
+    color: #fff;
+    font-size: var(--text-base);
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .astro-form__submit:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+  .astro-form__error {
+    font-size: var(--text-sm);
+    color: #dc2626;
+    text-align: center;
+  }
+
+  /* ── Result ── */
+  .astro-result {
+    text-align: center;
+    padding: var(--space-6) 0 var(--space-2);
+  }
+  .astro-result__sign {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-2);
+  }
+  .astro-result__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-neutral-500);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-3);
+  }
+  .astro-result__destination {
+    font-size: var(--text-3xl);
+    font-weight: 800;
+    color: var(--color-neutral-900);
+    margin-bottom: var(--space-3);
+  }
+  .astro-result__tagline {
+    font-size: var(--text-base);
+    color: var(--color-neutral-600);
+    line-height: 1.6;
+    margin-bottom: var(--space-6);
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .astro-result__cta {
+    display: inline-block;
+    padding: var(--space-3) var(--space-8);
+    background: linear-gradient(135deg, var(--color-primary-600) 0%, #7c3aed 100%);
+    color: #fff;
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    margin-bottom: var(--space-4);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .astro-result__cta:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+  .astro-result__note {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-400);
+  }
+
+  /* ── Zodiac grid ── */
+  .astro-grid-section {
+    padding: var(--space-16) 0;
+    background: var(--color-neutral-50);
+  }
+  .astro-grid-section__title {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+    text-align: center;
+    margin-bottom: var(--space-10);
+  }
+  .astro-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+  @media (min-width: 640px) {
+    .astro-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .astro-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  .astro-card {
+    background: var(--color-neutral-0);
+    border: 1px solid var(--color-neutral-200);
+    border-top: 3px solid var(--card-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .astro-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+  .astro-card__top {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+  .astro-card__symbol {
+    font-size: var(--text-2xl);
+  }
+  .astro-card__sign {
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+  }
+  .astro-card__dates {
+    font-size: var(--text-xs);
+    color: var(--color-neutral-400);
+  }
+  .astro-card__emoji {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-2);
+  }
+  .astro-card__destination {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--card-color);
+    margin-bottom: var(--space-1);
+  }
+  .astro-card__tagline {
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    color: var(--color-neutral-500);
+  }
+</style>
+
+<script>
+  // ── Carousel ──
+  const slides = document.querySelectorAll<HTMLElement>('.carousel__slide');
+  const dots = document.querySelectorAll<HTMLButtonElement>('.carousel__dot');
+  let current = 0;
+  let autoTimer: ReturnType<typeof setInterval>;
+
+  function goTo(index: number): void {
+    slides[current].setAttribute('aria-hidden', 'true');
+    dots[current].setAttribute('aria-selected', 'false');
+    current = (index + slides.length) % slides.length;
+    slides[current].setAttribute('aria-hidden', 'false');
+    dots[current].setAttribute('aria-selected', 'true');
+  }
+
+  function startAuto(): void {
+    autoTimer = setInterval(() => goTo(current + 1), 5000);
+  }
+
+  function resetAuto(): void {
+    clearInterval(autoTimer);
+    startAuto();
+  }
+
+  document.getElementById('carousel-prev')?.addEventListener('click', () => { goTo(current - 1); resetAuto(); });
+  document.getElementById('carousel-next')?.addEventListener('click', () => { goTo(current + 1); resetAuto(); });
+  dots.forEach((dot, i) => dot.addEventListener('click', () => { goTo(i); resetAuto(); }));
+
+  startAuto();
+
+  // ── Zodiac calculator ──
+  const zodiacData = [
+    { sign: 'Capricorn', symbol: '♑', destination: 'Machu Picchu, Peru', tagline: 'Summit the clouds — a reward worthy of your ambition.', emoji: '🏛️' },
+    { sign: 'Aquarius',  symbol: '♒', destination: 'New Zealand',         tagline: 'Untouched landscapes that rewrite what travel can be.', emoji: '🌿' },
+    { sign: 'Pisces',    symbol: '♓', destination: 'Bali, Indonesia',      tagline: 'Temple rituals, rice terraces, and spiritual surrender.', emoji: '🌺' },
+    { sign: 'Aries',     symbol: '♈', destination: 'Iceland',              tagline: 'Chase volcanoes, waterfalls, and the Northern Lights.', emoji: '🌋' },
+    { sign: 'Taurus',    symbol: '♉', destination: 'Tuscany, Italy',       tagline: 'Rolling vineyards, fine cuisine, and timeless beauty.', emoji: '🍷' },
+    { sign: 'Gemini',    symbol: '♊', destination: 'Tokyo, Japan',         tagline: 'Ancient temples and neon streets — two worlds in one city.', emoji: '🏙️' },
+    { sign: 'Cancer',    symbol: '♋', destination: 'Maldives',             tagline: 'Overwater sanctuaries where the ocean meets the sky.', emoji: '🌊' },
+    { sign: 'Leo',       symbol: '♌', destination: 'Santorini, Greece',    tagline: 'Golden sunsets on clifftop villages made for royalty.', emoji: '☀️' },
+    { sign: 'Virgo',     symbol: '♍', destination: 'Kyoto, Japan',         tagline: 'Zen gardens, bamboo groves, and meticulous perfection.', emoji: '🎋' },
+    { sign: 'Libra',     symbol: '♎', destination: 'Paris, France',        tagline: 'Art, romance, and the most beautiful city on Earth.', emoji: '🗼' },
+    { sign: 'Scorpio',   symbol: '♏', destination: 'Marrakech, Morocco',   tagline: 'Labyrinthine souks, mystic riads, and desert mystery.', emoji: '🕌' },
+    { sign: 'Sagittarius', symbol: '♐', destination: 'Patagonia, Argentina', tagline: 'Edge-of-the-world landscapes for the ultimate explorer.', emoji: '🏔️' },
+  ];
+
+  function getZodiacSign(month: number, day: number): typeof zodiacData[0] {
+    if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return zodiacData[0];
+    if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return zodiacData[1];
+    if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return zodiacData[2];
+    if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return zodiacData[3];
+    if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return zodiacData[4];
+    if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return zodiacData[5];
+    if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return zodiacData[6];
+    if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return zodiacData[7];
+    if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return zodiacData[8];
+    if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return zodiacData[9];
+    if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return zodiacData[10];
+    return zodiacData[11];
+  }
+
+  const astroForm = document.getElementById('astro-form') as HTMLFormElement | null;
+  const astroResult = document.getElementById('astro-result') as HTMLElement | null;
+  const errorEl = document.getElementById('astro-form-error') as HTMLElement | null;
+
+  astroForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (errorEl) errorEl.hidden = true;
+
+    const dob = (astroForm.querySelector('#dob') as HTMLInputElement).value;
+    const tob = (astroForm.querySelector('#tob') as HTMLInputElement).value;
+    const pob = (astroForm.querySelector('#pob') as HTMLInputElement).value.trim();
+    const email = (astroForm.querySelector('#astro-email') as HTMLInputElement).value.trim();
+
+    if (!dob || !tob || !pob || !email) {
+      if (errorEl) { errorEl.textContent = 'Please fill in all fields.'; errorEl.hidden = false; }
+      return;
+    }
+
+    const date = new Date(dob);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const zodiac = getZodiacSign(month, day);
+
+    const signEl = document.getElementById('astro-result-sign');
+    const destEl = document.getElementById('astro-result-destination');
+    const tagEl = document.getElementById('astro-result-tagline');
+    if (signEl) signEl.textContent = `${zodiac.emoji} ${zodiac.symbol} ${zodiac.sign}`;
+    if (destEl) destEl.textContent = zodiac.destination;
+    if (tagEl) tagEl.textContent = zodiac.tagline;
+
+    astroForm.hidden = true;
+    if (astroResult) astroResult.hidden = false;
+
+    // Send lead email in background
+    fetch('https://formsubmit.co/ajax/harshmathur15@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        _subject: 'New Astro Travel Request — Travel Baby',
+        _captcha: 'false',
+        dob, tob, pob, email,
+        zodiac_sign: zodiac.sign,
+        recommended_destination: zodiac.destination,
+      }),
+    }).catch(() => {});
+  });
+</script>

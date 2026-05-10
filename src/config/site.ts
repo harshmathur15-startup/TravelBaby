@@ -44,6 +44,7 @@ export const SITE_CONFIG = {
   /** Primary navigation links */
   navLinks: [
     { label: 'How It Works', href: '/#how-it-works' },
+    { label: 'Astro Travel', href: '/astro-travel' },
     { label: 'Services', href: '/services' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'About', href: '/about' },
