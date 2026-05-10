@@ -36,3 +36,5 @@ temp/
 thoughts/
 .claude/sessions/
 .claude/drift-baseline.json
+.vercel
+dist
