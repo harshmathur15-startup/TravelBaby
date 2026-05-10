@@ -23,67 +23,55 @@ export const POST: APIRoute = async ({ request }) => {
 
   const client = new Anthropic({ apiKey })
 
-  const prompt = `You are an expert Vedic and Western astrologer who specialises in travel recommendations. A user has provided their birth details:
+  const prompt = `You are an expert Vedic and Western astrologer specialising in travel recommendations for Indian travellers. A user has provided their birth details:
 
 Date of Birth: ${dob}
 Time of Birth: ${tob}
 Place of Birth: ${pob}
 
-Based on their astrological chart, provide personalised travel recommendations. Consider their:
-- Sun sign (core identity and what energises them)
-- Approximate rising sign based on birth time (how they engage with new environments)
-- Dominant element and modality
-- Ruling planet and what it governs in travel
+Based on their astrological chart, provide personalised travel recommendations. The user is from India.
 
-Respond ONLY with valid JSON in exactly this structure (no markdown, no extra text, no code fences):
+Respond ONLY with valid JSON — no markdown, no code fences, no extra text:
 {
   "sign": "Sun sign name",
   "symbol": "Zodiac symbol emoji",
   "element": "Fire | Earth | Air | Water",
-  "risingSign": "Approximate rising sign",
-  "cosmicProfile": "2-3 sentence poetic description of this person's travel soul",
-  "destinations": [
-    {
-      "rank": 1,
-      "name": "City or Region",
-      "country": "Country",
-      "emoji": "Relevant emoji",
-      "whyItFits": "2 sentences explaining the astrological alignment",
-      "experiences": ["Experience 1", "Experience 2", "Experience 3"]
-    },
-    {
-      "rank": 2,
-      "name": "City or Region",
-      "country": "Country",
-      "emoji": "Relevant emoji",
-      "whyItFits": "2 sentences explaining the astrological alignment",
-      "experiences": ["Experience 1", "Experience 2", "Experience 3"]
-    },
-    {
-      "rank": 3,
-      "name": "City or Region",
-      "country": "Country",
-      "emoji": "Relevant emoji",
-      "whyItFits": "2 sentences explaining the astrological alignment",
-      "experiences": ["Experience 1", "Experience 2", "Experience 3"]
-    }
-  ],
+  "risingSign": "Approximate rising sign based on birth time",
+  "cosmicProfile": "2-3 sentence poetic description of this person as a traveller",
   "travelStyle": "Short label e.g. 'The Spiritual Wanderer'",
-  "travelStyleDesc": "1-2 sentences on how they travel best",
+  "domesticBeach": [
+    { "name": "City or Place", "state": "Indian State", "emoji": "relevant emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" },
+    { "name": "City or Place", "state": "Indian State", "emoji": "relevant emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" },
+    { "name": "City or Place", "state": "Indian State", "emoji": "relevant emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" },
+    { "name": "City or Place", "state": "Indian State", "emoji": "relevant emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" },
+    { "name": "City or Place", "state": "Indian State", "emoji": "relevant emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" }
+  ],
+  "domesticMountain": [
+    { "name": "City or Place", "state": "Indian State", "emoji": "relevant emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" },
+    { "name": "City or Place", "state": "Indian State", "emoji": "relevant emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" },
+    { "name": "City or Place", "state": "Indian State", "emoji": "relevant emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" },
+    { "name": "City or Place", "state": "Indian State", "emoji": "relevant emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" },
+    { "name": "City or Place", "state": "Indian State", "emoji": "relevant emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" }
+  ],
+  "international": [
+    { "name": "Country name", "emoji": "country flag emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" },
+    { "name": "Country name", "emoji": "country flag emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" },
+    { "name": "Country name", "emoji": "country flag emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" },
+    { "name": "Country name", "emoji": "country flag emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" },
+    { "name": "Country name", "emoji": "country flag emoji", "tagline": "5-word evocative tagline", "whyItFits": "1 sentence astrological reason" }
+  ],
   "bestMonths": ["Month1", "Month2", "Month3"],
-  "avoidTip": "One sentence on what kind of travel drains them",
   "cosmicMessage": "One inspiring closing line about their cosmic travel destiny"
 }`
 
   try {
     const message = await client.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 1500,
+      max_tokens: 2000,
       messages: [{ role: 'user', content: prompt }],
     })
 
     const raw = message.content[0].type === 'text' ? message.content[0].text : ''
-    // Strip markdown code fences if present
     const cleaned = raw
       .replace(/^```(?:json)?\s*/m, '')
       .replace(/\s*```\s*$/m, '')
