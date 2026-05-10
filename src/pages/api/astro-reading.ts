@@ -95,10 +95,8 @@ Respond ONLY with valid JSON in exactly this structure (no markdown, no extra te
       headers: { 'Content-Type': 'application/json' },
     })
   } catch (err) {
-    console.error('[astro-reading] error:', err)
-    return new Response(
-      JSON.stringify({ error: 'Failed to generate reading. Please try again.' }),
-      { status: 500 },
-    )
+    const msg = err instanceof Error ? err.message : String(err)
+    console.error('[astro-reading] error:', msg)
+    return new Response(JSON.stringify({ error: msg }), { status: 500 })
   }
 }
